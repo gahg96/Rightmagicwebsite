@@ -1,17 +1,18 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Award, Target, Heart, TrendingUp } from 'lucide-react';
 import { getCompanyInfo, getBrandName } from '@/config/company';
 
 export default function AboutPage() {
     const t = useTranslations('About');
+    const locale = useLocale();
     const companyInfo = getCompanyInfo();
-    const brandName = getBrandName('en');
+    const brandName = getBrandName(locale);
     
-    // 根据公司类型获取关于我们的标题
-    const aboutTitle = companyInfo.region === 'domestic' 
+    // 根据语言环境获取关于我们的标题
+    const aboutTitle = locale === 'zh' 
         ? `关于${companyInfo.brandNameZh}`
         : `About ${brandName}`;
 
