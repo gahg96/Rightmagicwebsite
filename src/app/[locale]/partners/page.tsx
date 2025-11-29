@@ -56,7 +56,7 @@ export default function PartnersPage() {
 
                 {/* Partners by Category */}
                 <div className="space-y-16 mb-20">
-                    {partners.map((category, categoryIndex) => (
+                    {partners.map((category) => (
                         <div key={category.category}>
                             <motion.h2
                                 initial={{ opacity: 0, x: -20 }}

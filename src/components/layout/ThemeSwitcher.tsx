@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ThemeSwitcher() {
-    const { currentTheme, setTheme, theme } = useTheme();
+    const { currentTheme, setTheme } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
 
     const darkThemes = Object.entries(themes).filter(([_, t]) => t.isDark);
