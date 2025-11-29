@@ -3,9 +3,17 @@
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Award, Target, Heart, TrendingUp } from 'lucide-react';
+import { getCompanyInfo, getBrandName } from '@/config/company';
 
 export default function AboutPage() {
     const t = useTranslations('About');
+    const companyInfo = getCompanyInfo();
+    const brandName = getBrandName('en');
+    
+    // 根据公司类型获取关于我们的标题
+    const aboutTitle = companyInfo.region === 'domestic' 
+        ? `关于${companyInfo.brandNameZh}`
+        : `About ${brandName}`;
 
     const milestones = [
         { year: '2019', icon: '🌱' },
@@ -26,11 +34,16 @@ export default function AboutPage() {
                     className="text-center mb-16"
                 >
                     <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
-                        {t('title')}
+                        {aboutTitle}
                     </h1>
-                    <p className="text-2xl text-primary mb-6 italic">{t('slogan')}</p>
+                    <p className="text-2xl text-primary mb-6 italic">{companyInfo.sloganZh}</p>
                     <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                        {t('description')}
+                        {companyInfo.region === 'domestic' 
+                            ? `${companyInfo.companyNameZh}成立于2019年，由IBM专家创办，注册资金3000万，汇聚金融科技精英队伍。`
+                            : `${companyInfo.companyNameZh}致力于为全球企业提供专业的数字化解决方案，专注于金融科技领域的创新与发展。`}
+                        {companyInfo.region === 'domestic' 
+                            ? '成立于2019年，由IBM专家创办，注册资金3000万，汇聚金融科技精英队伍。'
+                            : '致力于为全球企业提供专业的数字化解决方案。'}
                     </p>
                 </motion.div>
 

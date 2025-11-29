@@ -31,13 +31,13 @@ const companyConfigs: Record<string, CompanyInfo> = {
   // 海外公司 - RightNova Labs
   'rightnovalabs': {
     brandName: 'RightNova Labs',
-    brandNameZh: 'RightNova Labs',
+    brandNameZh: '正新实验室',
     companyName: 'RightNova Labs Limited',
-    companyNameZh: 'RightNova Labs 有限公司',
+    companyNameZh: '正新实验室有限公司',
     description: 'Your Digital Strategy Partner. Powering enterprises with ZeroCraft and Gamium AI Sandbox.',
     descriptionZh: '您的数字化战略合作伙伴，提供零匠开发平台与Gamium AI演武场。',
     slogan: 'Tech-Driven Future, Crafted with Innovation',
-    sloganZh: '科技驱动未来，创新铸就奇迹',
+    sloganZh: '正道而行，新星自显',
     region: 'overseas',
   },
 };
