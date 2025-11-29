@@ -4,6 +4,7 @@
         "zerocraft": "ZeroCraft",
         "gamium": "Gamium",
         "partners": "Partners",
+        "cases": "Case Studies",
         "about": "About Us",
         "contact": "Contact"
     },
@@ -173,5 +174,155 @@
         "cert2": "Specialized & Innovative",
         "cert3": "ISO20000/27001",
         "cert4": "CMMI3 Certified"
+    },
+    "Cases": {
+        "title": "Case Studies",
+        "subtitle": "Deep expertise in financial industry, providing professional digital transformation solutions for leading enterprises",
+        "challenge": "Business Challenge",
+        "solution": "Solution",
+        "results": "Project Results",
+        "categories": {
+            "email": "Email Migration",
+            "oa": "OA Transformation",
+            "wps": "WPS Collaboration",
+            "zerocraft": "ZeroCraft Platform",
+            "ai": "AI Evaluation"
+        },
+        "highlights": {
+            "highlight1": "Large-scale Migration",
+            "highlight2": "Zero Downtime",
+            "highlight3": "Data Security",
+            "highlight4": "Seamless User Experience",
+            "highlight5": "Rapid Response",
+            "highlight6": "High Availability"
+        },
+        "bankEmail": {
+            "title": "State-owned Bank Email Migration",
+            "client": "Major State-owned Bank",
+            "challenge": "Need to migrate from IBM Lotus Domino platform to domestic email system, involving 40 domestic branches, 50 overseas branches, 400K+ users, facing different regulatory requirements globally.",
+            "solution": "Adopted dual-track operation mode, customized data migration tools, proposed different solutions for different regulatory requirements, implemented centralized and local deployment solutions.",
+            "results": "Over three years, email migration solution was deployed across 40 domestic branches, 50 overseas branches, and multiple direct institutions, achieving full domestic replacement for 400K+ users. Reduced user workload and improved user experience."
+        },
+        "securitiesOA": {
+            "title": "Securities Firm OA Transformation",
+            "client": "Leading Securities Firm",
+            "challenge": "Need to complete IT innovation migration of hundreds of core business processes, ensuring seamless user switching, online editing, document preview and other key functions.",
+            "solution": "Comprehensive migration of core business processes, achieving seamless user switching, online editing, document preview and other key functions, providing customized solutions for personalized needs of various departments.",
+            "results": "Completed IT innovation migration of hundreds of core business processes, achieved seamless user switching, online editing, document preview and other key functions, continuously optimized personalized needs of various departments."
+        },
+        "commercialWPS": {
+            "title": "Commercial Bank WPS Collaboration",
+            "client": "Joint-stock Commercial Bank",
+            "challenge": "Facing five major business pain points: difficult document collaboration, cross-platform management, document collection and retrieval, document security, and document control.",
+            "solution": "Based on WPS collaboration platform, achieved multi-platform document management, access, editing, enhanced interaction between customers and employees, provided complete document security system.",
+            "results": "WPS collaboration development, comprehensive document management upgrade, achieved multi-platform document management, improved collaboration efficiency, ensured document security."
+        },
+        "zerocraftRequirement": {
+            "title": "Securities Requirement Management System",
+            "client": "Securities Company",
+            "challenge": "Need to achieve full-process management of requirement feedback, application, workflow, and history, accurately locate customer needs, data precipitation to form customer profiles.",
+            "solution": "Rapidly built on ZeroCraft platform, achieved full-process management of requirement feedback, application, workflow, and history, based on sample data annotation, extracted requirement tags.",
+            "results": "Instant response to customer needs, resource matching and efficient collaboration, accurate customer needs positioning, data precipitation and customer profiles. Requirement forms reflect real customer needs with high analytical value."
+        },
+        "zerocraftDefect": {
+            "title": "Financial Institution Defect Management Platform",
+            "client": "Financial Institution",
+            "challenge": "Need to build microservices-based development platform, achieve containerized deployment, high availability, full-link tracking, complete security system.",
+            "solution": "Based on ZeroCraft platform, Web IDE development interface, AI-accelerated development experience, containerized deployment, application-level high availability, full-link tracking, standardized log extraction, complete security system.",
+            "results": "Rapid deployment based on Docker and K8s, elastic scaling, full-link tracking, non-invasive, minimal performance overhead, standardized integration interfaces, flexible adaptation mechanisms, unified integration management."
+        },
+        "aiEvaluation": {
+            "title": "Securities Company AI Q&A Evaluation",
+            "client": "Leading Securities Company",
+            "challenge": "Need to select professional, compliant and stable solutions from multiple large models and different investment advisory strategies, lacking unified selection, acceptance and continuous evaluation tools.",
+            "solution": "Established standard test sets covering account opening, trading rules, product consultation, investment advisory scenarios, conducted multi-round dialogue evaluation of multiple models, performed AB testing for different prompts and strategies.",
+            "results": "Helped customers complete first-round model and strategy selection, improved Q&A scenario accuracy by about 20%, significantly reduced violations and inappropriate expressions. Initially formed securities industry Q&A sample library and unified indicator standards."
+        }
+    },
+    "Architecture": {
+        "title": "ZeroCraft Platform Architecture",
+        "subtitle": "Enterprise-grade low-code platform based on PaaS architecture, providing complete digital solutions",
+        "layers": {
+            "presentation": {
+                "name": "Presentation Layer",
+                "description": "Enterprise Portal, Browser Terminal",
+                "components": {
+                    "component1": "Enterprise Portal",
+                    "component2": "Browser",
+                    "component3": "Mobile",
+                    "component4": "Multi-platform"
+                }
+            },
+            "application": {
+                "name": "Application Layer",
+                "description": "Business Application Systems",
+                "components": {
+                    "component1": "HR Management",
+                    "component2": "Operations",
+                    "component3": "Maintenance",
+                    "component4": "Finance",
+                    "component5": "CRM",
+                    "component6": "Administration"
+                }
+            },
+            "data": {
+                "name": "Data Layer",
+                "description": "Data Sources & Storage",
+                "components": {
+                    "component1": "Database",
+                    "component2": "Data Sources",
+                    "component3": "Data Warehouse"
+                }
+            },
+            "integration": {
+                "name": "Integration Layer",
+                "description": "System Integration & Plugins",
+                "components": {
+                    "component1": "OCR",
+                    "component2": "E-Signature",
+                    "component3": "E-Payment",
+                    "component4": "Third-party API"
+                }
+            },
+            "security": {
+                "name": "Security Layer",
+                "description": "Authentication & Security",
+                "components": {
+                    "component1": "Auth Center",
+                    "component2": "User Center",
+                    "component3": "Permission Management"
+                }
+            },
+            "platform": {
+                "name": "Platform Layer",
+                "description": "Core Services & Monitoring",
+                "components": {
+                    "component1": "Config Center",
+                    "component2": "Log Center",
+                    "component3": "Link Tracking",
+                    "component4": "Resource Monitoring"
+                }
+            }
+        },
+        "features": {
+            "feature1": {
+                "title": "Microservices Architecture",
+                "description": "Microservices-based architecture, supports containerized deployment, elastic scaling, high availability"
+            },
+            "feature2": {
+                "title": "Full-link Tracking",
+                "description": "Standardized log format, cross-service tracking, non-invasive, minimal performance overhead"
+            },
+            "feature3": {
+                "title": "Secure & Reliable",
+                "description": "Complete security system, data storage security, communication security, digital certificate system"
+            }
+        }
+    },
+    "Error": {
+        "title": "Something went wrong",
+        "description": "Sorry, an error occurred while loading the page. Please try again later.",
+        "retry": "Retry",
+        "goHome": "Go Home"
     }
 }

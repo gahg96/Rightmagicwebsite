@@ -4,6 +4,7 @@
         "zerocraft": "零匠平台",
         "gamium": "Gamium演武场",
         "partners": "生态合作",
+        "cases": "典型案例",
         "about": "关于我们",
         "contact": "联系我们"
     },
@@ -173,5 +174,155 @@
         "cert2": "专精特新企业",
         "cert3": "ISO20000/27001",
         "cert4": "CMMI3认证"
+    },
+    "Cases": {
+        "title": "典型案例",
+        "subtitle": "深耕金融行业，为头部企业提供专业的数字化转型解决方案",
+        "challenge": "业务挑战",
+        "solution": "解决方案",
+        "results": "项目成果",
+        "categories": {
+            "email": "邮箱迁移",
+            "oa": "OA改造",
+            "wps": "WPS协同",
+            "zerocraft": "零匠平台",
+            "ai": "AI评测"
+        },
+        "highlights": {
+            "highlight1": "大规模迁移",
+            "highlight2": "零停机",
+            "highlight3": "数据安全",
+            "highlight4": "用户无感",
+            "highlight5": "快速响应",
+            "highlight6": "高可用性"
+        },
+        "bankEmail": {
+            "title": "某国有大行邮箱迁移项目",
+            "client": "某国有大行",
+            "challenge": "需要将IBM Lotus Domino平台迁移至国产化邮件系统，涉及40家国内分行、50家海外分行，40万+用户，面临全球不同监管要求。",
+            "solution": "采用双轨运行方式，定制开发数据迁移工具，针对不同监管要求提出不同解决方案，实现集中式、本地部署2套方案落地。",
+            "results": "历经三年时间，邮箱迁移方案推广了全行40家国内分行，50家海外分行，若干直属机构，40多万用户的全面国产化替代。减少用户工作量，提高用户体验感。"
+        },
+        "securitiesOA": {
+            "title": "某头部券商信创OA改造项目",
+            "client": "头部券商",
+            "challenge": "需要完成集团数百项核心业务流程国产化迁移，确保用户无感切换、在线编辑、文档预览等关键功能。",
+            "solution": "全面迁移核心业务流程，实现用户无感切换、在线编辑、文档预览等关键功能，针对各部门个性化需求提供定制解决方案。",
+            "results": "完成集团数百项核心业务流程国产化迁移，实现用户无感切换、在线编辑、文档预览等关键功能，持续优化各部门个性化需求。"
+        },
+        "commercialWPS": {
+            "title": "某股份制银行WPS协同辅助开发项目",
+            "client": "股份制银行",
+            "challenge": "面临文档协作难、跨端管理难、文档收集检索难、文档安全难、文档管控难等五大业务痛点。",
+            "solution": "基于WPS协同平台，实现多端文档管理、访问、编辑，加强客户与员工的互动，提供完整的文档安全体系。",
+            "results": "WPS协同辅助开发，文档管理全面升级，实现多端文档管理，提升协作效率，保障文档安全。"
+        },
+        "zerocraftRequirement": {
+            "title": "某证券客户需求单管理系统",
+            "client": "证券公司",
+            "challenge": "需要实现需求反馈、需求申请、需求流转、历史需求全流程管理，精准定位客户需求，数据沉淀形成客户画像。",
+            "solution": "基于零匠平台快速搭建，实现需求反馈、需求申请、需求流转、历史需求全流程管理，基于样本数据进行标注，提炼需求标签。",
+            "results": "即时响应客户需求，资源匹配与高效协同，精准定位客户需求，数据沉淀、客户画像。需求单反应的是客户的真实需求，具有极高的分析价值。"
+        },
+        "zerocraftDefect": {
+            "title": "某金融机构缺陷管理平台系统",
+            "client": "金融机构",
+            "challenge": "需要构建基于微服务架构的开发平台，实现容器化部署、高可用性、全链路跟踪、完整的安全体系。",
+            "solution": "基于零匠平台，Web IDE开发界面，AI极速开发体验，容器化部署，应用服务级高可用，全链路跟踪，标准化日志格式抽取，完整的安全体系。",
+            "results": "基于Docker、K8s快速部署，弹性伸缩，全链路跟踪，非侵入式，性能损耗小，标准化集成接口，灵活的适配机制，统一的集成管理。"
+        },
+        "aiEvaluation": {
+            "title": "某头部证券公司智能问数评测",
+            "client": "头部证券公司",
+            "challenge": "需要在多家大模型和不同投顾话术策略中选出既专业合规又稳定的方案，缺乏统一的选型、验收和持续评估工具。",
+            "solution": "建立覆盖开户、交易规则、产品咨询、投顾说明等场景的标准测试集，对多家模型进行多轮对话评测，针对不同提示词和话术策略进行AB测试。",
+            "results": "帮助客户完成首轮模型和策略选型，智能问数场景正确率提升约20%，违规和不当表述明显下降。初步形成证券行业问数样本库和统一指标口径。"
+        }
+    },
+    "Architecture": {
+        "title": "零匠平台架构",
+        "subtitle": "基于PaaS架构的企业级低代码平台，提供完整的数字化解决方案",
+        "layers": {
+            "presentation": {
+                "name": "展示层",
+                "description": "企业门户、浏览器终端",
+                "components": {
+                    "component1": "企业门户",
+                    "component2": "浏览器",
+                    "component3": "移动端",
+                    "component4": "多终端适配"
+                }
+            },
+            "application": {
+                "name": "应用层",
+                "description": "业务应用系统",
+                "components": {
+                    "component1": "员工人事",
+                    "component2": "运营运行",
+                    "component3": "运维管理",
+                    "component4": "财务管理",
+                    "component5": "客户关系",
+                    "component6": "行政办公"
+                }
+            },
+            "data": {
+                "name": "数据层",
+                "description": "数据源与存储",
+                "components": {
+                    "component1": "数据库",
+                    "component2": "数据源",
+                    "component3": "数据仓库"
+                }
+            },
+            "integration": {
+                "name": "集成层",
+                "description": "系统集成与插件",
+                "components": {
+                    "component1": "OCR",
+                    "component2": "电子签",
+                    "component3": "电子支付",
+                    "component4": "第三方API"
+                }
+            },
+            "security": {
+                "name": "安全层",
+                "description": "认证与安全",
+                "components": {
+                    "component1": "认证中心",
+                    "component2": "用户中心",
+                    "component3": "权限管理"
+                }
+            },
+            "platform": {
+                "name": "平台层",
+                "description": "核心服务与监控",
+                "components": {
+                    "component1": "配置中心",
+                    "component2": "日志中心",
+                    "component3": "链路追踪",
+                    "component4": "资源监控"
+                }
+            }
+        },
+        "features": {
+            "feature1": {
+                "title": "微服务架构",
+                "description": "基于微服务架构，支持容器化部署，弹性伸缩，高可用性"
+            },
+            "feature2": {
+                "title": "全链路跟踪",
+                "description": "标准化日志格式，跨服务跟踪，非侵入式，性能损耗小"
+            },
+            "feature3": {
+                "title": "安全可靠",
+                "description": "完整的安全体系，数据存储安全、通信安全，数字证书体系"
+            }
+        }
+    },
+    "Error": {
+        "title": "出现了一些问题",
+        "description": "抱歉，页面加载时出现了错误。请稍后重试。",
+        "retry": "重试",
+        "goHome": "返回首页"
     }
 }
