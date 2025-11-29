@@ -69,6 +69,15 @@ export async function generateMetadata({
         'max-snippet': -1,
       },
     },
+    viewport: {
+      width: 'device-width',
+      initialScale: 1,
+      maximumScale: 5,
+    },
+    themeColor: '#050b14',
+    icons: {
+      icon: '/favicon.ico',
+    },
   };
 }
 
@@ -84,11 +93,6 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-        <meta name="theme-color" content="#050b14" />
-      </head>
       <body className="flex flex-col min-h-screen antialiased">
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
