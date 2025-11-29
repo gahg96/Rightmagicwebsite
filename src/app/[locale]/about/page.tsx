@@ -42,9 +42,6 @@ export default function AboutPage() {
                         {companyInfo.region === 'domestic' 
                             ? `${companyInfo.companyNameZh}成立于2019年，由IBM专家创办，注册资金3000万，汇聚金融科技精英队伍。`
                             : `${companyInfo.companyNameZh}致力于为全球企业提供专业的数字化解决方案，专注于金融科技领域的创新与发展。`}
-                        {companyInfo.region === 'domestic' 
-                            ? '成立于2019年，由IBM专家创办，注册资金3000万，汇聚金融科技精英队伍。'
-                            : '致力于为全球企业提供专业的数字化解决方案。'}
                     </p>
                 </motion.div>
 
