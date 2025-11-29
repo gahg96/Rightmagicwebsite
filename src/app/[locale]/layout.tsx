@@ -5,6 +5,7 @@ import "../globals.css";
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { getCompanyInfo } from '@/config/company';
 
 export async function generateMetadata({
   params
@@ -13,21 +14,27 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isZh = locale === 'zh';
+  
+  // 从环境变量获取域名配置，如果没有则使用默认值
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
+  const companyInfo = getCompanyInfo(siteUrl);
 
   return {
     title: {
-      default: isZh ? 'RightMagic - 科技驱动未来，匠心铸就奇迹' : 'RightMagic - Tech-Driven Future, Crafted with Magic',
-      template: `%s | RightMagic`
+      default: isZh 
+        ? `${companyInfo.brandNameZh} - ${companyInfo.sloganZh}` 
+        : `${companyInfo.brandName} - ${companyInfo.slogan}`,
+      template: `%s | ${companyInfo.brandName}`
     },
     description: isZh
-      ? '您的数字化战略合作伙伴，提供零匠开发平台与Gamium AI演武场。专注信创软件服务、产品代理和自研产品销售。'
-      : 'Your Digital Strategy Partner. Powering enterprises with ZeroCraft and Gamium AI Sandbox. Specializing in IT innovation services, product distribution, and proprietary products.',
+      ? `${companyInfo.descriptionZh}专注信创软件服务、产品代理和自研产品销售。`
+      : `${companyInfo.description} Specializing in IT innovation services, product distribution, and proprietary products.`,
     keywords: isZh
-      ? ['RightMagic', '零匠平台', 'Gamium', '信创软件', '数字化转型', 'AI演武场']
-      : ['RightMagic', 'ZeroCraft', 'Gamium', 'AI Sandbox', 'Digital Transformation', 'IT Innovation'],
-    authors: [{ name: 'RightMagic Team' }],
-    creator: 'Shanghai Zhengqi Information Technology Co., Ltd.',
-    publisher: 'Shanghai Zhengqi Information Technology Co., Ltd.',
+      ? [companyInfo.brandNameZh, '零匠平台', 'Gamium', '信创软件', '数字化转型', 'AI演武场']
+      : [companyInfo.brandName, 'ZeroCraft', 'Gamium', 'AI Sandbox', 'Digital Transformation', 'IT Innovation'],
+    authors: [{ name: `${companyInfo.brandName} Team` }],
+    creator: companyInfo.companyName,
+    publisher: companyInfo.companyName,
     formatDetection: {
       email: false,
       address: false,
@@ -45,18 +52,22 @@ export async function generateMetadata({
       type: 'website',
       locale: locale === 'zh' ? 'zh_CN' : 'en_US',
       url: process.env.NEXT_PUBLIC_SITE_URL || 'https://rightmagicwebsite.vercel.app',
-      siteName: 'RightMagic',
-      title: isZh ? 'RightMagic - 科技驱动未来，匠心铸就奇迹' : 'RightMagic - Tech-Driven Future, Crafted with Magic',
+      siteName: companyInfo.brandName,
+      title: isZh 
+        ? `${companyInfo.brandNameZh} - ${companyInfo.sloganZh}` 
+        : `${companyInfo.brandName} - ${companyInfo.slogan}`,
       description: isZh
-        ? '您的数字化战略合作伙伴，提供零匠开发平台与Gamium AI演武场'
-        : 'Your Digital Strategy Partner. Powering enterprises with ZeroCraft and Gamium AI Sandbox.',
+        ? companyInfo.descriptionZh
+        : companyInfo.description,
     },
     twitter: {
       card: 'summary_large_image',
-      title: isZh ? 'RightMagic - 科技驱动未来' : 'RightMagic - Tech-Driven Future',
+      title: isZh 
+        ? `${companyInfo.brandNameZh} - ${companyInfo.sloganZh.split('，')[0]}` 
+        : `${companyInfo.brandName} - ${companyInfo.slogan.split(',')[0]}`,
       description: isZh
-        ? '您的数字化战略合作伙伴'
-        : 'Your Digital Strategy Partner',
+        ? companyInfo.descriptionZh.split('。')[0]
+        : companyInfo.description.split('.')[0],
     },
     robots: {
       index: true,

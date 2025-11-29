@@ -8,11 +8,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import clsx from 'clsx';
+import { getBrandName } from '@/config/company';
 
 export default function Navbar() {
     const t = useTranslations('Navigation');
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const brandName = getBrandName('en'); // 品牌名称使用英文
 
     useEffect(() => {
         const handleScroll = () => {
@@ -59,7 +61,22 @@ export default function Navbar() {
                     className="text-2xl font-bold tracking-tighter text-white hover:opacity-80 transition-opacity"
                     onClick={() => setMobileMenuOpen(false)}
                 >
-                    Right<span className="text-primary">Magic</span>
+                    {brandName.includes('RightMagic') ? (
+                        <>
+                            Right<span className="text-primary">Magic</span>
+                        </>
+                    ) : brandName.includes('RightNova') ? (
+                        <>
+                            Right<span className="text-primary">Nova</span> <span className="text-primary">Labs</span>
+                        </>
+                    ) : (
+                        brandName.split(' ').map((word, idx) => (
+                            <span key={idx}>
+                                {idx === 0 ? word : <span className="text-primary">{word}</span>}
+                                {idx < brandName.split(' ').length - 1 && ' '}
+                            </span>
+                        ))
+                    )}
                 </Link>
 
                 {/* 桌面端导航 */}

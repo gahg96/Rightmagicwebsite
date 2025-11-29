@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
+import { getBrandName } from '@/config/company';
 import { Lightbulb, Blocks, Code, Settings, CheckCircle2 } from 'lucide-react';
 
 export default function GDFSection() {
@@ -43,7 +44,7 @@ export default function GDFSection() {
                             className="absolute inset-0 m-auto w-48 h-48 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 border-2 border-primary flex items-center justify-center"
                         >
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-white mb-1">RightMagic</div>
+                                <div className="text-2xl font-bold text-white mb-1">{getBrandName('en')}</div>
                                 <div className="text-sm text-primary">GDF</div>
                             </div>
                         </motion.div>
