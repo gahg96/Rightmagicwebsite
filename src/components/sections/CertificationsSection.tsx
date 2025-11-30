@@ -2,9 +2,9 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Award, Shield, CheckCircle2, Star } from 'lucide-react';
+import { Award, Shield, CheckCircle2, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface Certificate {
   id: string;
@@ -212,8 +212,142 @@ export default function CertificationsSection() {
             </motion.div>
           </div>
         )}
+
+        {/* Carousel Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-24"
+        >
+          <h2 className="text-3xl font-bold text-center mb-12 text-white">
+            {t('carouselTitle')}
+          </h2>
+          <Carousel certificates={certificates} onImageClick={setSelectedImage} />
+        </motion.div>
       </div>
     </section>
+  );
+}
+
+// 走马灯组件
+function Carousel({ 
+  certificates, 
+  onImageClick 
+}: { 
+  certificates: Certificate[]; 
+  onImageClick: (image: string) => void;
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 自动播放
+  useEffect(() => {
+    if (isAutoPlaying) {
+      intervalRef.current = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % certificates.length);
+      }, 3000); // 每3秒切换一次
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isAutoPlaying, certificates.length]);
+
+  const goToPrevious = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
+  };
+
+  const goToNext = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev + 1) % certificates.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setIsAutoPlaying(false);
+    setCurrentIndex(index);
+  };
+
+  return (
+    <div className="relative">
+      {/* 走马灯容器 */}
+      <div className="relative h-80 overflow-hidden rounded-2xl bg-black/20 border border-white/10">
+        <div
+          className="flex transition-transform duration-500 ease-in-out h-full"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {certificates.map((cert) => (
+            <div
+              key={cert.id}
+              className="min-w-full h-full flex items-center justify-center p-8 cursor-pointer"
+              onClick={() => onImageClick(cert.image)}
+            >
+              <div className="relative w-full h-full max-w-2xl">
+                <Image
+                  src={cert.image}
+                  alt={cert.nameZh}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  unoptimized
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 左右切换按钮 */}
+        <button
+          onClick={goToPrevious}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all backdrop-blur-sm z-10"
+          aria-label="Previous"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={goToNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-all backdrop-blur-sm z-10"
+          aria-label="Next"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      </div>
+
+      {/* 指示器 */}
+      <div className="flex justify-center gap-2 mt-6">
+        {certificates.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`h-2 rounded-full transition-all ${
+              index === currentIndex
+                ? 'w-8 bg-primary'
+                : 'w-2 bg-white/30 hover:bg-white/50'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* 证书信息 */}
+      <motion.div
+        key={currentIndex}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mt-6 text-center"
+      >
+        <h3 className="text-xl font-bold text-white mb-2">
+          {certificates[currentIndex].nameZh}
+        </h3>
+        <p className="text-gray-400">
+          {certificates[currentIndex].name}
+        </p>
+      </motion.div>
+    </div>
   );
 }
 
