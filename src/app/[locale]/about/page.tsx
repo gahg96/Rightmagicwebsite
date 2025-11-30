@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Award, Target, Heart, TrendingUp } from 'lucide-react';
+import { Target, Heart, TrendingUp } from 'lucide-react';
 import { getCompanyInfo, getBrandName } from '@/config/company';
 
 export default function AboutPage() {
@@ -117,27 +117,64 @@ export default function AboutPage() {
                     </div>
                 </div>
 
-                {/* Certifications */}
-                <div>
+                {/* Contact Information */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mt-20"
+                >
                     <h2 className="text-3xl font-bold text-center mb-12 text-white">
-                        {t('certifications')}
+                        {t('contact')}
                     </h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {['cert1', 'cert2', 'cert3', 'cert4'].map((cert, index) => (
-                            <motion.div
-                                key={cert}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                                className="glass-panel p-6 rounded-xl text-center hover:scale-105 transition-transform"
-                            >
-                                <Award className="w-10 h-10 text-accent mx-auto mb-3" />
-                                <p className="text-sm font-medium text-gray-300">{t(cert)}</p>
-                            </motion.div>
-                        ))}
+                    <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="glass-panel p-8 rounded-2xl"
+                        >
+                            <div className="flex items-start gap-4">
+                                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary flex-shrink-0">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-white mb-2">{t('address')}</h3>
+                                    <p className="text-gray-300 leading-relaxed">
+                                        {t('addressValue')}
+                                    </p>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="glass-panel p-8 rounded-2xl"
+                        >
+                            <div className="flex items-start gap-4">
+                                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent flex-shrink-0">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-white mb-2">{t('email')}</h3>
+                                    <a 
+                                        href="mailto:zq.corp@rightmagic.cn" 
+                                        className="text-primary hover:text-accent transition-colors break-all"
+                                    >
+                                        zq.corp@rightmagic.cn
+                                    </a>
+                                </div>
+                            </div>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </div>
     );

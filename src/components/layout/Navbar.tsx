@@ -125,25 +125,25 @@ export default function Navbar() {
                         />
                         {/* 菜单内容 */}
                         <motion.nav
-                            className="fixed top-20 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-white/10 z-40 md:hidden"
+                            className="fixed top-20 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-white/10 z-40 md:hidden max-h-[calc(100vh-5rem)] overflow-y-auto"
                             initial={{ y: -20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
                             transition={{ duration: 0.2 }}
                         >
                             <div className="container mx-auto px-6 py-6">
-                                <div className="flex flex-col gap-4">
+                                <div className="flex flex-col gap-2">
                                     {navLinks.map((link) => (
                                         <Link
                                             key={link.key}
                                             href={link.href}
-                                            className="text-base font-medium text-gray-300 hover:text-primary transition-colors py-2 border-b border-white/5 last:border-0"
+                                            className="text-base font-medium text-gray-300 hover:text-primary transition-colors py-3 px-2 border-b border-white/5 last:border-0 whitespace-nowrap"
                                             onClick={() => setMobileMenuOpen(false)}
                                         >
                                             {t(link.key)}
                                         </Link>
                                     ))}
-                                    <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-2">
+                                    <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-2 gap-4">
                                         <ThemeSwitcher />
                                         <LanguageSwitcher />
                                     </div>

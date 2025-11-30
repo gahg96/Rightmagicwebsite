@@ -184,11 +184,10 @@
         "2023Desc": "Obtained Specialized and Innovative Enterprise certification, passed ISO20000/27001 dual certification",
         "2024": "Innovation Leadership",
         "2024Desc": "Built autonomous and controllable product matrix, combined proprietary products with solutions, significantly enhanced technological innovation capabilities",
-        "certifications": "Certifications",
-        "cert1": "High-tech Enterprise",
-        "cert2": "Specialized & Innovative",
-        "cert3": "ISO20000/27001",
-        "cert4": "CMMI3 Certified"
+        "contact": "Contact",
+        "address": "Address",
+        "addressValue": "Room 2015, 20F, Kunyang International Business Plaza, No. 798 Zhaojiabang Road, Xuhui District, Shanghai",
+        "email": "Email"
     },
     "Cases": {
         "title": "Case Studies",
