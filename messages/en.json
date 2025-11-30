@@ -340,6 +340,25 @@
         "retry": "Retry",
         "goHome": "Go Home"
     },
+    "ClientWall": {
+        "title": "Major Clients",
+        "subtitle": "Serving numerous renowned enterprises across finance, technology, education, and more",
+        "all": "All",
+        "categories": {
+            "bank": "Banks",
+            "securities": "Securities",
+            "futures": "Futures",
+            "fund": "Funds",
+            "insurance": "Insurance",
+            "other": "Others"
+        },
+        "stats": {
+            "total": "Total Clients",
+            "banks": "Bank Clients",
+            "securities": "Securities Clients",
+            "others": "Other Clients"
+        }
+    },
     "Certifications": {
         "title": "Certifications",
         "subtitle": "We hold multiple authoritative certifications, demonstrating professional strength and industry recognition",

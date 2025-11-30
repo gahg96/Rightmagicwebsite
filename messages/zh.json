@@ -340,6 +340,25 @@
         "retry": "重试",
         "goHome": "返回首页"
     },
+    "ClientWall": {
+        "title": "主要客户",
+        "subtitle": "服务众多知名企业，涵盖金融、科技、教育等多个领域",
+        "all": "全部",
+        "categories": {
+            "bank": "银行",
+            "securities": "证券",
+            "futures": "期货",
+            "fund": "基金",
+            "insurance": "保险",
+            "other": "其他"
+        },
+        "stats": {
+            "total": "合作客户",
+            "banks": "银行客户",
+            "securities": "证券客户",
+            "others": "其他客户"
+        }
+    },
     "Certifications": {
         "title": "资质证书",
         "subtitle": "我们拥有多项权威认证，彰显专业实力与行业认可",
