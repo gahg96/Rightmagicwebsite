@@ -5,6 +5,7 @@
         "gamium": "Gamium",
         "partners": "Partners",
         "cases": "Case Studies",
+        "certifications": "Certifications",
         "about": "About Us",
         "contact": "Contact"
     },
@@ -338,5 +339,16 @@
         "description": "Sorry, an error occurred while loading the page. Please try again later.",
         "retry": "Retry",
         "goHome": "Go Home"
+    },
+    "Certifications": {
+        "title": "Certifications",
+        "subtitle": "We hold multiple authoritative certifications, demonstrating professional strength and industry recognition",
+        "all": "All",
+        "categories": {
+            "enterprise": "Enterprise",
+            "partnership": "Partnership",
+            "quality": "Quality",
+            "technology": "Technology"
+        }
     }
 }

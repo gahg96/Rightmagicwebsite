@@ -5,6 +5,7 @@
         "gamium": "Gamium演武场",
         "partners": "生态合作",
         "cases": "典型案例",
+        "certifications": "资质证书",
         "about": "关于我们",
         "contact": "联系我们"
     },
@@ -338,5 +339,16 @@
         "description": "抱歉，页面加载时出现了错误。请稍后重试。",
         "retry": "重试",
         "goHome": "返回首页"
+    },
+    "Certifications": {
+        "title": "资质证书",
+        "subtitle": "我们拥有多项权威认证，彰显专业实力与行业认可",
+        "all": "全部",
+        "categories": {
+            "enterprise": "企业资质",
+            "partnership": "合作伙伴",
+            "quality": "质量认证",
+            "technology": "技术认证"
+        }
     }
 }

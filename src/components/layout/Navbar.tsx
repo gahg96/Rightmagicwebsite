@@ -42,6 +42,7 @@ export default function Navbar() {
         { key: 'gamium', href: '/gamium' },
         { key: 'partners', href: '/partners' },
         { key: 'cases', href: '/cases' },
+        { key: 'certifications', href: '/certifications' },
         { key: 'about', href: '/about' },
     ];
 
