@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Shield, Swords, Eye, Target, Users, TrendingUp } from 'lucide-react';
+import { Shield, Swords, Target, Users, TrendingUp, BarChart3, Database, Settings } from 'lucide-react';
 
 export default function GamiumPage() {
     const t = useTranslations('Gamium');
@@ -38,32 +38,85 @@ export default function GamiumPage() {
                     </motion.div>
 
                     {/* Features */}
-                    <div className="grid md:grid-cols-3 gap-8 mb-20">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
                         <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             whileHover={{ y: -5 }}
-                            className="p-8 rounded-2xl bg-gradient-to-br from-red-500/10 to-transparent border border-red-500/20"
+                            viewport={{ once: true }}
+                            className="p-6 rounded-2xl bg-gradient-to-br from-red-500/10 to-transparent border border-red-500/20"
                         >
                             <Swords className="w-10 h-10 text-red-400 mb-4" />
-                            <h3 className="text-xl font-bold mb-3 text-white">{t('feature1')}</h3>
+                            <h3 className="text-lg font-bold mb-3 text-white">{t('feature1')}</h3>
                             <p className="text-gray-400 text-sm leading-relaxed">{t('feature1Desc')}</p>
                         </motion.div>
 
                         <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             whileHover={{ y: -5 }}
-                            className="p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20"
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="p-6 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20"
                         >
                             <Shield className="w-10 h-10 text-primary mb-4" />
-                            <h3 className="text-xl font-bold mb-3 text-white">{t('feature2')}</h3>
+                            <h3 className="text-lg font-bold mb-3 text-white">{t('feature2')}</h3>
                             <p className="text-gray-400 text-sm leading-relaxed">{t('feature2Desc')}</p>
                         </motion.div>
 
                         <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             whileHover={{ y: -5 }}
-                            className="p-8 rounded-2xl bg-gradient-to-br from-secondary/10 to-transparent border border-secondary/20"
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="p-6 rounded-2xl bg-gradient-to-br from-secondary/10 to-transparent border border-secondary/20"
                         >
-                            <Eye className="w-10 h-10 text-secondary mb-4" />
-                            <h3 className="text-xl font-bold mb-3 text-white">{t('feature3')}</h3>
+                            <Database className="w-10 h-10 text-secondary mb-4" />
+                            <h3 className="text-lg font-bold mb-3 text-white">{t('feature3')}</h3>
                             <p className="text-gray-400 text-sm leading-relaxed">{t('feature3Desc')}</p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            whileHover={{ y: -5 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="p-6 rounded-2xl bg-gradient-to-br from-accent/10 to-transparent border border-accent/20"
+                        >
+                            <BarChart3 className="w-10 h-10 text-accent mb-4" />
+                            <h3 className="text-lg font-bold mb-3 text-white">{t('feature4')}</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">{t('feature4Desc')}</p>
+                        </motion.div>
+                    </div>
+
+                    {/* Platform Positioning & Target Audience */}
+                    <div className="grid md:grid-cols-2 gap-8 mb-20">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="glass-panel p-8 rounded-2xl border-primary/20"
+                        >
+                            <div className="flex items-center gap-3 mb-4">
+                                <Settings className="w-8 h-8 text-primary" />
+                                <h3 className="text-xl font-bold text-white">{t('平台定位')}</h3>
+                            </div>
+                            <p className="text-gray-300 leading-relaxed">{t('定位Desc')}</p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="glass-panel p-8 rounded-2xl border-accent/20"
+                        >
+                            <div className="flex items-center gap-3 mb-4">
+                                <Users className="w-8 h-8 text-accent" />
+                                <h3 className="text-xl font-bold text-white">{t('服务对象')}</h3>
+                            </div>
+                            <p className="text-gray-300 leading-relaxed">{t('服务对象Desc')}</p>
                         </motion.div>
                     </div>
 
@@ -72,31 +125,46 @@ export default function GamiumPage() {
                         <h2 className="text-3xl font-bold text-center mb-12 text-white">
                             {t('应用场景')}
                         </h2>
-                        <div className="grid md:grid-cols-2 gap-8">
+                        <div className="grid md:grid-cols-3 gap-6">
                             <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="glass-panel p-8 rounded-2xl"
+                                className="glass-panel p-6 rounded-2xl"
                             >
                                 <div className="flex items-center gap-3 mb-4">
-                                    <Target className="w-8 h-8 text-accent" />
-                                    <h3 className="text-xl font-bold text-white">{t('场景1')}</h3>
+                                    <Target className="w-7 h-7 text-accent" />
+                                    <h3 className="text-lg font-bold text-white">{t('场景1')}</h3>
                                 </div>
-                                <p className="text-gray-300 leading-relaxed">{t('场景1Desc')}</p>
+                                <p className="text-gray-300 text-sm leading-relaxed">{t('场景1Desc')}</p>
                             </motion.div>
 
                             <motion.div
-                                initial={{ opacity: 0, x: 20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="glass-panel p-8 rounded-2xl"
+                                transition={{ delay: 0.1 }}
+                                className="glass-panel p-6 rounded-2xl"
                             >
                                 <div className="flex items-center gap-3 mb-4">
-                                    <Users className="w-8 h-8 text-accent" />
-                                    <h3 className="text-xl font-bold text-white">{t('场景2')}</h3>
+                                    <Shield className="w-7 h-7 text-accent" />
+                                    <h3 className="text-lg font-bold text-white">{t('场景2')}</h3>
                                 </div>
-                                <p className="text-gray-300 leading-relaxed">{t('场景2Desc')}</p>
+                                <p className="text-gray-300 text-sm leading-relaxed">{t('场景2Desc')}</p>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.2 }}
+                                className="glass-panel p-6 rounded-2xl"
+                            >
+                                <div className="flex items-center gap-3 mb-4">
+                                    <TrendingUp className="w-7 h-7 text-accent" />
+                                    <h3 className="text-lg font-bold text-white">{t('场景3')}</h3>
+                                </div>
+                                <p className="text-gray-300 text-sm leading-relaxed">{t('场景3Desc')}</p>
                             </motion.div>
                         </div>
                     </div>
