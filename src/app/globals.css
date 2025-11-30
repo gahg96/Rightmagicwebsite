@@ -45,13 +45,22 @@ body.light-mode .glass-panel {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-body.light-mode .text-gray-300,
-body.light-mode .text-gray-400 {
-  color: #4b5563;
+/* 浅色模式下的文字颜色调整 - 确保足够的对比度 */
+body.light-mode .text-white {
+  color: var(--foreground) !important;
 }
 
-body.light-mode .text-white {
-  color: var(--foreground);
+body.light-mode .text-gray-200,
+body.light-mode .text-gray-300 {
+  color: #1f2937 !important; /* 深灰色，确保在浅色背景上可见 */
+}
+
+body.light-mode .text-gray-400 {
+  color: #4b5563 !important; /* 中等灰色 */
+}
+
+body.light-mode .text-gray-500 {
+  color: #6b7280 !important; /* 稍浅的灰色，但仍可见 */
 }
 
 body.light-mode .border-white\/10,
@@ -62,6 +71,40 @@ body.light-mode .border-white\/5 {
 body.light-mode .bg-white\/5,
 body.light-mode .bg-white\/10 {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 浅色模式下的特殊元素 */
+body.light-mode .glass-panel .text-gray-200,
+body.light-mode .glass-panel .text-gray-300 {
+  color: #111827 !important; /* 在玻璃面板上使用更深的颜色 */
+}
+
+body.light-mode .glass-panel .text-gray-400 {
+  color: #374151 !important;
+}
+
+/* 浅色模式下的导航栏文字 */
+body.light-mode nav .text-gray-300 {
+  color: #374151 !important;
+}
+
+/* 浅色模式下的主题切换器文字 */
+body.light-mode .text-gray-200 {
+  color: #1f2937 !important;
+}
+
+/* 浅色模式下的卡片内文字 */
+body.light-mode [class*="glass-panel"] .text-gray-300,
+body.light-mode [class*="glass-panel"] .text-gray-200 {
+  color: #111827 !important;
+}
+
+/* 浅色模式下的渐变背景文字 */
+body.light-mode .text-gradient {
+  background: linear-gradient(to right, var(--foreground), var(--color-primary)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
 }
 
 @utility glass-panel {
