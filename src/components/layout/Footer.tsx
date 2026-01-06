@@ -5,6 +5,7 @@ import { getBrandName, getCompanyName } from '@/config/company';
 
 export default function Footer() {
     const t = useTranslations('Navigation');
+    const tFooter = useTranslations('Footer');
     const brandName = getBrandName('en');
     const companyName = getCompanyName('en');
 
@@ -41,6 +42,20 @@ export default function Footer() {
                         <a href="#" className="text-gray-400 hover:text-primary transition-colors text-sm">Terms of Service</a>
                         <a href="#" className="text-gray-400 hover:text-primary transition-colors text-sm">{t('contact')}</a>
                     </div>
+                </div>
+                
+                {/* 备案信息 */}
+                <div className="mt-8 pt-8 border-t border-white/5 text-center">
+                    <a 
+                        href="https://beian.miit.gov.cn/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-primary transition-colors text-sm"
+                    >
+                        {tFooter('icp')}
+                    </a>
+                    <span className="text-gray-500 text-sm mx-2">|</span>
+                    <span className="text-gray-400 text-sm">{tFooter('domain')}</span>
                 </div>
             </div>
         </footer>

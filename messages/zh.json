@@ -369,5 +369,9 @@
             "quality": "质量认证",
             "technology": "技术认证"
         }
+    },
+    "Footer": {
+        "icp": "沪ICP备 2021032500 号-1",
+        "domain": "rightmagic.cn"
     }
 }
