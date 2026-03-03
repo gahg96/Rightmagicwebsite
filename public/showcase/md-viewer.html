@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Showcase Markdown Viewer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f6f3ed;
+      --paper: #fffefb;
+      --line: #dfd8cc;
+      --text: #152238;
+      --muted: #5c6677;
+      --brand: #0f4c81;
+      --accent: #c84b31;
+      --code-bg: #101826;
+      --code-text: #e5edf7;
+      --radius: 18px;
+      --shadow: 0 18px 42px rgba(13, 22, 35, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Noto Sans SC", sans-serif;
+      background:
+        radial-gradient(circle at 12% 0, #fff 0, transparent 38%),
+        radial-gradient(circle at 88% 0, #e8f3fb 0, transparent 33%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.72;
+    }
+
+    .topbar {
+      max-width: 1100px;
+      margin: 24px auto 14px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 12px;
+      background: #fff;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn:hover { border-color: #b7b0a4; }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+      padding: 7px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--line);
+    }
+
+    .article-wrap {
+      max-width: 1100px;
+      margin: 0 auto 56px;
+      padding: 0 16px;
+    }
+
+    .article {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 4vw, 38px);
+    }
+
+    .article h1,
+    .article h2,
+    .article h3,
+    .article h4 {
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      line-height: 1.22;
+      margin: 20px 0 10px;
+      color: #0f2f52;
+    }
+
+    .article h1 { font-size: clamp(28px, 5vw, 46px); margin-top: 8px; }
+    .article h2 { font-size: clamp(24px, 4vw, 34px); margin-top: 26px; }
+    .article h3 { font-size: clamp(20px, 3vw, 28px); margin-top: 20px; }
+    .article h4 { font-size: clamp(17px, 2.4vw, 22px); margin-top: 18px; }
+
+    .article p {
+      margin: 10px 0;
+      color: #1f2937;
+      font-size: 17px;
+    }
+
+    .article strong { color: #0a233f; }
+
+    .article ul,
+    .article ol {
+      margin: 10px 0 12px 20px;
+      color: #1f2937;
+    }
+
+    .article li { margin: 8px 0; }
+
+    .article hr {
+      border: 0;
+      border-top: 1px dashed #ccc2b2;
+      margin: 24px 0;
+    }
+
+    .article a {
+      color: var(--brand);
+      word-break: break-all;
+    }
+
+    .article img {
+      max-width: 100%;
+      display: block;
+      margin: 18px auto;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      box-shadow: 0 14px 30px rgba(20, 31, 49, 0.12);
+    }
+
+    .article code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.92em;
+      background: #f1f4f8;
+      border: 1px solid #dce2ea;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .article pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 14px;
+      border-radius: 12px;
+      overflow: auto;
+      margin: 14px 0;
+      border: 1px solid #2a3750;
+    }
+
+    .article pre code {
+      background: transparent;
+      border: 0;
+      color: inherit;
+      padding: 0;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 42px 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <a class="btn" href="./index.html">← 返回 Showcase 首页</a>
+    <button class="btn" onclick="location.reload()">刷新</button>
+    <div class="meta" id="meta">加载中...</div>
+  </div>
+
+  <div class="article-wrap">
+    <article class="article" id="article">
+      <div class="empty">正在加载 Markdown...</div>
+    </article>
+  </div>
+
+  <script>
+    function escapeHtml(s) {
+      return s
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function inlineMd(s) {
+      let t = escapeHtml(s);
+      t = t.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img alt="$1" src="$2" />');
+      t = t.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      t = t.replace(/`([^`]+)`/g, '<code>$1</code>');
+      return t;
+    }
+
+    function parseMarkdown(md) {
+      const lines = md.replace(/\r\n?/g, '\n').split('\n');
+      const out = [];
+      let inCode = false;
+      let listType = null;
+      let para = [];
+
+      function flushPara() {
+        if (!para.length) return;
+        out.push(`<p>${inlineMd(para.join(' '))}</p>`);
+        para = [];
+      }
+
+      function closeList() {
+        if (!listType) return;
+        out.push(listType === 'ul' ? '</ul>' : '</ol>');
+        listType = null;
+      }
+
+      for (const raw of lines) {
+        const line = raw.trimEnd();
+
+        if (line.startsWith('```')) {
+          flushPara();
+          closeList();
+          if (!inCode) {
+            out.push('<pre><code>');
+            inCode = true;
+          } else {
+            out.push('</code></pre>');
+            inCode = false;
+          }
+          continue;
+        }
+
+        if (inCode) {
+          out.push(escapeHtml(raw) + '\n');
+          continue;
+        }
+
+        if (!line.trim()) {
+          flushPara();
+          closeList();
+          continue;
+        }
+
+        if (line === '---' || line === '***') {
+          flushPara();
+          closeList();
+          out.push('<hr />');
+          continue;
+        }
+
+        const h = line.match(/^(#{1,4})\s+(.*)$/);
+        if (h) {
+          flushPara();
+          closeList();
+          const level = h[1].length;
+          out.push(`<h${level}>${inlineMd(h[2])}</h${level}>`);
+          continue;
+        }
+
+        const ul = line.match(/^[-*]\s+(.*)$/);
+        if (ul) {
+          flushPara();
+          if (listType !== 'ul') {
+            closeList();
+            out.push('<ul>');
+            listType = 'ul';
+          }
+          out.push(`<li>${inlineMd(ul[1])}</li>`);
+          continue;
+        }
+
+        const ol = line.match(/^\d+\.\s+(.*)$/);
+        if (ol) {
+          flushPara();
+          if (listType !== 'ol') {
+            closeList();
+            out.push('<ol>');
+            listType = 'ol';
+          }
+          out.push(`<li>${inlineMd(ol[1])}</li>`);
+          continue;
+        }
+
+        if (listType) {
+          out.push(`<li>${inlineMd(line.trim())}</li>`);
+          continue;
+        }
+
+        para.push(line.trim());
+      }
+
+      flushPara();
+      closeList();
+      return out.join('\n') || '<div class="empty">文档为空</div>';
+    }
+
+    async function loadDoc() {
+      const qs = new URLSearchParams(location.search);
+      const file = qs.get('file');
+      const article = document.getElementById('article');
+      const meta = document.getElementById('meta');
+
+      if (!file) {
+        article.innerHTML = '<div class="empty">缺少参数: ?file=...</div>';
+        meta.textContent = '未指定文件';
+        return;
+      }
+
+      try {
+        meta.textContent = `文档: ${file}`;
+        const res = await fetch(file, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const txt = await res.text();
+        article.innerHTML = parseMarkdown(txt);
+      } catch (err) {
+        article.innerHTML = `<div class="empty">读取失败: ${escapeHtml(String(err))}</div>`;
+      }
+    }
+
+    loadDoc();
+  </script>
+</body>
+
+</html>

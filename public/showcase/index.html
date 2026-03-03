@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RightMagic Showcase Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --paper: #fffdf8;
+      --ink: #111827;
+      --ink-soft: #4b5563;
+      --line: #ddd6ca;
+      --brand: #0d3b66;
+      --brand-soft: #e7f0f8;
+      --accent: #c84b31;
+      --accent-soft: #f8e5df;
+      --good: #127a52;
+      --good-soft: #e4f5ee;
+      --radius: 20px;
+      --shadow: 0 16px 36px rgba(17, 24, 39, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Noto Sans SC", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 10%, #ffffff 0%, transparent 38%),
+        radial-gradient(circle at 88% 0%, #eef7f8 0%, transparent 34%),
+        var(--bg);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .hero {
+      padding: 72px 20px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      width: 380px;
+      height: 380px;
+      position: absolute;
+      right: -120px;
+      top: -120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d8e8f7, #f9ede5);
+      filter: blur(1px);
+      z-index: -1;
+    }
+
+    .hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--ink-soft);
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 7vw, 70px);
+      line-height: 1.08;
+      font-weight: 900;
+      max-width: 980px;
+      margin: 0 auto;
+      color: var(--brand);
+    }
+
+    .hero p {
+      max-width: 900px;
+      margin: 18px auto 0;
+      color: var(--ink-soft);
+      font-size: clamp(15px, 2.2vw, 20px);
+    }
+
+    .meta-strip {
+      max-width: 1240px;
+      margin: 20px auto 4px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .meta-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      text-align: center;
+    }
+
+    .meta-card .k {
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .meta-card .v {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-top: 5px;
+      color: var(--brand);
+    }
+
+    .grid {
+      max-width: 1240px;
+      margin: 26px auto 90px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: rise 0.7s ease forwards;
+    }
+
+    .card:nth-child(2) { animation-delay: 0.05s; }
+    .card:nth-child(3) { animation-delay: 0.1s; }
+    .card:nth-child(4) { animation-delay: 0.15s; }
+    .card:nth-child(5) { animation-delay: 0.2s; }
+    .card:nth-child(6) { animation-delay: 0.25s; }
+
+    .card .thumb {
+      height: 236px;
+      width: 100%;
+      object-fit: cover;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 4px 10px;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+
+    .tag.topic {
+      background: var(--brand-soft);
+      color: var(--brand);
+      border-color: #bfd4ea;
+    }
+
+    .tag.metric {
+      background: var(--good-soft);
+      color: var(--good);
+      border-color: #bde5d4;
+    }
+
+    .card h3 {
+      font-size: 29px;
+      line-height: 1.2;
+      color: #0f2f52;
+    }
+
+    .summary {
+      color: var(--ink-soft);
+      font-size: 15px;
+      min-height: 78px;
+    }
+
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: #b7b0a3;
+    }
+
+    .btn.primary {
+      background: var(--brand);
+      color: #fff;
+      border-color: var(--brand);
+    }
+
+    .btn.primary:hover {
+      background: #0f4d86;
+      border-color: #0f4d86;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s ease;
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 30px 18px;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      max-width: 1160px;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.24);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .overlay.active .modal {
+      transform: translateY(0);
+    }
+
+    .modal-top {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 20px;
+      padding: 24px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(160deg, #fff, #f8f5ef);
+    }
+
+    .modal-top img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+    }
+
+    .modal-head h2 {
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.12;
+      color: #0f2f52;
+      margin-top: 12px;
+    }
+
+    .modal-head p {
+      margin-top: 14px;
+      color: var(--ink-soft);
+      font-size: 16px;
+    }
+
+    .close {
+      position: sticky;
+      top: 16px;
+      margin-left: auto;
+      margin-right: 18px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1010;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-body {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .sec {
+      margin-bottom: 20px;
+    }
+
+    .sec h4 {
+      color: var(--accent);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+
+    .sec p {
+      color: #1f2937;
+      font-size: 16px;
+    }
+
+    .sec ul {
+      margin-left: 18px;
+      margin-top: 6px;
+      color: #1f2937;
+    }
+
+    .sec li {
+      margin: 7px 0;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .panel .k {
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .panel .v {
+      font-size: 16px;
+      font-weight: 700;
+      color: #172034;
+    }
+
+    .chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .chip {
+      font-size: 12px;
+      background: #f2f4f8;
+      border: 1px solid #d7deea;
+      color: #2f3d56;
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+
+    footer {
+      padding: 34px 20px 48px;
+      text-align: center;
+      color: #6b7280;
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .modal-top,
+      .modal-body {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-top img {
+        height: 240px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="eyebrow">🚀 RightMagic · 6 大核心 Showcase</div>
+    <h1>企业级 AI Showcase Portal</h1>
+    <p>从知识蒸馏、证券智能运维到金融数字孪生与交互产品，这里是 6 个可落地案例的完整展示入口。</p>
+  </section>
+
+  <section class="meta-strip">
+    <article class="meta-card">
+      <div class="k">Case Studies</div>
+      <div class="v">6</div>
+    </article>
+    <article class="meta-card">
+      <div class="k">Domains</div>
+      <div class="v">5</div>
+    </article>
+    <article class="meta-card">
+      <div class="k">Top Model Span</div>
+      <div class="v">397B→72B</div>
+    </article>
+    <article class="meta-card">
+      <div class="k">Deployment Bias</div>
+      <div class="v">Private-first</div>
+    </article>
+  </section>
+
+  <main class="grid" id="grid"></main>
+
+  <div class="overlay" id="overlay" onclick="onOverlayClick(event)">
+    <button class="close" onclick="closeModal()" aria-label="Close">×</button>
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <footer>
+    RightMagic Showcase Portal · 2026 · Built for 深度案例展示与业务沟通
+  </footer>
+
+  <script>
+    const projects = [
+      {
+        id: "distillation",
+        topic: "Model Distillation",
+        metric: "3,425 条黄金数据",
+        title: "跨代演进：397B → 72B 知识蒸馏",
+        summary: "利用 397B 教师模型进行结构化提纯，把超大模型的推理心智迁移到 72B 高吞吐模型，构建可复用的数据资产闭环。",
+        cover: "./content/md/knowledge_distillation.png",
+        md: "./content/md/Showcase_Knowledge_Distillation.md",
+        year: "2026",
+        client: "RightMagic 模型实验室",
+        stack: ["Qwen3.5-397B", "Qwen2.5-72B", "Metal SDPA", "LoRA", "Data Distillation"],
+        problem: "397B 具备强推理能力但吞吐与成本受限，72B 更易部署却在复杂行业语义上有逻辑断层。",
+        solution: "构建双阶段蒸馏流程：397B 负责逻辑重写与表达提纯，72B 使用高质量数据做 SFT；同时针对 M3 Ultra 优化 KV Cache 与 Attention 路径。",
+        highlights: [
+          "激活参数从超大规模压缩到可部署区间，保持逻辑完整性。",
+          "形成 3,425 条可复训、可审计、可扩展的高价值训练样本。",
+          "建立“蒸馏-训练-验证-复训”的稳定工程闭环。"
+        ],
+        impact: [
+          "在不牺牲部署效率的前提下提升复杂任务回答稳定性。",
+          "显著降低推理成本，为企业私有化上线提供现实路径。"
+        ]
+      },
+      {
+        id: "securities",
+        topic: "RAG + Ops",
+        metric: "检索提效约 60%",
+        title: "证券智能运维：企业知识大脑",
+        summary: "面向证券行业文档碎片化问题，打通 RAGFlow 与企业微信，实现移动端可追溯知识检索与告警联动。",
+        cover: "./content/md/securities_ai_brain.png",
+        md: "./content/md/Showcase_Securities_AI_Brain.md",
+        year: "2026",
+        client: "某头部证券机构 POC",
+        stack: ["RAGFlow", "Enterprise WeChat", "OCR", "Private Deployment", "Citation Trace"],
+        problem: "运维手册、合规文档、故障单分散在多系统且包含大量扫描件，人工检索慢且不稳定。",
+        solution: "构建深度解析与语义召回管线，支持复杂报表和截图信息读取；在企业微信接入智能助手，完成问答、播报、引用回溯一体化。",
+        highlights: [
+          "支持复杂 PDF / 扫描件 / 图文混排的结构化解析。",
+          "每条答案都保留来源引用，满足金融审计要求。",
+          "支持移动端现场排障与值班协作。"
+        ],
+        impact: [
+          "新手工程师也能快速获得可执行操作方案。",
+          "运维响应时间与文档检索成本显著下降。"
+        ]
+      },
+      {
+        id: "rightmagic",
+        topic: "Web Platform",
+        metric: "多国别路由与 SEO",
+        title: "RightMagic 全球数字化门户",
+        summary: "基于现代前端架构构建全球化品牌门户，覆盖多语种路由、主题系统、性能优化和生态入口整合。",
+        cover: "./content/md/rightmagic_website.png",
+        md: "./content/md/Showcase_RightMagic_Website.md",
+        year: "2025",
+        client: "RightMagic Global",
+        stack: ["Next.js", "Tailwind", "Framer Motion", "i18n", "JSON-LD SEO"],
+        problem: "跨地区访问体验不一致、品牌叙事割裂、SEO 能见度不足。",
+        solution: "采用服务器组件与边缘分发策略提升首屏感知；搭建可持久化主题系统与多语种路由，统一品牌表达。",
+        highlights: [
+          "多域名与区域化内容分发并行，提升访问体验一致性。",
+          "视觉系统可覆盖“严肃金融”到“创新科技”风格。",
+          "门户承载产品演示入口与线索转化路径。"
+        ],
+        impact: [
+          "强化品牌技术可信度，提升全球客户触达效率。",
+          "网站从展示页升级为可增长的业务入口。"
+        ]
+      },
+      {
+        id: "l2c",
+        topic: "Enterprise Workflow",
+        metric: "协同效率 +40%",
+        title: "Lead-to-Cash (L2C) 运营中枢",
+        summary: "将商机、投标、交付、收款串成可追踪链路，构建业务与财务联动的内部操作系统。",
+        cover: "./content/md/l2c_dashboard.png",
+        md: "./content/md/Showcase_L2C_System.md",
+        year: "2025",
+        client: "成长型科技企业",
+        stack: ["Workflow Engine", "Data Dashboard", "Risk Alerts", "Milestone Tracking"],
+        problem: "多系统割裂导致信息断层，管理层无法实时掌握商机质量和回款风险。",
+        solution: "搭建全流程链路模型，按合同节点自动触发关键动作；结合看板和预警规则实现运营与现金流联动。",
+        highlights: [
+          "销售漏斗、交付里程碑、回款状态统一建模。",
+          "支持赢单预测与坏账风险提前识别。",
+          "全流程留痕，便于复盘与审计。"
+        ],
+        impact: [
+          "缩短回款周期，提升经营透明度。",
+          "跨部门协同成本显著降低。"
+        ]
+      },
+      {
+        id: "finance",
+        topic: "Digital Twin + RL",
+        metric: "黑天鹅压力测试",
+        title: "Gamium-FinanceAI 智慧决策平台",
+        summary: "以数字孪生环境模拟银行经营全局，用自博弈策略搜索优化风控与收益平衡。",
+        cover: "./content/md/finance_ai_twin.png",
+        md: "./content/md/Showcase_Gamium_FinanceAI.md",
+        year: "2024",
+        client: "商业银行创新团队",
+        stack: ["LendingEnv", "AlphaZero-style", "Scenario Stress Test", "Model Arena"],
+        problem: "传统风控策略依赖经验，难以应对复杂经济周期和极端波动。",
+        solution: "构建可演化的金融孪生沙盘，模拟多行业客户与经济周期；通过自博弈寻找动态放贷与风险策略。",
+        highlights: [
+          "覆盖繁荣-衰退全周期与黑天鹅事件模拟。",
+          "集成多模型对抗评测，比较话术合规与逻辑质量。",
+          "实时看板呈现资本、不良率、期限违约趋势。"
+        ],
+        impact: [
+          "将“经验决策”转化为可验证的策略实验。",
+          "为银行级 AI 决策系统提供可落地原型。"
+        ]
+      },
+      {
+        id: "tank",
+        topic: "Interactive Simulation",
+        metric: "实时策略博弈",
+        title: "钢铁洪流：东线战场 (Iron Clash)",
+        summary: "Web 端坦克博弈实验，融合实时渲染、路径策略与教育场景，展示高交互系统工程能力。",
+        cover: "./content/md/tank_battle_game.png",
+        md: "./content/md/Showcase_Tank_Battle_Game.md",
+        year: "2024",
+        client: "Education & Demo Showcase",
+        stack: ["Canvas", "Physics Simulation", "Enemy AI", "State Machine"],
+        problem: "在浏览器里实现流畅战场模拟，同时保留策略深度与可教学价值。",
+        solution: "设计三类坦克分工与技能系统，结合弹道计算、视角切换和敌方行为策略，形成可玩且可扩展的实时框架。",
+        highlights: [
+          "支持全景与驾驶舱视角切换，提升沉浸感。",
+          "多单位协同、道具系统与场景反馈完整闭环。",
+          "将复杂逻辑拆解为可理解的教育型工程案例。"
+        ],
+        impact: [
+          "验证浏览器高交互项目的性能与架构可行性。",
+          "兼具技术演示价值与跨代协作教育价值。"
+        ]
+      }
+    ];
+
+    const grid = document.getElementById("grid");
+
+    function renderCards() {
+      projects.forEach((p) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <img class="thumb" src="${p.cover}" alt="${p.title}" loading="lazy" />
+          <div class="card-body">
+            <div class="tag-row">
+              <span class="tag topic">${p.topic}</span>
+              <span class="tag metric">${p.metric}</span>
+            </div>
+            <h3>${p.title}</h3>
+            <p class="summary">${p.summary}</p>
+            <div class="card-actions">
+              <button class="btn primary" onclick="openModal('${p.id}')">查看详情</button>
+              <a class="btn" href="./md-viewer.html?file=${encodeURIComponent(p.md)}" target="_blank" rel="noopener">打开 MD 文档</a>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openModal(id) {
+      const p = projects.find((x) => x.id === id);
+      if (!p) return;
+      const modal = document.getElementById("modal");
+      modal.innerHTML = `
+        <section class="modal-top">
+          <img src="${p.cover}" alt="${p.title}" />
+          <div class="modal-head">
+            <div class="tag-row">
+              <span class="tag topic">${p.topic}</span>
+              <span class="tag metric">${p.metric}</span>
+            </div>
+            <h2>${p.title}</h2>
+            <p>${p.summary}</p>
+            <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
+              <a class="btn primary" href="./md-viewer.html?file=${encodeURIComponent(p.md)}" target="_blank" rel="noopener">阅读全文 (MD)</a>
+            </div>
+          </div>
+        </section>
+        <section class="modal-body">
+          <div>
+            <div class="sec">
+              <h4>Project Background</h4>
+              <p>${p.problem}</p>
+            </div>
+            <div class="sec">
+              <h4>Solution Design</h4>
+              <p>${p.solution}</p>
+            </div>
+            <div class="sec">
+              <h4>Technical Highlights</h4>
+              <ul>${p.highlights.map((x) => `<li>${x}</li>`).join("")}</ul>
+            </div>
+            <div class="sec">
+              <h4>Business Impact</h4>
+              <ul>${p.impact.map((x) => `<li>${x}</li>`).join("")}</ul>
+            </div>
+          </div>
+          <aside>
+            <div class="panel">
+              <div class="k">Client / Team</div>
+              <div class="v">${p.client}</div>
+            </div>
+            <div class="panel">
+              <div class="k">Year</div>
+              <div class="v">${p.year}</div>
+            </div>
+            <div class="panel">
+              <div class="k">Tech Stack</div>
+              <div class="chips">${p.stack.map((x) => `<span class="chip">${x}</span>`).join("")}</div>
+            </div>
+            <div class="panel">
+              <div class="k">Reference</div>
+              <div class="v"><a href="./md-viewer.html?file=${encodeURIComponent(p.md)}" target="_blank" rel="noopener">${p.md.split('/').pop()}</a></div>
+            </div>
+          </aside>
+        </section>
+      `;
+
+      document.getElementById("overlay").classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      document.getElementById("overlay").classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+
+    function onOverlayClick(e) {
+      if (e.target.id === "overlay") {
+        closeModal();
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    renderCards();
+  </script>
+</body>
+
+</html>
