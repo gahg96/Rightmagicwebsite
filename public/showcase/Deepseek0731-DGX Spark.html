@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>DeepSeek-V4-Flash-0731 双 DGX Spark 集群部署完整复盘</title>
+<style>
+  @page {
+    size: A4;
+    margin: 15mm 12mm;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    line-height: 1.5;
+    background-color: #f8fafc;
+    margin: 0;
+    padding: 20px;
+    font-size: 10pt;
+  }
+
+  .header-card {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+    color: #ffffff;
+    padding: 24px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.25);
+  }
+
+  .header-card h1 {
+    font-size: 18pt;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .header-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 10px;
+    font-size: 8.5pt;
+    color: #cbd5e1;
+  }
+
+  .header-meta strong {
+    color: #38bdf8;
+  }
+
+  h2 {
+    font-size: 13pt;
+    color: #0f172a;
+    border-left: 5px solid #6366f1;
+    padding-left: 10px;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 11pt;
+    color: #334155;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    page-break-after: avoid;
+  }
+
+  h4 {
+    font-size: 10pt;
+    color: #475569;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    page-break-after: avoid;
+  }
+
+  p {
+    margin: 4px 0 8px 0;
+  }
+
+  .diagram-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px;
+    margin: 12px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .diagram-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #4f46e5;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 4px;
+  }
+
+  pre {
+    background-color: #0f172a;
+    color: #f1f5f9;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 8pt;
+    line-height: 1.4;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 8px 0;
+    border: 1px solid #1e293b;
+  }
+
+  code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 8.5pt;
+    background-color: #e0e7ff;
+    color: #3730a3;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    font-size: 8.5pt;
+  }
+
+  th {
+    background-color: #4f46e5;
+    color: #ffffff;
+    text-align: left;
+    padding: 6px 10px;
+    font-weight: 600;
+  }
+
+  td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+
+  .pitfall-table th {
+    background-color: #be123c;
+  }
+
+  .pitfall-table td:first-child {
+    font-weight: 600;
+    color: #e11d48;
+  }
+
+  ul, ol {
+    margin: 4px 0 8px 0;
+    padding-left: 18px;
+  }
+
+  li {
+    margin-bottom: 3px;
+  }
+
+  .checklist {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .checklist li {
+    padding: 5px 8px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    margin-bottom: 4px;
+    font-size: 9pt;
+  }
+
+  .checklist li::before {
+    content: "✓ ";
+    color: #10b981;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<div class="header-card">
+  <h1>DeepSeek-V4-Flash-0731 双 DGX Spark 集群部署完整复盘</h1>
+  <p style="color: #cbd5e1; margin-top: 4px; font-size: 9.5pt;">基于真实部署过程整理，包含所有踩坑记录与解决方案</p>
+  <div class="header-meta">
+    <div><strong>部署时间：</strong>2026年8月</div>
+    <div><strong>硬件：</strong>2× NVIDIA DGX Spark (GB10)</div>
+    <div><strong>网络：</strong>QSFP112 DAC 200GbE 直连</div>
+  </div>
+</div>
+
+<h2>一、项目架构概览</h2>
+
+<h3>1.1 硬件拓扑</h3>
+<div class="diagram-card">
+  <div class="diagram-title">⚡ 硬件拓扑与网络拓扑</div>
+  <pre><code>                          QSFP112 DAC 直连 (200GbE)
+                    ┌─────────────────────────────────┐
+                    │                                 │
+            ┌───────▼───────┐                 ┌───────▼───────┐
+            │  DGX Spark A  │◄═══════════════►│  DGX Spark B  │
+            │    (head)     │   RoCE:         │   (worker)    │
+            │   GB10 ×1     │   10.100.216.1  │   GB10 ×1     │
+            │   128GB       │   10.100.217.1  │   128GB       │
+            └───────┬───────┘                 └───────────────┘
+                    │
+                    │ 管理网 (Wi-Fi/有线, 同一 LAN)
+                    ▼
+            OpenAI 兼容 API: http://&lt;head_IP&gt;:8888/v1</code></pre>
+</div>
+
+<h3>1.2 物理接口与角色分工</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 30%;">组件</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>管理网口 (wlP9s9)</strong></td>
+      <td>Wi-Fi 或有线，用于 SSH、Docker 控制、日志查看，速度约 1Gbps</td>
+    </tr>
+    <tr>
+      <td><strong>高速网口 (enp1s0f* / enP2p1s0f*)</strong></td>
+      <td>QSFP112 端口，用于 NCCL/RDMA 通信，理论 200Gbps</td>
+    </tr>
+    <tr>
+      <td><strong>本地 NVMe SSD</strong></td>
+      <td>存储模型文件，每台机器独立保存完整副本（167GB），读取速度 2-3 GB/s</td>
+    </tr>
+    <tr>
+      <td><strong>GPU (GB10)</strong></td>
+      <td>每台一块，张量并行（TP=2）切分模型权重，各负责一半</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>1.3 软件栈</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">组件</th>
+      <th>版本/来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>推理引擎</strong></td>
+      <td>vLLM 0.25.2 (<code>ghcr.io/anemll/dspark-vllm-gx10:0.1.1</code>)</td>
+    </tr>
+    <tr>
+      <td><strong>模型</strong></td>
+      <td><code>deepseek-ai/DeepSeek-V4-Flash-0731</code> (166.9GB, 48分片)</td>
+    </tr>
+    <tr>
+      <td><strong>KV Cache</strong></td>
+      <td><code>nvfp4_ds_mla</code>，双机共享池 ~230万 token</td>
+    </tr>
+    <tr>
+      <td><strong>并行策略</strong></td>
+      <td>TP=2，DSpark MTP=5 投机解码</td>
+    </tr>
+    <tr>
+      <td><strong>通信库</strong></td>
+      <td>NCCL 2.30.7，使用 RoCEv2 (GID idx=3)</td>
+    </tr>
+    <tr>
+      <td><strong>容器编排</strong></td>
+      <td>Docker Compose，主机统一控制备机</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>二、系统架构与数据流深度解析</h2>
+
+<h3>2.1 物理架构与逻辑映射</h3>
+<div class="diagram-card">
+  <pre><code>        ┌─────────────────────────────────────────────────────────────────┐
+        │                        物理硬件层                              │
+        │  ┌─────────────┐                    ┌─────────────┐            │
+        │  │ 节点 A      │                    │ 节点 B      │            │
+        │  │ spark-1fbb  │                    │ spark-3470  │            │
+        │  │ (head)      │                    │ (worker)    │            │
+        │  │  CPU        │                    │  CPU        │            │
+        │  │  DRAM 128GB │                    │  DRAM 128GB │            │
+        │  │  GPU0 GB10  │                    │  GPU1 GB10  │            │
+        │  │  NVMe SSD   │                    │  NVMe SSD   │            │
+        │  │  3.67TB     │                    │  3.67TB     │            │
+        │  │  CX-7 Port1 │◄───200GbE RoCE───►│  CX-7 Port0 │            │
+        │  │  管理网口   │◄───管理网络───────►│  管理网口   │            │
+        │  └─────────────┘                    └─────────────┘            │
+        └─────────────────────────────────────────────────────────────────┘</code></pre>
+  <p><strong>说明：</strong></p>
+  <ul>
+    <li><strong>高速数据网</strong>：用于 NCCL 通信，理论 200Gbps</li>
+    <li><strong>管理网</strong>：用于 SSH、Docker 控制，实际为 Wi-Fi 或有线</li>
+    <li>每台机器的 NVMe SSD 都存放完整的模型副本（167GB）</li>
+  </ul>
+</div>
+
+<h3>2.2 模型加载与切分流程（TP=2）</h3>
+<div class="diagram-card">
+  <pre><code>启动阶段
+    │
+    ▼
+用户执行 start-deepseek-v4-flash-dspark.sh
+    │
+    ▼
+脚本读取 .env.dspark 配置
+    │
+    ▼
+通过 SSH 同步 compose 文件到备机
+    │
+    ├───────────────────────────────┐
+    ▼                               ▼
+节点 A 加载过程                   节点 B 加载过程
+    │                               │
+Docker 启动 vLLM 容器            SSH 触发备机 Docker 启动
+    │                               │
+vLLM 读取 DSPARK_MODEL 路径      vLLM 读取同一路径
+    │                               │
+从 NVMe SSD 读取模型文件         从本地 NVMe SSD 读取模型文件
+    │                               │
+TP=2 切分：GPU0 获取权重切片 0    TP=2 切分：GPU1 获取权重切片 1
+    │                               │
+加载到 GPU0 显存                 加载到 GPU1 显存
+(约 80GB 权重 + KV Cache 预留)  (约 80GB 权重 + KV Cache 预留)
+    │                               │
+    └───────────────┬───────────────┘
+                    ▼
+            模型就绪，等待请求</code></pre>
+  <p><strong>关键点：</strong></p>
+  <ul>
+    <li>两台机器各自从本地 SSD 加载，不走网络</li>
+    <li>权重按列切分（Column Parallel），GPU0 拿前半部分，GPU1 拿后半部分</li>
+    <li>加载完成后，每块 GPU 占用约 80GB 显存（权重 + KV Cache 预留）</li>
+  </ul>
+</div>
+
+<h3>2.3 单次请求完整数据流（含 NCCL 通信时机）</h3>
+<div class="diagram-card">
+  <pre><code>用户 → API (Head) → Scheduler
+                        │
+                        ▼
+                ┌───────┴───────┐
+                ▼               ▼
+            GPU0 (Head)     GPU1 (Worker)
+                │               │
+    ──── Prefill 阶段 ────      │
+                │               │
+        计算 Q/K/V (前半)   计算 Q/K/V (后半)
+                │               │
+          ◄── All-Gather (Q) ──►│
+                │               │
+        计算 Attention (前头) 计算 Attention (后头)
+                │               │
+          ◄── All-Reduce (Attn)►│
+                │               │
+        写入 KV Cache (分片)  写入 KV Cache (分片)
+                │               │
+    ──── Decode 循环 (每 token) ────
+                │               │
+        计算当前 Q            计算当前 Q
+                │               │
+          ◄── All-Gather (Q) ──►│
+                │               │
+        Attention (自己的 KV)  Attention (自己的 KV)
+                │               │
+          ◄── All-Reduce (Attn)►│
+                │               │
+        MoE 专家 (0-50)       MoE 专家 (51-100)
+                │               │
+          ◄── All-Reduce (MoE)►│
+                │               │
+        LM Head + 采样        LM Head + 采样
+                │               │
+          ◄── All-Reduce (Logits)►
+                │               │
+        采样生成 token        同步采样结果
+                │               │
+                └───────┬───────┘
+                        ▼
+                API 流式返回给用户</code></pre>
+  <p><strong>通信模式说明：</strong></p>
+  <ul>
+    <li><strong>All-Gather</strong>：合并分散在多个 GPU 上的数据（如 Q 矩阵）</li>
+    <li><strong>All-Reduce</strong>：汇总各 GPU 的计算结果（如 Attention 输出）</li>
+    <li><strong>Reduce-Scatter</strong>：将汇总结果切分回各 GPU（用于 MoE）</li>
+    <li><strong>Broadcast</strong>：广播控制信息（如采样参数）</li>
+  </ul>
+</div>
+
+<h3>2.4 数据流与存储层次</h3>
+<div class="diagram-card">
+  <pre><code>存储层次                       运行时数据流
+─────────                       ─────────────
+┌─────────────────┐            ┌──────────────┐
+│ L1: NVMe SSD    │            │ 用户 Prompt  │
+│ 模型 167GB      │ ──读取──►  └──────┬───────┘
+│ 速度 2-3 GB/s   │                   ▼
+└─────────────────┘            ┌──────────────┐
+        │                      │ Tokenizer    │
+        ▼                      └──────┬───────┘
+┌─────────────────┐                   ▼
+│ L2: DRAM        │            ┌──────────────┐
+│ 页缓存/缓冲     │ ──加载──►  │ Embedding    │
+│ 速度 50-100GB/s │            └──────┬───────┘
+└─────────────────┘                   ▼
+        │                      ┌──────────────┐
+        ▼                      │ GPU0+GPU1    │
+┌─────────────────┐            │ 并行计算     │
+│ L3: GPU HBM     │ ──运算──►  └──────┬───────┘
+│ 权重切片 ~80GB  │                   ▼
+│ 速度 1-3 TB/s   │            ┌──────────────┐
+                               │ NCCL+RDMA    │
+                               │ 跨节点同步   │
+                               └──────┬───────┘
+                                      ▼
+                               ┌──────────────┐
+                               │ Sampler 采样 │
+                               └──────┬───────┘
+                                      ▼
+                               ┌──────────────┐
+                               │ Detokenizer  │
+                               └──────┬───────┘
+                                      ▼
+                               ┌──────────────┐
+                               │ 返回 Token   │
+                               └──────────────┘</code></pre>
+  <p><strong>存储层次速度对比：</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>层级</th>
+        <th>介质</th>
+        <th>典型速度</th>
+        <th>容量</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>L1</td>
+        <td>NVMe SSD</td>
+        <td>2-3 GB/s</td>
+        <td>3.67 TB</td>
+      </tr>
+      <tr>
+        <td>L2</td>
+        <td>DRAM</td>
+        <td>50-100 GB/s</td>
+        <td>128 GB</td>
+      </tr>
+      <tr>
+        <td>L3</td>
+        <td>GPU HBM</td>
+        <td>1-3 TB/s</td>
+        <td>约 80 GB（可用）</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>2.5 通信量分布</h3>
+<p><strong>单次 Decode（生成1个token）通信量分布：</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>数据类型</th>
+      <th>占比</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>KV Cache 同步</td>
+      <td>30%</td>
+    </tr>
+    <tr>
+      <td>Attention 中间结果</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>MoE 专家输出</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>Logits 同步</td>
+      <td>15%</td>
+    </tr>
+    <tr>
+      <td>控制消息</td>
+      <td>10%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Prefill（处理 372 token prompt）通信量分布：</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>数据类型</th>
+      <th>占比</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Q 矩阵 All-Gather</td>
+      <td>35%</td>
+    </tr>
+    <tr>
+      <td>Attention 输出 All-Reduce</td>
+      <td>30%</td>
+    </tr>
+    <tr>
+      <td>KV Cache 写入同步</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>控制消息</td>
+      <td>10%</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>2.6 系统完整状态机</h3>
+<div class="diagram-card">
+  <pre><code>[*] → 硬件就绪 → OTA升级 → 基础配置 → 集群创建 → NCCL编译 → 模型下载 → 模型同步 → 环境配置 → 镜像拉取 → 服务启动
+                                                                                                            │
+                                                                                                            ▼
+                                                                                                    ┌───────┴───────┐
+                                                                                                    ▼               ▼
+                                                                                            备机启动         主机启动
+                                                                                                    │               │
+                                                                                                    ▼               ▼
+                                                                                            模型加载Worker   模型加载Head
+                                                                                                    │               │
+                                                                                                    └───────┬───────┘
+                                                                                                            ▼
+                                                                                                     NCCL初始化
+                                                                                                            │
+                                                                                                            ▼
+                                                                                                      服务就绪
+                                                                                                            │
+                                                                                                            ▼
+                                                                                                      处理请求
+                                                                                                            │
+                                                                                                            ▼
+                                                                                                      Prefill阶段
+                                                                                                            │
+                                                                                                            ▼
+                                                                                                      Decode循环 ◄──┐
+                                                                                                            │       │
+                                                                                                            ▼       │
+                                                                                                      流式返回 ────┘
+                                                                                                            │
+                                                                                                            ▼
+                                                                                                      完成响应
+                                                                                                            │
+                                                                                                            ▼
+                                                                                                           [*]</code></pre>
+  <p><strong>状态说明：</strong> 备机不启动 API，只作为计算 Worker；NCCL 初始化使用 idx=3 (RoCEv2)，GID 手动指定。</p>
+</div>
+
+<h3>2.7 核心组件深度介绍</h3>
+<h4>硬件组件</h4>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">组件</th>
+      <th>作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>DGX Spark (GB10)</strong></td>
+      <td>单卡算力约 1 PFLOPS（FP8），128GB 统一内存，适合大模型推理</td>
+    </tr>
+    <tr>
+      <td><strong>QSFP112 DAC 线缆</strong></td>
+      <td>200GbE 直连，无需交换机，延迟极低（实测 1.6µs）</td>
+    </tr>
+    <tr>
+      <td><strong>ConnectX-7 网卡</strong></td>
+      <td>支持 RoCEv2，每端口 200Gbps，支持 GPUDirect RDMA</td>
+    </tr>
+    <tr>
+      <td><strong>管理网络 (Wi-Fi/有线)</strong></td>
+      <td>用于 SSH、Docker 控制、日志传输，不参与推理数据流</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>软件组件</h4>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">组件</th>
+      <th>作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>vLLM</strong></td>
+      <td>高吞吐推理引擎，支持 PagedAttention、Continuous Batching、张量并行</td>
+    </tr>
+    <tr>
+      <td><strong>NCCL</strong></td>
+      <td>NVIDIA 集合通信库，实现 GPU 间 All-Gather、All-Reduce 等操作</td>
+    </tr>
+    <tr>
+      <td><strong>RDMA (RoCEv2)</strong></td>
+      <td>绕过 CPU，网卡直接读写 GPU 显存，降低延迟</td>
+    </tr>
+    <tr>
+      <td><strong>Docker</strong></td>
+      <td>容器化部署，环境隔离，便于快速复制</td>
+    </tr>
+    <tr>
+      <td><strong>启动脚本</strong></td>
+      <td>自动化部署，同步配置，管理双机生命周期</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>张量并行 (TP=2) 工作原理</h4>
+<ul>
+  <li>模型权重按列切分，GPU0 负责前一半注意力头/MoE 专家，GPU1 负责后一半</li>
+  <li>每层计算后通过 NCCL 同步中间结果</li>
+  <li>KV Cache 也按分片存储，节省显存</li>
+</ul>
+
+<h2>三、详细步骤与踩坑记录</h2>
+
+<h3>第01章：硬件准备与拓扑</h3>
+<h4>操作步骤</h4>
+<ol>
+  <li><strong>准备硬件</strong>：两台 DGX Spark 插电开机，用一根 QSFP112 DAC 线直连两台机器的 QSFP 口。</li>
+  <li><strong>连接管理网络</strong>：将两台机器通过有线或 Wi-Fi 接入同一局域网。</li>
+  <li><strong>物理口映射确认（关键）</strong>：
+    <p>每台 DGX Spark 有 2 个 QSFP 物理口，每个物理口在 Linux 下映射为 2 个网口：</p>
+    <table>
+      <thead>
+        <tr>
+          <th>物理口</th>
+          <th>链路0 (100G)</th>
+          <th>链路1 (100G)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Port 0</td>
+          <td><code>enp1s0f0np0</code> / <code>rocep1s0f0</code></td>
+          <td><code>enP2p1s0f0np0</code> / <code>roceP2p1s0f0</code></td>
+        </tr>
+        <tr>
+          <td>Port 1</td>
+          <td><code>enp1s0f1np1</code> / <code>rocep1s0f1</code></td>
+          <td><code>enP2p1s0f1np1</code> / <code>roceP2p1s0f1</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li><strong>检查接线状态</strong>：
+    <pre><code>ip -br link show | grep -E "enp1s0f|enP2p1s0f"
+sudo ethtool &lt;网口名&gt; | grep -E "Speed|Link detected"</code></pre>
+    <p>预期：插线的物理口两个链路均为 <code>Speed: 200000Mb/s</code> 且 <code>Link detected: yes</code>。</p>
+  </li>
+</ol>
+
+<h4>⚠️ 踩坑记录</h4>
+<table class="pitfall-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">问题</th>
+      <th style="width: 35%;">原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>测速只有 25 Gbps</td>
+      <td>网络计划尚未生效</td>
+      <td><strong>线保持插着，重启两台机器</strong>，然后 Run Test Again</td>
+    </tr>
+    <tr>
+      <td>线缆不识别</td>
+      <td>线缆型号不匹配</td>
+      <td>必须使用官方列出的 QSFP112 DAC 型号（如 Amphenol NJAAKK-N911）</td>
+    </tr>
+    <tr>
+      <td>物理口对应错误</td>
+      <td>两台机器插了不同的物理口</td>
+      <td>Cluster Assistant 会自动识别，但 NCCL 配置需按实际口位填写</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>第02章：系统初始化与 OTA 升级</h3>
+<h4>操作步骤</h4>
+<ol>
+  <li><strong>首次启动</strong>：接电源、显示器/键盘，完成 NVIDIA 首启向导。</li>
+  <li><strong>确认系统版本</strong>：
+    <pre><code>cat /etc/dgx-release
+cat /etc/os-release | head -2</code></pre>
+  </li>
+  <li><strong>执行官方 OTA 升级（关键——不要用 <code>apt upgrade</code> 代替）</strong>：
+    <pre><code>sudo apt update
+sudo apt dist-upgrade        # 官方是 dist-upgrade，不是 apt upgrade！
+sudo fwupdmgr refresh
+sudo fwupdmgr upgrade
+sudo reboot</code></pre>
+  </li>
+  <li><strong>重启后确认版本 ≥ 2026-04</strong>：
+    <pre><code>cat /etc/dgx-release          # OTA 应用后才有 DGX_OTA_VERSION
+LC_ALL=C apt-cache policy dgx-spark-ota-update-meta   # Installed 行 ≥ 26.04.1</code></pre>
+  </li>
+</ol>
+
+<h4>⚠️ 踩坑记录</h4>
+<table class="pitfall-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">问题</th>
+      <th style="width: 35%;">原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>nvidia-smi</code> 报 "No devices found"</td>
+      <td>用 <code>apt upgrade</code> 代替了 <code>apt dist-upgrade</code></td>
+      <td>重新执行官方 OTA 升级路径</td>
+    </tr>
+    <tr>
+      <td><code>nvidia-spark-ota-check: command not found</code></td>
+      <td>误解了该工具的作用</td>
+      <td>它是 OTA 升级过程中随软件包一并安装的校验工具</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>第03章：基础配置（用户、SSH、网络与代理）</h3>
+<h4>操作步骤</h4>
+<ol>
+  <li><strong>创建统一用户并配置 sudo 免密（两台机器）</strong>：
+    <pre><code>sudo useradd -m -s /bin/bash -u 1000 &lt;USER&gt;
+sudo tee /etc/sudoers.d/&lt;USER&gt;-nopasswd &lt;&lt;&lt; "&lt;USER&gt; ALL=(ALL) NOPASSWD:ALL"
+sudo chmod 440 /etc/sudoers.d/&lt;USER&gt;-nopasswd</code></pre>
+  </li>
+  <li><strong>双向 SSH 免密配置</strong>：
+    <ul>
+      <li>在 head 上生成密钥并分发到自身和 worker：
+        <pre><code>ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519
+ssh-copy-id &lt;USER&gt;@&lt;IP_MGMT_B&gt;
+cat ~/.ssh/id_ed25519.pub &gt;&gt; ~/.ssh/authorized_keys</code></pre>
+      </li>
+      <li>在 worker 上生成密钥并信任自己：
+        <pre><code>ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub &gt;&gt; ~/.ssh/authorized_keys</code></pre>
+      </li>
+    </ul>
+  </li>
+  <li><strong>配置 <code>/etc/hosts</code>（两台机器都加）</strong>：
+    <pre><code>&lt;IP_MGMT_A&gt;  &lt;HOSTNAME_A&gt;  spark-a
+&lt;IP_MGMT_B&gt;  &lt;HOSTNAME_B&gt;  spark-b</code></pre>
+  </li>
+  <li><strong>配置 <code>~/.ssh/config</code>（head 上）</strong>：
+    <pre><code>Host spark-b
+  HostName &lt;IP_MGMT_B&gt;
+  User &lt;USER&gt;</code></pre>
+  </li>
+  <li><strong>验证</strong>：<code>ssh spark-b hostname</code> 应免密直达。</li>
+  <li><strong>记录管理 IP</strong>：
+    <pre><code>ip -4 addr show &lt;MGMT_IF&gt;   # enP7s7 或 wlP9s9</code></pre>
+  </li>
+</ol>
+
+<h4>⚠️ 踩坑记录</h4>
+<table class="pitfall-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">问题</th>
+      <th style="width: 35%;">原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>UID/GID 不一致</td>
+      <td>创建用户时未指定 <code>-u 1000</code></td>
+      <td>使用 <code>sudo useradd -m -s /bin/bash -u 1000 &lt;USER&gt;</code> 统一 UID</td>
+    </tr>
+    <tr>
+      <td>管理网口名称错误</td>
+      <td>直接用了文档示例 <code>enP7s7</code></td>
+      <td>先用 <code>ip -4 addr show</code> 查看实际网口名，本次部署是 <code>wlP9s9</code>（Wi-Fi）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>第04章：双机集群（NVIDIA Sync + Cluster Assistant）</h3>
+<h4>操作步骤</h4>
+<ol>
+  <li><strong>安装 NVIDIA Sync</strong>：macOS 下载 <code>nvidia-sync.dmg</code>，打开后添加两台设备。</li>
+  <li><strong>创建集群</strong>：Sync → Settings → Cluster Assistant → Add New Cluster。</li>
+  <li><strong>Link Speed Test</strong>：逐链路测速，要求下限 <strong>184 Gbit/s</strong>。</li>
+  <li><strong>配置产物</strong>：Cluster Assistant 写入 <code>/etc/netplan/99-nvidia-sync-cluster.yaml</code>，分配 IP：
+    <table>
+      <thead>
+        <tr>
+          <th>节点</th>
+          <th>链路0</th>
+          <th>链路1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>head</td>
+          <td>10.100.216.1/24</td>
+          <td>10.100.217.1/24</td>
+        </tr>
+        <tr>
+          <td>worker</td>
+          <td>10.100.216.2/24</td>
+          <td>10.100.217.2/24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ol>
+
+<h4>⚠️ 踩坑记录</h4>
+<table class="pitfall-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">问题</th>
+      <th style="width: 35%;">原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>首次测速只有 25 Gbps</td>
+      <td>网络计划刚写入尚未生效</td>
+      <td><strong>线保持插着，重启两台机器</strong>，然后 Run Test Again</td>
+    </tr>
+    <tr>
+      <td>反复插拔线缆无效</td>
+      <td>配置未生效</td>
+      <td>重启才是关键，不是插拔线缆</td>
+    </tr>
+    <tr>
+      <td>Cluster Assistant 报版本过低</td>
+      <td>系统软件 &lt; 2026-04</td>
+      <td>先完成 OTA 升级再使用 Cluster Assistant</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>第05章：NCCL 编译与双机验证</h3>
+<h4>操作步骤</h4>
+<ol>
+  <li><strong>安装依赖（两台机器）</strong>：
+    <pre><code>sudo apt-get update && sudo apt-get install -y libopenmpi-dev</code></pre>
+  </li>
+  <li><strong>编译 NCCL（两台机器，约 10-20 分钟）</strong>：
+    <pre><code>git clone -b v2.30.7-1 https://github.com/NVIDIA/nccl.git ~/nccl
+cd ~/nccl
+make -j$(nproc) src.build NVCC_GENCODE="-gencode=arch=compute_121,code=sm_121"</code></pre>
+  </li>
+  <li><strong>编译 nccl-tests（两台机器）</strong>：
+    <pre><code>git clone https://github.com/NVIDIA/nccl-tests.git ~/nccl-tests
+cd ~/nccl-tests
+export CUDA_HOME=/usr/local/cuda
+export MPI_HOME=/usr/lib/aarch64-linux-gnu/openmpi
+export NCCL_HOME=$HOME/nccl/build/
+export LD_LIBRARY_PATH=$NCCL_HOME/lib:$CUDA_HOME/lib64/:$MPI_HOME/lib:$LD_LIBRARY_PATH
+make -j$(nproc) MPI=1</code></pre>
+  </li>
+  <li><strong>确认 RoCE 设备与 GID</strong>：
+    <pre><code>ibdev2netdev                    # 查看物理口 → 网口映射
+rdma link show                  # 期望 state ACTIVE / LINK_UP
+
+# GID 表：找到 IPv4 的 RoCE v2 索引
+for i in 0 1 2 3 4 5; do
+  echo "idx$i: $(cat /sys/class/infiniband/&lt;HCA&gt;/ports/1/gids/$i) $(cat /sys/class/infiniband/&lt;HCA&gt;/ports/1/gid_attrs/types/$i)"
+done</code></pre>
+    <p>预期：IPv4 映射的 GID（<code>::ffff:</code>）位于 <code>idx3</code>（RoCE v2）。</p>
+  </li>
+  <li><strong>双机 all_gather 测试（在 head 上执行）</strong>：
+    <pre><code>export CUDA_HOME=/usr/local/cuda
+export MPI_HOME=/usr/lib/aarch64-linux-gnu/openmpi
+export NCCL_HOME=$HOME/nccl/build/
+export LD_LIBRARY_PATH=$NCCL_HOME/lib:$CUDA_HOME/lib64/:$MPI_HOME/lib:$LD_LIBRARY_PATH
+
+mpirun -np 2 -H &lt;IP_MGMT_A&gt;:1,&lt;IP_MGMT_B&gt;:1   --mca plm_rsh_agent "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"   -x LD_LIBRARY_PATH=$LD_LIBRARY_PATH   -x UCX_NET_DEVICES=&lt;MGMT_IF&gt;   -x NCCL_SOCKET_IFNAME=&lt;MGMT_IF&gt;   -x OMPI_MCA_btl_tcp_if_include=&lt;MGMT_IF&gt;   $HOME/nccl-tests/build/all_gather_perf -b 16G -e 16G -f 2</code></pre>
+    <p>预期：两个 rank 各识别一块 GB10，<code>#wrong = 0</code>，<code>busbw</code> 约 21 GB/s。</p>
+  </li>
+</ol>
+
+<h4>⚠️ 踩坑记录</h4>
+<table class="pitfall-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">问题</th>
+      <th style="width: 35%;">原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>git clone</code> 报 <code>gnutls_handshake() failed</code></td>
+      <td>网络问题</td>
+      <td>使用 SSH 协议克隆（<code>git@github.com:...</code>），或配置代理，或从备机复制已编译好的 NCCL 目录</td>
+    </tr>
+    <tr>
+      <td><code>mpirun</code> 卡住/超时</td>
+      <td>SSH 免密未配置</td>
+      <td>先 <code>ssh &lt;hostname&gt; hostname</code> 确认免密，再用 <code>mpirun -np 2 -H ... hostname</code> 做最小验证</td>
+    </tr>
+    <tr>
+      <td><code>Unknown interface name enP7s7</code></td>
+      <td>管理网口名称不存在</td>
+      <td>先用 <code>ip -4 addr show</code> 查看实际网口名，本次部署是 <code>wlP9s9</code></td>
+    </tr>
+    <tr>
+      <td>GID 索引查询失败</td>
+      <td>HCA 名称不是 <code>mlx5_0</code></td>
+      <td>根据 <code>ibdev2netdev</code> 输出确定 HCA 名称（如 <code>rocep1s0f1</code>）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>第06章：模型下载与同步</h3>
+<h4>操作步骤</h4>
+<ol>
+  <li><strong>创建 Python 虚拟环境并安装工具（head）</strong>：
+    <pre><code>python3 -m venv ~/hf-venv
+~/hf-venv/bin/pip install -U huggingface_hub hf_xet httpx</code></pre>
+  </li>
+  <li><strong>生成官方 sha256 清单</strong>：
+    <pre><code>HF_ENDPOINT=https://huggingface.co ~/hf-venv/bin/python - &lt;&lt;'PY'
+import json
+from huggingface_hub import HfApi
+api = HfApi()
+files = list(api.list_repo_tree("deepseek-ai/DeepSeek-V4-Flash-0731", recursive=True, expand=True))
+out = [{"path": f.path, "size": f.size, "sha256": (f.lfs.sha256 if getattr(f, "lfs", None) else None)} for f in files]
+json.dump(out, open("/tmp/dsv4-files.json", "w"), indent=1)
+print("files:", len(out), "total GB: %.2f" % (sum(x["size"] for x in out) / 1e9))
+PY
+cp /tmp/dsv4-files.json ~/dsv4-files.json</code></pre>
+    <p>预期输出：<code>files: 74 total GB: 166.90</code>。</p>
+  </li>
+  <li><strong>运行分块下载器（head，后台）</strong>：
+    <pre><code>nohup setsid env -u http_proxy -u https_proxy -u all_proxy   -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY   ~/hf-venv/bin/python ~/dsv4-chunkdl.py &gt;&gt; ~/dsv4-chunkdl.log 2&gt;&amp;1 &amp;</code></pre>
+  </li>
+  <li><strong>同步模型到备机（head 上执行）</strong>：
+    <pre><code>rsync -avP --progress /home/&lt;USER&gt;/models/DeepSeek-V4-Flash-0731/ &lt;USER&gt;@&lt;IP_FABRIC_B&gt;:/home/&lt;USER&gt;/models/DeepSeek-V4-Flash-0731/</code></pre>
+  </li>
+</ol>
+
+<h4>⚠️ 踩坑记录</h4>
+<table class="pitfall-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">问题</th>
+      <th style="width: 35%;">原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>代理下载几乎不可用（0 MB/s）</td>
+      <td>huggingface.co 直连不通</td>
+      <td>使用 <code>hf-mirror.com</code> 镜像站（单连接约 27 MB/s）</td>
+    </tr>
+    <tr>
+      <td>rsync 速度慢（~42 MB/s）</td>
+      <td>走了管理网（Wi-Fi）</td>
+      <td>使用 <code>--rsh="ssh -o BindAddress=&lt;FABRIC_IP&gt;"</code> 强制走高速数据网</td>
+    </tr>
+    <tr>
+      <td>模型文件权限错误</td>
+      <td>初始在 <code>admin</code> 用户目录下</td>
+      <td>迁移到 <code>deepseek</code> 用户目录并修正权限</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>第07章：部署启动</h3>
+<h4>操作步骤</h4>
+<ol>
+  <li><strong>拉取运行时镜像（双机）</strong>：
+    <pre><code># 国内镜像站拉取（ghcr.io 直连被限速到 ~17 KB/s）
+docker pull ghcr.nju.edu.cn/anemll/dspark-vllm-gx10:0.1.1
+docker tag ghcr.nju.edu.cn/anemll/dspark-vllm-gx10:0.1.1 ghcr.io/anemll/dspark-vllm-gx10:0.1.1</code></pre>
+  </li>
+  <li><strong>镜像可信校验（可选）</strong>：
+    <p>期望 digest: <code>sha256:a83948492cf13df455170fb42885f5ef4db54fefe0feff0f841ecbff464ac9d8</code></p>
+  </li>
+  <li><strong>克隆部署仓库并配置（head）</strong>：
+    <pre><code>git clone https://github.com/MiaAI-Lab/DeepSeek-v4-Flash-DSpark-2x-DGX-Spark.git ~/DeepSeek-v4-Flash-DSpark-2x-DGX-Spark
+cd ~/DeepSeek-v4-Flash-DSpark-2x-DGX-Spark
+cp .env.dspark.example .env.dspark</code></pre>
+  </li>
+  <li><strong>编辑 <code>.env.dspark</code> 关键配置项</strong>：
+    <table>
+      <thead>
+        <tr>
+          <th>配置项</th>
+          <th>值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>WORKER_HOST</code></td>
+          <td><code>&lt;IP_MGMT_B&gt;</code></td>
+        </tr>
+        <tr>
+          <td><code>MASTER_ADDR</code></td>
+          <td><code>&lt;IP_FABRIC_A&gt;</code></td>
+        </tr>
+        <tr>
+          <td><code>VLLM_HOST_IP</code></td>
+          <td><code>&lt;IP_FABRIC_A&gt;</code></td>
+        </tr>
+        <tr>
+          <td><code>WORKER_VLLM_HOST_IP</code></td>
+          <td><code>&lt;IP_FABRIC_B&gt;</code></td>
+        </tr>
+        <tr>
+          <td><code>NCCL_IB_HCA</code></td>
+          <td>head 的实际 HCA（如 <code>rocep1s0f1,roceP2p1s0f1</code>）</td>
+        </tr>
+        <tr>
+          <td><code>NCCL_SOCKET_IFNAME</code></td>
+          <td>head 的实际 HCA</td>
+        </tr>
+        <tr>
+          <td><code>WORKER_NCCL_IB_HCA</code></td>
+          <td>worker 的实际 HCA（如 <code>rocep1s0f0,roceP2p1s0f0</code>）</td>
+        </tr>
+        <tr>
+          <td><code>WORKER_NCCL_SOCKET_IFNAME</code></td>
+          <td>worker 的实际 HCA</td>
+        </tr>
+        <tr>
+          <td><code>NCCL_IB_GID_AUTO</code></td>
+          <td><code>0</code>（手动指定）</td>
+        </tr>
+        <tr>
+          <td><code>NCCL_IB_GID_INDEX</code></td>
+          <td><code>3</code></td>
+        </tr>
+        <tr>
+          <td><code>WORKER_NCCL_IB_GID_INDEX</code></td>
+          <td><code>3</code></td>
+        </tr>
+        <tr>
+          <td><code>DSPARK_MODEL</code></td>
+          <td><code>/home/&lt;USER&gt;/models/DeepSeek-V4-Flash-0731</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li><strong>修改 <code>docker-compose.dspark.yml</code> 添加模型挂载</strong>：
+    <pre><code>volumes:
+  - ${HF_CACHE:-${HOME}/.cache/huggingface}:/cache/huggingface
+  - ${VLLM_GB10_PATCH_DIR:-./vllm_patch_gb10}:/opt/vllm-gb10-hybrid-nvfp4
+  - ${DSPARK_TMP_HOST:-${HOME}/.cache/dspark-tmp}:/tmp
+  - /home/&lt;USER&gt;/models:/home/&lt;USER&gt;/models:ro   # 新增</code></pre>
+  </li>
+  <li><strong>启动服务（head 上执行）</strong>：
+    <pre><code>./start-deepseek-v4-flash-dspark.sh</code></pre>
+    <p>冷启动约 6-9 分钟。</p>
+  </li>
+</ol>
+
+<h4>⚠️ 踩坑记录</h4>
+<table class="pitfall-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">问题</th>
+      <th style="width: 35%;">原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>repro-preflight.sh</code> 脚本不存在</td>
+      <td>该脚本在部署仓库中不存在</td>
+      <td>手动执行 SSH/GPU/镜像/模型/端口检查</td>
+    </tr>
+    <tr>
+      <td>FATAL: could not resolve head RoCEv2 GID index</td>
+      <td>填了网口名而不是 HCA 名</td>
+      <td>设置 <code>NCCL_IB_GID_AUTO=0</code> 和 <code>NCCL_IB_GID_INDEX=3</code></td>
+    </tr>
+    <tr>
+      <td>HFValidationError: Repo id must be in the form 'repo_name'</td>
+      <td>vLLM 把本地路径当成了 Hugging Face 仓库 ID</td>
+      <td>在 compose 中添加模型目录挂载</td>
+    </tr>
+    <tr>
+      <td><code>--model</code> 参数不被启动脚本接受</td>
+      <td>启动脚本只接受 <code>--host</code> 和 <code>--port</code></td>
+      <td>模型路径由 <code>.env.dspark</code> 中的 <code>DSPARK_MODEL</code> 控制</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>第08章：验证与性能</h3>
+<h4>操作步骤</h4>
+<ol>
+  <li><strong>API 健康检查</strong>：
+    <pre><code>curl http://&lt;IP_MGMT_A&gt;:8888/health   # 期望 200
+curl http://&lt;IP_MGMT_A&gt;:8888/v1/models   # 期望 max_model_len: 1048576</code></pre>
+  </li>
+  <li><strong>最小对话测试</strong>：
+    <pre><code>curl http://&lt;IP_MGMT_A&gt;:8888/v1/chat/completions   -H "Content-Type: application/json"   -d '{"model":"deepseek-v4-flash-0731", "messages":[{"role":"user","content":"计算 17*23 等于多少，只回答数字"}], "temperature":0,"max_tokens":200, "chat_template_kwargs":{"thinking":false}}'</code></pre>
+    <p>期望：秒级返回 <code>391</code>。</p>
+  </li>
+  <li><strong>仓库自带脚本</strong>：
+    <pre><code>./smoke-deepseek-v4-flash-dspark.sh   # 默认 6 并发冒烟测试
+./status-deepseek-v4-flash-dspark.sh
+./logs-deepseek-v4-flash-dspark.sh</code></pre>
+  </li>
+</ol>
+
+<h4>性能预期</h4>
+<table>
+  <thead>
+    <tr>
+      <th>指标</th>
+      <th>实测/预期</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>单流 decode</td>
+      <td>~60-80 tok/s（热机 78-80）</td>
+    </tr>
+    <tr>
+      <td>prefill</td>
+      <td>372 token 提示 ~99 tok/s</td>
+    </tr>
+    <tr>
+      <td>DSpark 投机接受率</td>
+      <td>~91%</td>
+    </tr>
+    <tr>
+      <td>KV 池</td>
+      <td>双机 ~230 万 token</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>⚠️ 踩坑记录</h4>
+<table class="pitfall-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">问题</th>
+      <th style="width: 35%;">原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>压测单个用例要 10-20+ 分钟</td>
+      <td><code>DEFAULT_THINKING=max</code> 产生超长推理链</td>
+      <td>压测前把 <code>.env.dspark</code> 的 <code>DEFAULT_THINKING</code> 改为 <code>low</code> 或 <code>off</code> 并重启服务</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>四、环境变量速查表</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">配置项</th>
+      <th>说明</th>
+      <th style="width: 35%;">示例值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>WORKER_HOST</code></td>
+      <td>worker 管理 IP</td>
+      <td><code>192.168.31.60</code></td>
+    </tr>
+    <tr>
+      <td><code>MASTER_ADDR</code></td>
+      <td>head 高速数据网 IP</td>
+      <td><code>10.100.216.1</code></td>
+    </tr>
+    <tr>
+      <td><code>VLLM_HOST_IP</code></td>
+      <td>head 高速数据网 IP</td>
+      <td><code>10.100.216.1</code></td>
+    </tr>
+    <tr>
+      <td><code>WORKER_VLLM_HOST_IP</code></td>
+      <td>worker 高速数据网 IP</td>
+      <td><code>10.100.216.2</code></td>
+    </tr>
+    <tr>
+      <td><code>NCCL_IB_HCA</code></td>
+      <td>head HCA 名</td>
+      <td><code>rocep1s0f1,roceP2p1s0f1</code></td>
+    </tr>
+    <tr>
+      <td><code>NCCL_SOCKET_IFNAME</code></td>
+      <td>head 网口名</td>
+      <td><code>rocep1s0f1,roceP2p1s0f1</code></td>
+    </tr>
+    <tr>
+      <td><code>WORKER_NCCL_IB_HCA</code></td>
+      <td>worker HCA 名</td>
+      <td><code>rocep1s0f0,roceP2p1s0f0</code></td>
+    </tr>
+    <tr>
+      <td><code>WORKER_NCCL_SOCKET_IFNAME</code></td>
+      <td>worker 网口名</td>
+      <td><code>rocep1s0f0,roceP2p1s0f0</code></td>
+    </tr>
+    <tr>
+      <td><code>NCCL_IB_GID_AUTO</code></td>
+      <td>GID 自动解析开关</td>
+      <td><code>0</code></td>
+    </tr>
+    <tr>
+      <td><code>NCCL_IB_GID_INDEX</code></td>
+      <td>head GID 索引</td>
+      <td><code>3</code></td>
+    </tr>
+    <tr>
+      <td><code>WORKER_NCCL_IB_GID_INDEX</code></td>
+      <td>worker GID 索引</td>
+      <td><code>3</code></td>
+    </tr>
+    <tr>
+      <td><code>DSPARK_MODEL</code></td>
+      <td>模型本地路径</td>
+      <td><code>/home/deepseek/models/DeepSeek-V4-Flash-0731</code></td>
+    </tr>
+    <tr>
+      <td><code>DEFAULT_THINKING</code></td>
+      <td>默认思考级别</td>
+      <td><code>off</code> / <code>low</code> / <code>high</code> / <code>max</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>五、关键故障排查速查表</h2>
+<table class="pitfall-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">现象</th>
+      <th style="width: 35%;">可能原因</th>
+      <th>解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>测速只有 25 Gbps</td>
+      <td>网络计划尚未生效</td>
+      <td><strong>线保持插着，重启两台机器</strong></td>
+    </tr>
+    <tr>
+      <td><code>nvidia-smi</code> No devices found</td>
+      <td>用 <code>apt upgrade</code> 代替了 <code>apt dist-upgrade</code></td>
+      <td>重新执行官方 OTA 升级路径</td>
+    </tr>
+    <tr>
+      <td><code>git clone</code> TLS 握手失败</td>
+      <td>网络问题</td>
+      <td>用 SSH 协议克隆，或配置代理</td>
+    </tr>
+    <tr>
+      <td><code>mpirun</code> 卡住/超时</td>
+      <td>SSH 免密未配置</td>
+      <td>先 <code>ssh hostname</code> 验证</td>
+    </tr>
+    <tr>
+      <td>模型路径被当作 HF 仓库 ID</td>
+      <td>compose 未挂载模型目录</td>
+      <td>在 compose 中添加 <code>volumes</code> 挂载</td>
+    </tr>
+    <tr>
+      <td>GID 解析失败</td>
+      <td>填了网口名而不是 HCA 名</td>
+      <td>设置 <code>NCCL_IB_GID_AUTO=0</code> 手动指定</td>
+    </tr>
+    <tr>
+      <td>rsync 速度慢</td>
+      <td>走了管理网而不是高速数据网</td>
+      <td>使用 <code>--rsh="ssh -o BindAddress=&lt;FABRIC_IP&gt;"</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>六、最终验证清单</h2>
+<ul class="checklist">
+  <li>两台机器 SSH 免密互通（<code>ssh spark-b hostname</code>）</li>
+  <li>Cluster Assistant 测速 ≥ 184 Gbps</li>
+  <li>NCCL <code>all_gather_perf</code> 测试通过（<code>busbw ≈ 21 GB/s</code>）</li>
+  <li>模型文件在两台机器上完整（166.9 GB）</li>
+  <li>vLLM 镜像已拉取并打 tag</li>
+  <li><code>.env.dspark</code> 配置正确（HCA、GID、模型路径）</li>
+  <li><code>docker-compose.dspark.yml</code> 已添加模型挂载</li>
+  <li><code>./start-deepseek-v4-flash-dspark.sh</code> 启动成功</li>
+  <li><code>curl /health</code> 返回 200</li>
+  <li>最小对话测试返回正确结果</li>
+</ul>
+
+<div style="text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 8.5pt;">
+  部署复盘文档 · 基于真实部署过程整理 · 2026年8月
+</div>
+
+
+<h2>九、性能压测与并发对比分析 (10 并发 vs 20 并发)</h2>
+
+<h3>9.1 核心指标对比总览</h3>
+<table>
+  <thead>
+    <tr>
+      <th>指标</th>
+      <th>10 并发</th>
+      <th>20 并发</th>
+      <th>变化与趋势</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>总吞吐量 (aggregate_tok_s)</strong></td>
+      <td><strong>65.35 tok/s</strong></td>
+      <td><strong>84.86 tok/s</strong></td>
+      <td><span style="color: #10b981; font-weight: bold;">⬆️ +29.9%</span> (吞吐量提升显著)</td>
+    </tr>
+    <tr>
+      <td><strong>总耗时</strong></td>
+      <td>384.32 秒</td>
+      <td>673.97 秒</td>
+      <td><span style="color: #f43f5e; font-weight: bold;">⬇️ -43.0%</span> (整体跑完耗时增加)</td>
+    </tr>
+    <tr>
+      <td><strong>中位 TTFT (首 Token 延迟)</strong></td>
+      <td><strong>23.93 秒</strong></td>
+      <td>285.34 秒</td>
+      <td><span style="color: #f43f5e; font-weight: bold;">⬇️ -91.6%</span> (20并发延迟剧增 11.9倍)</td>
+    </tr>
+    <tr>
+      <td><strong>中位输出速度 (output_tok_s)</strong></td>
+      <td>13.48 tok/s</td>
+      <td>15.31 tok/s</td>
+      <td>基本持平 (Decode 阶段非瓶颈)</td>
+    </tr>
+    <tr>
+      <td><strong>中位 Prefill 速度</strong></td>
+      <td>15.00 tok/s</td>
+      <td>1.27 tok/s</td>
+      <td><span style="color: #f43f5e; font-weight: bold;">⬇️ -91.5%</span> (KV池爆满导致排队)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>9.2 详细现象与调度机制解读</h3>
+
+<div class="diagram-card">
+  <div class="diagram-title">🧠 vLLM 调度模型与并发排队逻辑</div>
+  <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                     vLLM 调度模型                            │
+│                                                             │
+│  并发数  ──►  活跃槽位 (MAX_NUM_SEQS=6)  ──►  队列长度     │
+│                                                             │
+│  10     ──►  6 个活跃 + 4 个排队                         │
+│  20     ──►  6 个活跃 + 14 个排队  ⬅️ 排队越长，TTFT越高 │
+│                                                             │
+│  总吞吐量受 GPU 利用率影响，20 并发 GPU 更忙，总吞吐量更高 │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+  <ul>
+    <li><strong>总吞吐量：</strong> 20 并发达 <strong>84.86 tok/s</strong>（高于 10 并发的 65.35 tok/s）。由于并发数增加，GPU 在整个压测周期内的空闲等待时间被大幅压缩，整体算力输出更充分。</li>
+    <li><strong>TTFT（首 Token 延迟）：</strong> 10 并发（23.93s）大幅优于 20 并发（285.34s）。20 并发时超出活跃槽位（MAX_NUM_SEQS=6）的请求达到 14 个，导致后面的请求严重卡在 Prefill 排队阶段。</li>
+    <li><strong>单流生成速度：</strong> 均保持在 13~16 tok/s 范围，说明 Decode 计算阶段并非瓶颈，系统真正的限制在于 Prefill 阶段的 KV Cache 资源与排队。</li>
+  </ul>
+</div>
+
+<h3>9.3 耗时分布对比</h3>
+<div class="diagram-card">
+  <div class="diagram-title">⏱️ 耗时分布对比示意</div>
+  <pre><code>【10 并发耗时分布】
+最快: 124.7 秒  ████████
+中位: ~250 秒   ████████████████
+最慢: 384.3 秒  ██████████████████████████
+(分布相对集中，排队时间较可控)
+
+【20 并发耗时分布】
+最快: 161.1 秒  ██████████
+中位: ~500 秒   ████████████████████████████████
+最慢: 674.0 秒  ████████████████████████████████████████
+(分布极度离散，尾部 10 个请求超时显著)</code></pre>
+</div>
+
+<h3>9.4 场景参数调优建议</h3>
+<table>
+  <thead>
+    <tr>
+      <th>业务场景</th>
+      <th>推荐参数配置</th>
+      <th>预期表现</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>实时对话 / 低延迟</strong></td>
+      <td><code>DEFAULT_THINKING=low/off</code><br><code>MAX_NUM_SEQS=6</code><br>并发数：4-6</td>
+      <td>TTFT &lt; 5 秒，单流输出 ~20 tok/s，用户体验极佳</td>
+    </tr>
+    <tr>
+      <td><strong>批量推理 / 高吞吐</strong></td>
+      <td><code>DEFAULT_THINKING=off</code><br><code>MAX_NUM_SEQS=12</code><br><code>GPU_MEMORY_UTILIZATION=0.85</code><br>并发数：16-24</td>
+      <td>总吞吐量 &gt; 120 tok/s，适合离线数据处理与批批作业</td>
+    </tr>
+    <tr>
+      <td><strong>深度推理 / Agent 思考</strong></td>
+      <td><code>DEFAULT_THINKING=max</code><br><code>MAX_NUM_SEQS=4</code><br>并发数：2-4</td>
+      <td>让每个请求分得更多 GPU 资源，思考速度提升，TTFT 10-20 秒</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
