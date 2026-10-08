@@ -40,9 +40,28 @@ body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-
 mark { background:#7a5c00; color:#fff; border-radius:2px; padding:0 2px; }
 .home h2 { margin-top:8px; }
 .home li { margin:6px 0; }
+/* ===== mobile responsive ===== */
+#topbar { display:none; }
+#overlay { display:none; }
+@media (max-width: 768px) {
+  body { display:block; height:auto; min-height:100vh; overflow:auto; }
+  #topbar { display:flex; align-items:center; gap:10px; position:sticky; top:0; z-index:30; background:var(--panel); border-bottom:1px solid var(--border); padding:10px 12px; font-size:15px; font-weight:700; }
+  #menuBtn { background:var(--bg); color:var(--fg); border:1px solid var(--border); border-radius:6px; font-size:18px; padding:4px 10px; cursor:pointer; line-height:1.4; }
+  #sidebar { position:fixed; top:0; left:0; bottom:0; z-index:40; width:300px; min-width:300px; transform:translateX(-105%); transition:transform .25s ease; box-shadow:2px 0 12px rgba(0,0,0,.5); }
+  #sidebar.open { transform:none; }
+  #overlay.show { display:block; position:fixed; inset:0; z-index:35; background:rgba(0,0,0,.55); }
+  #content { max-width:none; padding:16px 14px 40px; }
+  #content h1 { font-size:20px; }
+  #content h2 { font-size:18px; }
+  #content h3 { font-size:16px; }
+  #content pre { font-size:12px; padding:10px; }
+  #content table { font-size:12px; }
+}
 </style>
 </head>
 <body>
+<div id="topbar"><button id="menuBtn" aria-label="打开目录">☰</button><span>📘 CUDA 编程指南 · 中文 Wiki</span></div>
+<div id="overlay"></div>
 <div id="sidebar">
   <h1>📘 CUDA 编程指南 · 中文 Wiki</h1>
   <div class="sub">Release 13.4.2 · 共 45 节 · 离线可读</div>
@@ -81,6 +100,8 @@ function show(num){
   var el = document.getElementById('nav-'+num); if(el) el.classList.add('active');
   content.innerHTML = s.html;
   content.scrollTop = 0;
+  window.scrollTo(0, 0);
+  if(typeof closeDrawer === 'function') closeDrawer();
   document.title = s.title + ' · CUDA 中文 Wiki';
 }
 var searchBox = document.getElementById('search');
@@ -121,6 +142,12 @@ var HOME_HTML = '<div class="home"><h1>📘 CUDA 编程指南 · 中文 Wiki</h1
   + '<li><b>查表</b>：5.1 计算能力（各架构 SM/寄存器配额）· 5.2 环境变量</li>'
   + '</ul><p style="color:var(--muted)">术语统一：线程束（warp）、流多处理器（SM）、核函数、统一内存等；代码/API 名保留英文原文。</p><p style=\"color:var(--muted);font-size:0.85em;border-top:1px solid var(--border);padding-top:0.8em;margin-top:1.2em\">版权说明：本站内容为 NVIDIA《CUDA Programming Guide》(Release 13.4.2) 的中文翻译，原文版权归 NVIDIA Corporation 所有，仅供个人学习交流使用。</p></div>';
 content.innerHTML = HOME_HTML;
+/* mobile drawer */
+var _sidebar = document.getElementById('sidebar');
+var _overlay = document.getElementById('overlay');
+function closeDrawer(){ _sidebar.classList.remove('open'); _overlay.classList.remove('show'); }
+document.getElementById('menuBtn').onclick = function(){ _sidebar.classList.toggle('open'); _overlay.classList.toggle('show'); };
+_overlay.onclick = closeDrawer;
 </script>
 </body>
 </html>
