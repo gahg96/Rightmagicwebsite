@@ -370,6 +370,12 @@
             "technology": "技术认证"
         }
     },
+    "MealLog": {
+        "badge": "Muse 记录整理",
+        "title": "控血糖饮食记录",
+        "desc": "自 2026 年 10 月起每日餐食拍照记录，热量与碳水由 AI 助手 Muse 估算整理",
+        "button": "查看饮食记录"
+    },
     "Footer": {
         "icp": "沪ICP备 2021032500 号-1",
         "domain": "rightmagic.cn"
