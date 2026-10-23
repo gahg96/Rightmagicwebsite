@@ -1,0 +1,1353 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="t1">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="data:," />
+<title>RightMagic 正奇信息 — 正道而行，奇迹自显 · 信创服务 × 企业级 AI</title>
+<meta name="description" content="RightMagic（上海正奇信息科技有限公司）：2019 年 IBM 专家创办。基本盘是卖产品、做技术服务、做解决方案——信创软件服务与产品代理、自研零匠平台与 ZenMind 智能体、Gamium AI 演武场；AI 是第二曲线：大模型私有化部署、模型微调、企业 AI 培训与私有 AI 一体机解决方案。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============ THEMES ============ */
+  :root, :root[data-theme="t1"]{ /* 绛红鎏金 */
+    --deep:#2A0A0D; --deep-2:#380D11; --deep-3:#4A0E12;
+    --deep-fg:#F5EDE2; --deep-fg2:#D8C6BC; --deep-mut:#A98D84; --deep-line:rgba(245,237,226,.14);
+    --lite:#F7F3EC; --lite-2:#EFE7DA; --lite-card:#FCFAF4;
+    --lite-fg:#2B1414; --lite-fg2:#57403C; --lite-mut:#8A7368; --lite-line:#E0D2C2;
+    --acc:#C6A15B; --acc-deep:#A8873F; --acc-ink:#9E1B1B; --on-acc:#14100A;
+    --ok-d:#93C79B; --ok-l:#3E7A44; --ok-t:#93C79B;
+    --term-bg:#1D0507; --term-head:#2A0A0D; --term-fg:#D8C6BC; --term-k:#C98A7D;
+  }
+  :root[data-theme="t2"]{ /* 墨蓝香槟 */
+    --deep:#0A1428; --deep-2:#0D1B2E; --deep-3:#12233C;
+    --deep-fg:#F2EFE6; --deep-fg2:#C6CCDA; --deep-mut:#8E97AB; --deep-line:rgba(242,239,230,.14);
+    --lite:#F7F5F0; --lite-2:#EFEAE0; --lite-card:#FCFBF7;
+    --lite-fg:#1B2436; --lite-fg2:#454E61; --lite-mut:#767E90; --lite-line:#DDD6C4;
+    --acc:#C6A15B; --acc-deep:#A8873F; --acc-ink:#8A6D2F; --on-acc:#14100A;
+    --ok-d:#7FBF8F; --ok-l:#3E7A44; --ok-t:#7FBF8F;
+    --term-bg:#081020; --term-head:#0A1730; --term-fg:#C6CCDA; --term-k:#93A7CE;
+  }
+  :root[data-theme="t3"]{ /* 曜石铂金 */
+    --deep:#101114; --deep-2:#16171B; --deep-3:#1E2026;
+    --deep-fg:#EDEEF0; --deep-fg2:#C0C4CC; --deep-mut:#868C96; --deep-line:rgba(237,238,240,.13);
+    --lite:#F4F4F2; --lite-2:#E9EAEC; --lite-card:#FFFFFF;
+    --lite-fg:#17181C; --lite-fg2:#43464D; --lite-mut:#7C8087; --lite-line:#D8D9DC;
+    --acc:#C0C4CC; --acc-deep:#9AA1AC; --acc-ink:#4A5568; --on-acc:#101114;
+    --ok-d:#8FBF9F; --ok-l:#3E7A44; --ok-t:#8FBF9F;
+    --term-bg:#0A0A0C; --term-head:#131418; --term-fg:#C0C4CC; --term-k:#8FA3BC;
+  }
+  :root[data-theme="t4"]{ /* 黛青金 */
+    --deep:#0C2420; --deep-2:#0F2C26; --deep-3:#143830;
+    --deep-fg:#F0EFE4; --deep-fg2:#C4CFC2; --deep-mut:#8CA294; --deep-line:rgba(240,239,228,.13);
+    --lite:#F7F5EE; --lite-2:#EDEAE0; --lite-card:#FCFBF5;
+    --lite-fg:#16241F; --lite-fg2:#43524A; --lite-mut:#75817A; --lite-line:#D8D8C8;
+    --acc:#C6A15B; --acc-deep:#A8873F; --acc-ink:#8A6D2F; --on-acc:#14100A;
+    --ok-d:#8FC7A8; --ok-l:#3E7A44; --ok-t:#8FC7A8;
+    --term-bg:#071612; --term-head:#0A201B; --term-fg:#C4CFC2; --term-k:#93BFA8;
+  }
+  :root[data-theme="t5"]{ /* 素白正红 */
+    --deep:#FAF8F4; --deep-2:#FFFFFF; --deep-3:#F1EEE6;
+    --deep-fg:#191919; --deep-fg2:#3D3D3D; --deep-mut:#7A766C; --deep-line:rgba(25,25,25,.13);
+    --lite:#FFFFFF; --lite-2:#F4F1EA; --lite-card:#FAF8F4;
+    --lite-fg:#191919; --lite-fg2:#3D3D3D; --lite-mut:#7A766C; --lite-line:#E3DED2;
+    --acc:#A6191F; --acc-deep:#7E1218; --acc-ink:#A6191F; --on-acc:#FFFFFF;
+    --ok-d:#3E7A44; --ok-l:#3E7A44; --ok-t:#3E7A44;
+    --term-bg:#FFFFFF; --term-head:#F4F1EA; --term-fg:#3D3D3D; --term-k:#7A766C;
+  }
+  :root{
+    --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+    --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+    /* legacy aliases */
+    --gold:var(--acc); --gold-deep:var(--acc-deep); --gold-ink:var(--acc-ink);
+    --navy:var(--deep); --cream:var(--lite);
+  }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; font-family:var(--sans); font-size:16px; line-height:1.75; -webkit-font-smoothing:antialiased; background:var(--deep); transition:background .3s; }
+  h1,h2,h3,h4,p,ul,ol,figure{ margin:0; }
+  ul{ padding:0; list-style:none; }
+  a{ color:inherit; text-decoration:none; }
+  img{ display:block; max-width:100%; }
+  section{ scroll-margin-top:76px; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+
+  /* section themes */
+  .sec-dark{
+    --fg:var(--deep-fg); --fg2:var(--deep-fg2); --mut:var(--deep-mut);
+    --line:var(--deep-line); --card:var(--deep-2); --card2:var(--deep-3);
+    --accS:var(--acc); --ok:var(--ok-d); --bg:var(--deep);
+    background:var(--deep); color:var(--fg);
+  }
+  .sec-light{
+    --fg:var(--lite-fg); --fg2:var(--lite-fg2); --mut:var(--lite-mut);
+    --line:var(--lite-line); --card:var(--lite-card); --card2:var(--lite-2);
+    --accS:var(--acc-ink); --ok:var(--ok-l); --bg:var(--lite);
+    background:var(--lite); color:var(--fg);
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--deep) 94%, transparent); backdrop-filter:blur(10px);
+    border-bottom:1px solid color-mix(in srgb, var(--acc) 35%, transparent);
+  }
+  .nav-in{ display:flex; align-items:center; gap:26px; height:66px; color:var(--deep-fg); }
+  .brand{ display:flex; align-items:baseline; gap:10px; flex:none; }
+  .brand b{ font-size:20px; font-weight:900; letter-spacing:.2px; }
+  .brand b i{ font-style:normal; color:var(--acc); }
+  .brand span{ font-size:12px; color:var(--deep-mut); letter-spacing:1px; }
+  .nav-links{ display:flex; gap:2px; margin-left:auto; }
+  .nav-links a{ font-size:14px; color:var(--deep-fg2); padding:7px 11px; border-radius:4px; transition:color .15s, background .15s; }
+  .nav-links a:hover{ color:var(--deep-fg); background:color-mix(in srgb, var(--deep-fg) 8%, transparent); }
+  .draft-chip{
+    flex:none; font-family:var(--mono); font-size:11px; color:var(--acc);
+    border:1px solid color-mix(in srgb, var(--acc) 55%, transparent); border-radius:999px; padding:3px 10px; letter-spacing:.5px;
+  }
+  .nav-toggle{
+    display:none; margin-left:auto; background:none; border:1px solid color-mix(in srgb, var(--deep-fg) 30%, transparent);
+    border-radius:6px; color:var(--deep-fg); width:40px; height:40px; cursor:pointer;
+    align-items:center; justify-content:center;
+  }
+  .nav-toggle svg{ width:20px; height:20px; }
+  @media (max-width:1080px){
+    .nav-links{
+      display:none; position:absolute; top:66px; left:0; right:0;
+      flex-direction:column; gap:0; padding:10px 16px 16px;
+      background:var(--deep-2); border-bottom:1px solid color-mix(in srgb, var(--acc) 35%, transparent);
+    }
+    .nav-links.open{ display:flex; }
+    .nav-links a{ padding:11px 10px; border-bottom:1px solid var(--deep-line); border-radius:0; }
+    .nav-links a:last-child{ border-bottom:none; }
+    .nav-toggle{ display:flex; }
+    .draft-chip{ display:none; }
+  }
+
+  /* ---------- theme switcher ---------- */
+  .theme-switch{ position:fixed; top:84px; right:16px; z-index:90; display:flex; flex-direction:column; align-items:flex-end; }
+  .ts-btn{ order:1; }
+  .ts-btn{
+    display:flex; align-items:center; gap:9px; cursor:pointer;
+    background:var(--deep-2); color:var(--deep-fg);
+    border:1px solid color-mix(in srgb, var(--acc) 60%, transparent);
+    border-radius:999px; padding:9px 15px;
+    font-family:var(--sans); font-size:13px; font-weight:700;
+    box-shadow:0 12px 32px rgba(0,0,0,.30);
+  }
+  .ts-btn .lbl{ font-size:11px; font-weight:500; color:var(--deep-mut); letter-spacing:1px; }
+  .ts-btn .dots{ display:flex; gap:3px; }
+  .ts-btn .dots i{ width:11px; height:11px; border-radius:50%; border:1px solid rgba(130,130,130,.45); }
+  .ts-btn .chev{ font-family:var(--mono); font-size:11px; color:var(--acc); }
+  .ts-panel{
+    order:2;
+    display:none; margin-top:10px; width:312px; max-width:calc(100vw - 32px);
+    max-height:min(calc(100vh - 116px), 780px); overflow:auto;
+    background:var(--deep-2); color:var(--deep-fg);
+    border:1px solid color-mix(in srgb, var(--acc) 45%, transparent);
+    border-radius:10px; padding:14px; box-shadow:0 24px 60px rgba(0,0,0,.35);
+  }
+  .theme-switch.open .ts-panel{ display:block; }
+  .ts-head{ font-size:11.5px; letter-spacing:2px; color:var(--deep-mut); margin-bottom:11px; display:flex; justify-content:space-between; gap:10px; }
+  .ts-head b{ color:var(--acc); letter-spacing:1px; }
+  .ts-opt{
+    display:block; width:100%; text-align:left; cursor:pointer; color:inherit;
+    background:transparent; border:1px solid var(--deep-line); border-radius:8px;
+    padding:11px 12px; margin-bottom:8px; font-family:var(--sans);
+  }
+  .ts-opt:last-child{ margin-bottom:0; }
+  .ts-opt:hover{ border-color:color-mix(in srgb, var(--acc) 55%, transparent); }
+  .ts-opt[aria-pressed="true"]{ border-color:var(--acc); background:color-mix(in srgb, var(--acc) 10%, transparent); }
+  .ts-opt .nm{ font-weight:900; font-size:14.5px; display:flex; align-items:baseline; gap:8px; }
+  .ts-opt .nm .no{ font-family:var(--mono); font-size:11px; color:var(--deep-mut); font-weight:600; }
+  .ts-opt .nm .cur{ margin-left:auto; font-size:11px; color:var(--acc); font-weight:700; display:none; }
+  .ts-opt[aria-pressed="true"] .nm .cur{ display:inline; }
+  .ts-opt .ds{ font-size:11.8px; color:var(--deep-mut); margin-top:2px; line-height:1.55; }
+  .ts-sw{ display:flex; gap:6px; margin-top:9px; }
+  .ts-sw span{ flex:1; border-radius:4px; padding:5px 7px; font-family:var(--mono); font-size:9.8px; line-height:1.35; border:1px solid rgba(130,130,130,.35); }
+  .ts-sw span b{ display:block; font-size:9.8px; font-weight:600; }
+  @media (max-width:560px){ .theme-switch{ top:auto; bottom:16px; right:12px; flex-direction:column-reverse; } .ts-panel{ margin-top:0; margin-bottom:10px; } }
+
+  /* ---------- version switch (旧版 / 新版) ---------- */
+  .ver-switch{
+    order:0;
+    display:flex; align-items:center; gap:9px;
+    background:var(--deep-2); color:var(--deep-fg);
+    border:1px solid color-mix(in srgb, var(--acc) 60%, transparent);
+    border-radius:999px; padding:6px 7px 6px 14px;
+    box-shadow:0 12px 32px rgba(0,0,0,.30); margin-bottom:10px;
+  }
+  .ver-switch .ver-lbl{ font-size:11px; letter-spacing:1px; color:var(--deep-mut); font-weight:500; }
+  .ver-switch .ver-group{ display:flex; border:1px solid color-mix(in srgb, var(--acc) 45%, transparent); border-radius:999px; overflow:hidden; }
+  .ver-switch .ver-opt{
+    font-size:12.5px; font-weight:700; line-height:1; padding:7px 15px;
+    color:var(--deep-fg2); background:transparent;
+  }
+  .ver-switch .ver-opt + .ver-opt{ border-left:1px solid color-mix(in srgb, var(--acc) 45%, transparent); }
+  .ver-switch a.ver-opt:hover{ color:var(--acc); }
+  .ver-switch .ver-opt.on{ background:var(--acc); color:var(--on-acc); }
+  @media (max-width:560px){ .ver-switch{ margin-bottom:0; margin-top:10px; } }
+
+  /* ---------- hero ---------- */
+  .hero{
+    --fg:var(--deep-fg); --fg2:var(--deep-fg2); --mut:var(--deep-mut); --line:var(--deep-line);
+    background:linear-gradient(165deg, var(--deep-3) 0%, var(--deep) 58%); color:var(--fg);
+    border-bottom:1px solid color-mix(in srgb, var(--acc) 35%, transparent);
+  }
+  .hero-in{ padding:88px 0 0; }
+  .hero-grid{ display:grid; grid-template-columns:1.22fr .92fr; gap:52px; align-items:start; }
+  .hero-tag{
+    display:inline-flex; align-items:center; gap:9px;
+    font-size:12.5px; letter-spacing:2px; color:var(--fg2);
+    border:1px solid color-mix(in srgb, var(--acc) 45%, transparent); padding:6px 15px;
+  }
+  .hero-tag .dot{ width:6px; height:6px; border-radius:50%; background:var(--acc); flex:none; }
+  .hero h1{
+    font-family:var(--serif); font-size:clamp(2.5rem,5.6vw,4rem); font-weight:900;
+    line-height:1.28; letter-spacing:4px; margin:30px 0 8px;
+  }
+  .hero h1 .gold{ color:var(--acc); }
+  .hero .hero-en{ font-family:var(--mono); font-size:12px; letter-spacing:3px; color:var(--mut); margin-bottom:24px; }
+  .hero-sub{ font-size:16.5px; color:var(--fg2); max-width:35em; }
+  .hero-sub b{ color:var(--fg); font-weight:700; }
+  .hero-cta{ display:flex; gap:14px; margin-top:36px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:15px; font-weight:700; padding:13px 28px; border-radius:3px;
+    transition:background .15s, border-color .15s, color .15s;
+  }
+  .btn-gold{ background:var(--acc); color:var(--on-acc); }
+  .btn-gold:hover{ background:var(--acc-deep); color:var(--on-acc); }
+  .btn-ghost{ border:1px solid color-mix(in srgb, var(--fg) 35%, transparent); color:var(--fg); }
+  .btn-ghost:hover{ border-color:var(--acc); color:var(--acc); }
+
+  .term{
+    background:var(--term-bg); border:1px solid color-mix(in srgb, var(--acc) 35%, transparent);
+    font-family:var(--mono); font-size:12.6px; line-height:1.85; overflow:hidden;
+  }
+  .term-head{
+    display:flex; align-items:center; gap:7px; padding:10px 14px;
+    border-bottom:1px solid var(--deep-line); background:var(--term-head);
+  }
+  .term-head i{ width:10px; height:10px; border-radius:50%; background:color-mix(in srgb, var(--term-fg) 28%, transparent); }
+  .term-head span{ margin-left:8px; color:var(--mut); font-size:11.5px; letter-spacing:.4px; }
+  .term-body{ padding:16px 18px 18px; color:var(--term-fg); white-space:pre-wrap; word-break:break-all; }
+  .term-body .p{ color:var(--acc); }
+  .term-body .k{ color:var(--term-k); }
+  .term-body .ok{ color:var(--ok-t); }
+  .term-body .dim{ color:var(--mut); }
+
+  .hero-stats{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    border-top:1px solid color-mix(in srgb, var(--acc) 35%, transparent); margin-top:68px;
+  }
+  .hstat{ padding:28px 28px 32px; border-left:1px solid var(--line); }
+  .hstat:first-child{ border-left:none; }
+  .hstat .num{ font-family:var(--mono); font-size:32px; font-weight:700; color:var(--acc); line-height:1.15; }
+  .hstat .num small{ font-size:16px; color:var(--acc-deep); font-weight:600; }
+  :root[data-theme="t5"] .hstat .num small{ color:var(--acc); }
+  .hstat .lbl{ font-size:13.5px; color:var(--mut); margin-top:6px; }
+  @media (max-width:900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-stats{ grid-template-columns:1fr 1fr; }
+    .hstat{ border-top:1px solid var(--line); }
+    .hstat:nth-child(-n+2){ border-top:none; }
+    .hstat:nth-child(odd){ border-left:none; }
+  }
+  @media (max-width:480px){ .hero-stats{ grid-template-columns:1fr; } .hstat{ border-left:none; border-top:1px solid var(--line);} .hstat:first-child{ border-top:none; } }
+
+  /* ---------- sections ---------- */
+  .sec{ padding:92px 0; }
+  .sec + .sec{ border-top:1px solid var(--line); }
+  .sec-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:16px; }
+  .sec-idx{ font-family:var(--mono); font-size:14px; font-weight:700; color:var(--accS); }
+  .sec-head h2{ font-family:var(--serif); font-size:clamp(1.7rem,3.4vw,2.3rem); font-weight:900; letter-spacing:2px; }
+  .sec-head .en{ font-family:var(--mono); font-size:11.5px; color:var(--mut); letter-spacing:2.5px; margin-left:auto; text-align:right; }
+  .sec-rule{ height:1px; background:linear-gradient(90deg, var(--accS) 0, color-mix(in srgb, var(--accS) 45%, transparent) 140px, var(--line) 140px); margin-bottom:34px; }
+  .sec-lede{ color:var(--fg2); font-size:16.5px; max-width:47em; margin-bottom:44px; }
+  .sec-lede b{ color:var(--fg); }
+
+  /* about / creed */
+  .creed{ border:1px solid var(--line); background:var(--card); }
+  .creed-top{ display:grid; grid-template-columns:1fr 1fr; }
+  .creed-cell{ padding:28px 30px; }
+  .creed-cell + .creed-cell{ border-left:1px solid var(--line); }
+  @media (max-width:860px){
+    .creed-top{ grid-template-columns:1fr; }
+    .creed-cell + .creed-cell{ border-left:none; border-top:1px solid var(--line); }
+  }
+  .creed .k{ font-size:12.5px; letter-spacing:3px; color:var(--accS); font-weight:700; margin-bottom:10px; }
+  .creed .v{ font-family:var(--serif); font-size:19px; font-weight:700; line-height:1.6; color:var(--fg); }
+  .creed-vals{ border-top:1px solid var(--line); padding:24px 30px 28px; }
+  .creed-vals .k{ margin-bottom:18px; }
+  .vals-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+  .val .w{ font-family:var(--serif); font-size:21px; font-weight:700; color:var(--fg); margin-bottom:6px; }
+  .val .w i{ font-style:normal; color:var(--accS); margin-right:8px; font-size:15px; vertical-align:2px; }
+  .val .n{ font-size:13.5px; line-height:1.65; color:var(--mut); }
+  @media (max-width:860px){ .vals-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:480px){
+    .vals-grid{ grid-template-columns:1fr; }
+    .creed-cell, .creed-vals{ padding-left:22px; padding-right:22px; }
+  }
+  .creed-note{ margin-top:16px; font-size:13.5px; letter-spacing:1px; color:var(--mut); text-align:center; }
+  .creed-note b{ font-family:var(--serif); color:var(--accS); font-weight:700; }
+
+  /* offer cards (products / services / solutions) */
+  .offer-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  .offer-grid.cols3{ grid-template-columns:repeat(3,1fr); }
+  @media (max-width:960px){ .offer-grid, .offer-grid.cols3{ grid-template-columns:1fr; } }
+  .offer{
+    background:var(--card); border:1px solid var(--line); border-radius:4px;
+    padding:32px 30px 28px; display:flex; flex-direction:column;
+  }
+  .offer.wide{ grid-column:1 / -1; }
+  .offer-top{ display:flex; align-items:flex-start; gap:12px; }
+  .offer h3{ font-size:22px; font-weight:900; line-height:1.35; }
+  .offer h3 .en-name{ display:block; font-family:var(--mono); font-size:11.5px; font-weight:600; color:var(--mut); letter-spacing:1.5px; margin-top:4px; }
+  .badge-open{
+    margin-left:auto; flex:none; display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; font-weight:700; color:var(--ok);
+    border:1px solid color-mix(in srgb, var(--ok) 50%, transparent); border-radius:999px; padding:3px 11px;
+  }
+  .badge-open i{ width:6px; height:6px; border-radius:50%; background:var(--ok); }
+  .offer .pitch{ font-size:15.5px; color:var(--fg); font-weight:500; margin:16px 0 4px; line-height:1.65; }
+  .offer .desc{ font-size:14.5px; color:var(--fg2); }
+  .feat{ margin-top:15px; display:flex; flex-direction:column; gap:9px; }
+  .feat li{ font-size:14px; color:var(--fg2); padding-left:18px; position:relative; line-height:1.65; }
+  .feat li::before{ content:""; position:absolute; left:0; top:.62em; width:7px; height:2px; background:var(--accS); }
+  .feat li b{ color:var(--fg); font-weight:700; }
+  .feat li code{ font-family:var(--mono); font-size:12.3px; }
+  .meta-rows{ margin-top:20px; border-top:1px solid var(--line); }
+  .meta-rows div{ display:grid; grid-template-columns:64px 1fr; gap:14px; padding:9px 0; border-bottom:1px solid var(--line); font-size:13.8px; }
+  .meta-rows .k{ color:var(--accS); font-weight:700; letter-spacing:1px; font-size:12.5px; padding-top:2px; }
+  .meta-rows .v{ color:var(--fg2); }
+  .meta-rows .v b{ color:var(--fg); }
+  .offer-links{ margin-top:auto; padding-top:24px; display:flex; gap:10px; flex-wrap:wrap; }
+  .plink{
+    font-size:13.5px; font-weight:700; padding:9px 17px; border-radius:3px;
+    border:1px solid var(--line); color:var(--fg); transition:border-color .15s, color .15s, background .15s;
+  }
+  .plink:hover{ border-color:var(--accS); color:var(--accS); }
+  .plink.primary{ background:var(--acc); border-color:var(--acc); color:var(--on-acc); }
+  .plink.primary:hover{ background:var(--acc-deep); border-color:var(--acc-deep); color:var(--on-acc); }
+  .svc-chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
+  .svc-chips span{
+    font-family:var(--mono); font-size:11.8px; color:var(--fg2);
+    border:1px solid var(--line); border-radius:3px; padding:3px 9px; background:var(--card2);
+  }
+  .metric-row{ display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+  .metric-row span{
+    font-size:12.5px; color:var(--accS); border:1px solid color-mix(in srgb, var(--accS) 45%, transparent);
+    border-radius:3px; padding:3px 10px; font-weight:500;
+  }
+
+  /* proof / infra */
+  .infra-grid{ display:grid; grid-template-columns:.92fr 1.08fr; gap:46px; align-items:start; }
+  @media (max-width:960px){ .infra-grid{ grid-template-columns:1fr; } }
+  .photo-card{ border:1px solid var(--line); background:var(--card); }
+  .photo-card img{ width:100%; aspect-ratio:3/2; object-fit:cover; }
+  .photo-card figcaption{
+    padding:13px 18px; font-size:12.8px; color:var(--mut);
+    border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+  .photo-card figcaption .mono{ font-family:var(--mono); font-size:12px; color:var(--fg2); }
+  .spec-list{ border-top:1px solid var(--line); }
+  .spec-list li{
+    display:grid; grid-template-columns:118px 1fr; gap:18px;
+    padding:15px 2px; border-bottom:1px solid var(--line); align-items:baseline;
+  }
+  .spec-list .k{ font-size:13px; color:var(--mut); letter-spacing:1px; }
+  .spec-list .v{ font-size:15.5px; color:var(--fg2); }
+  .spec-list .v b{ color:var(--fg); font-weight:700; }
+  .spec-list .v .mono{ font-family:var(--mono); font-size:14px; color:var(--accS); font-weight:600; }
+  @media (max-width:520px){ .spec-list li{ grid-template-columns:1fr; gap:2px; } }
+  .privacy-note{ margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; }
+  .privacy-note span{
+    font-size:13.5px; font-weight:700; color:var(--ok);
+    border:1px solid color-mix(in srgb, var(--ok) 50%, transparent); border-radius:999px; padding:5px 14px;
+    display:inline-flex; align-items:center; gap:7px;
+  }
+  .privacy-note span::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--ok); }
+  .stat-band{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; margin-top:54px; }
+  @media (max-width:900px){ .stat-band{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .stat-band{ grid-template-columns:1fr; } }
+  .stat{ border-top:2px solid var(--accS); padding:20px 4px 0; }
+  .stat .num{ font-family:var(--mono); font-size:36px; font-weight:700; color:var(--accS); line-height:1.1; }
+  .stat .num em{ font-style:normal; font-size:22px; }
+  .stat .lbl{ font-size:14.5px; color:var(--fg); margin-top:8px; font-weight:700; }
+  .stat .sub{ font-size:12.5px; color:var(--mut); margin-top:2px; }
+  .pipeline{ margin-top:58px; }
+  .pipeline h4, .sub-h{ font-size:15px; font-weight:700; letter-spacing:2px; color:var(--fg2); margin-bottom:18px; }
+  .pipe-steps{ display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
+  @media (max-width:960px){ .pipe-steps{ grid-template-columns:1fr; } }
+  .pstep{ position:relative; border:1px solid var(--line); background:var(--card); padding:18px 16px 15px; }
+  .pstep .n{ font-family:var(--mono); font-size:12px; color:var(--accS); font-weight:700; }
+  .pstep .t{ font-size:16px; font-weight:700; margin:6px 0 3px; }
+  .pstep .d{ font-size:12.8px; color:var(--mut); line-height:1.6; }
+  @media (min-width:961px){
+    .pstep:not(:last-child)::after{
+      content:"→"; position:absolute; right:-19px; top:50%; transform:translateY(-50%);
+      color:var(--acc-deep); font-weight:700; z-index:1; font-size:15px;
+    }
+  }
+  .proof-sub{ margin-top:64px; }
+  .proof-sub h3{ font-family:var(--serif); font-size:21px; font-weight:900; letter-spacing:1.5px; margin-bottom:8px; }
+  .proof-sub .lede2{ font-size:15px; color:var(--fg2); max-width:46em; margin-bottom:26px; }
+  .proof-sub .lede2 b{ color:var(--fg); }
+  .ft-steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  @media (max-width:960px){ .ft-steps{ grid-template-columns:1fr; } }
+  .ftstep{ position:relative; border:1px solid var(--line); background:var(--card); padding:26px 24px 22px; }
+  .ftstep .n{ font-family:var(--mono); font-size:12.5px; color:var(--accS); font-weight:700; letter-spacing:1px; }
+  .ftstep h4{ font-size:18px; font-weight:900; margin:8px 0 8px; }
+  .ftstep p{ font-size:14.5px; color:var(--fg2); }
+  .ftstep p b{ color:var(--fg); }
+  @media (min-width:961px){
+    .ftstep:not(:last-child)::after{
+      content:"→"; position:absolute; right:-20px; top:44px;
+      color:var(--acc-deep); font-weight:700; z-index:1; font-size:16px;
+    }
+  }
+  .hw-grid{ display:grid; grid-template-columns:1.08fr .92fr; gap:46px; align-items:start; }
+  @media (max-width:960px){ .hw-grid{ grid-template-columns:1fr; } }
+  .hw-item{ padding:20px 0; border-bottom:1px solid var(--line); }
+  .hw-item:first-child{ padding-top:4px; }
+  .hw-item:last-child{ border-bottom:none; }
+  .hw-item h4{ font-size:18px; font-weight:900; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .hw-item h4 .tag{
+    font-family:var(--mono); font-size:11px; font-weight:600; color:var(--ok);
+    border:1px solid color-mix(in srgb, var(--ok) 50%, transparent); border-radius:999px; padding:1px 9px; letter-spacing:.5px;
+  }
+  .hw-item p{ font-size:14.8px; color:var(--fg2); margin-top:7px; }
+  .hw-item p b{ color:var(--fg); }
+  .article-link{
+    display:inline-flex; align-items:center; gap:8px; margin-top:12px;
+    font-size:13.5px; font-weight:700; color:var(--accS);
+    border:1px solid color-mix(in srgb, var(--accS) 45%, transparent); border-radius:3px; padding:8px 14px;
+  }
+  .os-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  @media (max-width:860px){ .os-grid{ grid-template-columns:1fr; } }
+  .os-card{ display:block; border:1px solid var(--line); background:var(--card); padding:26px 28px; transition:border-color .18s; }
+  a.os-card:hover{ border-color:var(--accS); }
+  .os-card .row{ display:flex; align-items:baseline; gap:12px; }
+  .os-card h4{ font-size:19px; font-weight:900; }
+  .os-card .url{ font-family:var(--mono); font-size:12px; color:var(--accS); margin-left:auto; flex:none; }
+  .os-card .arrow{ margin-left:auto; font-family:var(--mono); color:var(--mut); flex:none; }
+  .os-card p{ font-size:14.5px; color:var(--fg2); margin-top:9px; }
+  .os-card p b{ color:var(--fg); }
+  .os-card .nums{ display:flex; gap:24px; margin-top:16px; flex-wrap:wrap; }
+  .os-card .nums .n{ font-family:var(--mono); font-size:20px; font-weight:700; color:var(--accS); }
+  .os-card .nums .l{ font-size:12px; color:var(--mut); }
+
+  /* cases */
+  .case{ border:1px solid var(--line); background:var(--card); padding:34px 34px 30px; margin-bottom:22px; }
+  .case-head{ display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px; }
+  .case-head .who{ font-family:var(--mono); font-size:12px; letter-spacing:1.5px; color:var(--accS); font-weight:700; }
+  .case-head h3{ font-family:var(--serif); font-size:21px; font-weight:900; letter-spacing:1px; }
+  .case-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:20px; border-top:1px solid var(--line); }
+  @media (max-width:860px){ .case-cols{ grid-template-columns:1fr; } }
+  .case-cols > div{ padding:20px 24px 6px 0; }
+  .case-cols > div + div{ border-left:1px solid var(--line); padding-left:24px; }
+  @media (max-width:860px){
+    .case-cols > div{ padding:16px 0 4px; }
+    .case-cols > div + div{ border-left:none; border-top:1px solid var(--line); padding-left:0; }
+  }
+  .case-cols .k{ font-size:12.5px; font-weight:700; letter-spacing:2.5px; color:var(--accS); margin-bottom:9px; }
+  .case-cols p, .case-cols li{ font-size:14.3px; color:var(--fg2); line-height:1.7; }
+  .case-cols p b, .case-cols li b{ color:var(--fg); }
+  .case-cols ul{ display:flex; flex-direction:column; gap:6px; }
+  .case-cols li{ padding-left:15px; position:relative; }
+  .case-cols li::before{ content:""; position:absolute; left:0; top:.6em; width:6px; height:2px; background:var(--accS); }
+  .case-result{ font-family:var(--mono); font-size:15px; color:var(--accS); font-weight:700; }
+
+  /* xinchuang pillars + partner table + gdf */
+  .xc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  @media (max-width:960px){ .xc-grid{ grid-template-columns:1fr; } }
+  .xc{ border:1px solid var(--line); background:var(--card); padding:28px 28px 24px; }
+  .xc h3{ font-size:18px; font-weight:900; margin-bottom:9px; }
+  .xc p{ font-size:14.5px; color:var(--fg2); }
+  .xc p b{ color:var(--fg); }
+  .ptable{ width:100%; border-collapse:collapse; border:1px solid var(--line); background:var(--card); }
+  .ptable th, .ptable td{ text-align:left; padding:16px 20px; font-size:14.5px; vertical-align:top; }
+  .ptable thead th{ font-size:12.5px; letter-spacing:2px; color:var(--accS); border-bottom:1px solid color-mix(in srgb, var(--accS) 45%, transparent); background:var(--card2); }
+  .ptable tbody tr + tr td{ border-top:1px solid var(--line); }
+  .ptable td.cat{ font-weight:900; font-size:16px; white-space:nowrap; color:var(--fg); }
+  .ptable td{ color:var(--fg2); }
+  .ptable td b{ color:var(--fg); }
+  @media (max-width:640px){
+    .ptable thead{ display:none; }
+    .ptable tr{ display:block; }
+    .ptable td{ display:block; padding:8px 20px; }
+    .ptable td.cat{ padding-top:18px; }
+    .ptable tbody tr + tr td{ border-top:none; }
+    .ptable tbody tr{ border-top:1px solid var(--line); padding-bottom:12px; }
+  }
+  .gdf{ margin-top:48px; }
+  .gdf-steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  @media (max-width:960px){ .gdf-steps{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .gdf-steps{ grid-template-columns:1fr; } }
+  .gstep{ border:1px solid var(--line); background:var(--card); padding:18px; }
+  .gstep .n{ font-family:var(--mono); font-size:12px; color:var(--accS); font-weight:700; }
+  .gstep .t{ font-size:16.5px; font-weight:700; margin:5px 0 3px; }
+  .gstep .d{ font-size:13px; color:var(--mut); line-height:1.6; }
+
+  /* zerocraft */
+  .eco-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  @media (max-width:960px){ .eco-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .eco-grid{ grid-template-columns:1fr; } }
+  .eco{ border:1px solid var(--line); background:var(--card); padding:20px; text-align:left; }
+  .eco .cn{ font-size:17px; font-weight:900; }
+  .eco .en{ font-family:var(--mono); font-size:11.5px; color:var(--accS); letter-spacing:1.5px; margin-top:2px; }
+  .eco p{ font-size:13px; color:var(--mut); margin-top:8px; line-height:1.6; }
+  .adv-list{ display:grid; grid-template-columns:1fr 1fr; gap:0 44px; margin-top:8px; }
+  @media (max-width:860px){ .adv-list{ grid-template-columns:1fr; } }
+  .adv{ display:grid; grid-template-columns:44px 1fr; gap:16px; padding:20px 0; border-bottom:1px solid var(--line); }
+  .adv .n{ font-family:var(--mono); font-size:19px; font-weight:700; color:var(--accS); }
+  .adv h4{ font-size:16.5px; font-weight:900; }
+  .adv p{ font-size:14px; color:var(--fg2); margin-top:3px; }
+  .adv p b{ color:var(--fg); }
+
+  /* timeline */
+  .tl{ position:relative; margin-top:6px; }
+  .tl::before{ content:""; position:absolute; left:86px; top:8px; bottom:8px; width:1px; background:color-mix(in srgb, var(--accS) 45%, transparent); }
+  @media (max-width:640px){ .tl::before{ left:64px; } }
+  .tl-item{ display:grid; grid-template-columns:64px 1fr; gap:44px; padding:20px 0; position:relative; }
+  @media (max-width:640px){ .tl-item{ grid-template-columns:44px 1fr; gap:38px; } }
+  .tl-item .yr{ font-family:var(--mono); font-size:21px; font-weight:700; color:var(--accS); text-align:right; line-height:1.3; }
+  .tl-item .dot{ position:absolute; left:81px; top:30px; width:11px; height:11px; border-radius:50%; background:var(--accS); box-shadow:0 0 0 4px var(--bg); }
+  @media (max-width:640px){ .tl-item .dot{ left:59px; } }
+  .tl-item h3{ font-size:18px; font-weight:900; letter-spacing:1px; }
+  .tl-item p{ font-size:14.5px; color:var(--fg2); margin-top:3px; max-width:44em; }
+
+  /* credentials / clients / locations */
+  .cred-band{ display:flex; flex-wrap:wrap; gap:9px; }
+  .cred-band span{
+    font-size:13.5px; color:var(--fg2); border:1px solid var(--line); border-radius:999px;
+    padding:6px 15px; background:var(--card);
+  }
+  .cred-band span b{ color:var(--accS); }
+  .client-wall{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:44px; }
+  @media (max-width:860px){ .client-wall{ grid-template-columns:1fr; } }
+  .client{ border-top:2px solid var(--accS); padding-top:14px; }
+  .client h4{ font-family:var(--serif); font-size:17px; font-weight:900; }
+  .client p{ font-size:13.5px; color:var(--mut); margin-top:4px; }
+  .loc-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; margin-top:44px; }
+  @media (max-width:960px){ .loc-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .loc-grid{ grid-template-columns:1fr; } }
+  .loc{ border-top:1px solid color-mix(in srgb, var(--accS) 45%, transparent); padding-top:16px; }
+  .loc h4{ font-size:18px; font-weight:900; }
+  .loc h4 .en{ display:block; font-family:var(--mono); font-size:11.5px; font-weight:600; color:var(--mut); letter-spacing:1.2px; margin-top:2px; }
+  .loc .role{ font-size:14px; color:var(--accS); font-weight:700; margin-top:7px; }
+  .loc p{ font-size:13.5px; color:var(--mut); margin-top:4px; }
+
+  /* footer */
+  footer{
+    --fg:var(--deep-fg); --fg2:var(--deep-fg2); --mut:var(--deep-mut); --line:var(--deep-line);
+    background:var(--deep); padding:60px 0 42px; color:var(--fg2);
+    border-top:1px solid color-mix(in srgb, var(--acc) 35%, transparent);
+  }
+  .foot-grid{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:44px; }
+  @media (max-width:860px){ .foot-grid{ grid-template-columns:1fr; gap:30px; } }
+  footer .brand{ color:var(--fg); }
+  footer .brand b{ font-size:22px; }
+  footer .brand span{ color:var(--mut); }
+  .foot-co{ font-size:14px; margin-top:12px; line-height:1.85; }
+  .foot-slogan{ font-family:var(--serif); font-size:15px; color:var(--acc); letter-spacing:3px; margin-top:14px; }
+  .foot-h{ font-size:12.5px; font-weight:700; letter-spacing:2px; color:var(--mut); margin-bottom:14px; }
+  .foot-links{ display:flex; flex-direction:column; gap:9px; }
+  .foot-links a{ font-size:14px; color:var(--fg2); }
+  .foot-links a:hover{ color:var(--acc); }
+  .foot-bottom{
+    margin-top:46px; padding-top:22px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
+    font-size:12.5px; color:var(--mut);
+  }
+  .foot-bottom .muse-note b{ color:var(--acc); font-weight:700; }
+
+  .rv{ animation:rvIn .65s ease-out both; }
+  @keyframes rvIn{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .rv{ animation:none; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ======================= NAV ======================= -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><b>Right<i>Magic</i></b><span>上海正奇信息科技</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="展开导航" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#products">产品</a>
+      <a href="#services">技术服务</a>
+      <a href="#solutions">解决方案</a>
+      <a href="#proof">实力背书</a>
+      <a href="#cases">客户案例</a>
+      <a href="#xinchuang">信创服务</a>
+      <a href="#zerocraft">零匠平台</a>
+      <a href="#about">关于我们</a>
+    </nav>
+    <span class="draft-chip">改版效果稿 v2</span>
+  </div>
+</header>
+
+<!-- ======================= THEME SWITCHER ======================= -->
+<div class="theme-switch" id="themeSwitch">
+  <div class="ver-switch" role="group" aria-label="网站版本切换">
+    <span class="ver-lbl">网站版本</span>
+    <span class="ver-group"><a class="ver-opt" href="https://rightmagic.cn/">旧版</a><span class="ver-opt on" aria-current="page">新版</span></span>
+  </div>
+  <div class="ts-panel" role="group" aria-label="配色方案选择">
+    <div class="ts-head"><span>配色方案 · 点击即时切换对比</span><b id="tsCur">当前：绛红鎏金</b></div>
+    <button class="ts-opt" type="button" data-theme="t1" aria-pressed="true">
+      <span class="nm"><span class="no">01</span>绛红鎏金<span class="cur">当前皮肤</span></span>
+      <span class="ds">深绛红近黑打底，暗正红与香槟金双点缀——故宫红的哑光高级感，红得深、红得稳。</span>
+      <span class="ts-sw">
+        <span style="background:#2A0A0D;color:#F5EDE2">主色<b>#2A0A0D 深绛红</b></span>
+        <span style="background:#9E1B1B;color:#FFF3EA">强调<b>#9E1B1B 暗正红</b></span>
+        <span style="background:#F7F3EC;color:#2B1414">底色<b>#F7F3EC 米白</b></span>
+      </span>
+    </button>
+    <button class="ts-opt" type="button" data-theme="t2" aria-pressed="false">
+      <span class="nm"><span class="no">02</span>墨蓝香槟<span class="cur">当前皮肤</span></span>
+      <span class="ds">深墨蓝配香槟金，克制商务——金融机构最稳妥的一套深色高级感。</span>
+      <span class="ts-sw">
+        <span style="background:#0A1428;color:#F2EFE6">主色<b>#0A1428 墨蓝</b></span>
+        <span style="background:#C6A15B;color:#14100A">强调<b>#C6A15B 香槟金</b></span>
+        <span style="background:#F7F5F0;color:#1B2436">底色<b>#F7F5F0 米白</b></span>
+      </span>
+    </button>
+    <button class="ts-opt" type="button" data-theme="t3" aria-pressed="false">
+      <span class="nm"><span class="no">03</span>曜石铂金<span class="cur">当前皮肤</span></span>
+      <span class="ds">曜石黑与铂金银灰，极简冷峻——只用银白与一条细灰蓝说话的科技高级感。</span>
+      <span class="ts-sw">
+        <span style="background:#101114;color:#EDEEF0">主色<b>#101114 曜石黑</b></span>
+        <span style="background:#C0C4CC;color:#101114">强调<b>#C0C4CC 铂金银</b></span>
+        <span style="background:#F4F4F2;color:#17181C">底色<b>#F4F4F2 冷白</b></span>
+      </span>
+    </button>
+    <button class="ts-opt" type="button" data-theme="t4" aria-pressed="false">
+      <span class="nm"><span class="no">04</span>黛青金<span class="cur">当前皮肤</span></span>
+      <span class="ds">近黑的深墨绿配金，老钱金融感——稳重、稀有、不动声色。</span>
+      <span class="ts-sw">
+        <span style="background:#0C2420;color:#F0EFE4">主色<b>#0C2420 黛青</b></span>
+        <span style="background:#C6A15B;color:#14100A">强调<b>#C6A15B 金</b></span>
+        <span style="background:#F7F5EE;color:#16241F">底色<b>#F7F5EE 米白</b></span>
+      </span>
+    </button>
+    <button class="ts-opt" type="button" data-theme="t5" aria-pressed="false">
+      <span class="nm"><span class="no">05</span>素白正红<span class="cur">当前皮肤</span></span>
+      <span class="ds">象牙白大留白、墨黑文字，正红只作细线、按钮与数字——证明红色在浅底上也能高级。</span>
+      <span class="ts-sw">
+        <span style="background:#FAF8F4;color:#191919">主色<b>#FAF8F4 象牙白</b></span>
+        <span style="background:#A6191F;color:#FFFFFF">强调<b>#A6191F 正红</b></span>
+        <span style="background:#FFFFFF;color:#191919">底色<b>#FFFFFF 纯白</b></span>
+      </span>
+    </button>
+  </div>
+  <button class="ts-btn" id="tsBtn" type="button" aria-expanded="false" aria-haspopup="true">
+    <span class="dots" id="tsDots"><i style="background:#2A0A0D"></i><i style="background:#9E1B1B"></i><i style="background:#C6A15B"></i></span>
+    <span class="lbl">配色</span><span id="tsName">绛红鎏金</span><span class="chev">▾</span>
+  </button>
+</div>
+
+
+<!-- ======================= HERO ======================= -->
+<div class="hero" id="top">
+  <div class="wrap hero-in">
+    <div class="hero-grid">
+      <div class="rv">
+        <span class="hero-tag"><span class="dot"></span>信创基本盘 × AI 第二曲线</span>
+        <h1>正道而行，<br /><span class="gold">奇迹自显</span></h1>
+        <p class="hero-en">RIGHTMAGIC · SHANGHAI ZHENGQI INFORMATION TECHNOLOGY</p>
+        <p class="hero-sub">上海正奇信息科技有限公司，2019 年由 <b>IBM 专家团队</b>创办。我们的基本盘始终清晰：<b>卖产品、做技术服务、做解决方案</b>——信创迁移与国产化落地是六年现金流，AI 是正在打开的第二曲线：自研智能体产品、大模型私有化部署、模型微调与企业培训，每一项都对应明确的客户、交付物与报价方式。</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold" href="#products">看产品与服务 →</a>
+          <a class="btn btn-ghost" href="#cases">看客户案例</a>
+        </div>
+      </div>
+      <div class="term rv" aria-label="本地推理服务实测快照">
+        <div class="term-head"><i></i><i></i><i></i><span>intranet · vllm serve · measured</span></div>
+        <div class="term-body"><span class="p">$</span> vllm serve Qwen-125B-MoE-NVFP4 \
+    <span class="k">--tensor-parallel-size</span> 2 <span class="k">--enable-expert-parallel</span> \
+    <span class="k">--quantization</span> nvfp4 <span class="k">--speculative</span> MTP \
+    <span class="k">--max-num-seqs</span> 8
+<span class="ok">✓ 私有 API 已就绪</span> <span class="dim">（OpenAI 兼容接口 · 数据不出内网）</span>
+  统一内存带宽   <span class="ok">224 GB/s</span> <span class="dim">实测</span>
+  MTP 接受率     <span class="ok">61.8%</span>
+  解码加速       <span class="ok">1.5–1.8×</span> <span class="dim">vs 关闭投机解码</span></div>
+      </div>
+    </div>
+    <div class="hero-stats rv">
+      <div class="hstat"><div class="num">3000<small>万</small></div><div class="lbl">注册资金 · 2019 年 IBM 专家创办</div></div>
+      <div class="hstat"><div class="num">40<small>万+</small></div><div class="lbl">信创邮箱迁移用户数（90+ 分支机构）</div></div>
+      <div class="hstat"><div class="num">125<small>B</small></div><div class="lbl">本地部署 MoE 大模型参数规模（NVFP4 量化）</div></div>
+      <div class="hstat"><div class="num">21<small>讲</small></div><div class="lbl">全量开源的 AI 培训讲义（约 11.6 万字）</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= ABOUT ======================= -->
+<section class="sec sec-light" id="about-intro">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-idx">—</span><h2>公司简介</h2><span class="en">ABOUT US</span></div>
+    <div class="sec-rule"></div>
+    <p class="sec-lede rv">公司概况：<b>2019 年由 IBM 专家创办，注册资金 3000 万，汇聚金融科技精英队伍</b>。六年里，我们为国有大行、头部券商、股份制银行等金融机构完成了从 Lotus Domino 到国产 WPS 生态的整套迁移；今天，同一支团队把大模型部署进客户内网、微调成企业专属小模型、装进员工桌面与边缘设备。</p>
+    <div class="creed rv">
+      <div class="creed-top">
+        <div class="creed-cell"><div class="k">愿 景</div><div class="v">守正出奇，做智能时代的长期主义者</div></div>
+        <div class="creed-cell"><div class="k">使 命</div><div class="v">以正道立信，以出奇制胜——为企业提供自主可控的数字化与智能化产品、服务与解决方案</div></div>
+      </div>
+      <div class="creed-vals">
+        <div class="k">价值观</div>
+        <div class="vals-grid">
+          <div class="val"><div class="w"><i>01</i>正道</div><div class="n">合规诚信，客户的信任是命根子</div></div>
+          <div class="val"><div class="w"><i>02</i>匠心</div><div class="n">把交付做到底，不做半成品</div></div>
+          <div class="val"><div class="w"><i>03</i>实证</div><div class="n">不讲 PPT 概念，用跑通的数据和交付结果说话</div></div>
+          <div class="val"><div class="w"><i>04</i>开拓</div><div class="n">守正不守旧，以新技术为客户创造增量</div></div>
+        </div>
+      </div>
+    </div>
+    <p class="creed-note rv">公司名拆开就是我们的活法：<b>正奇 = 守正 + 出奇</b></p>
+  </div>
+</section>
+
+<!-- ======================= 01 PRODUCTS ======================= -->
+<section class="sec sec-light" id="products" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-idx">01</span><h2>卖产品</h2><span class="en">PRODUCTS</span></div>
+    <div class="sec-rule"></div>
+    <p class="sec-lede rv">能下单、能下载、能落地的产品线：三件自研产品——<b>ZenMind 智能体平台、Gamium AI 演武场、零匠开发平台</b>，加一条信创产品代理线（WPS / 中间件 / 数据库）。AI 不再只是展示，它是货架上的商品。</p>
+    <div class="offer-grid">
+      <article class="offer wide rv">
+        <div class="offer-top">
+          <h3>ZenMind 智能体平台<span class="en-name">OPENCLAW-INSPIRED AGENT PLATFORM · DESKTOP-FIRST</span></h3>
+          <span class="badge-open"><i></i>已开源</span>
+        </div>
+        <p class="pitch">「家里闲置的电脑，应该变成能干活的 AI agent 工作台。」</p>
+        <p class="desc">桌面优先（desktop-first）的 AI 智能体平台，面向本地、Web 与移动工作流。一个 Desktop 应用完成全部服务的安装、初始化、启停与监控——开源版免费下载，企业版提供内网部署与技术支持。</p>
+        <ul class="feat">
+          <li><b>国产模型原生接入</b>：DeepSeek V4（pro / flash，1M 上下文）、MiMo、MiniMax M3、Qwen / 百炼</li>
+          <li><b>自研 AGW UI 协议</b>：流式输出、HITL 人工确认（提问 / 审批 / 表单 / 计划确认）、viewport 渲染、用量遥测（token / 缓存 / 成本）、子智能体调用 <code>agent_invoke</code></li>
+          <li><b>本地沙箱层</b>：容器沙箱承载长会话与工具环境，支撑办公 / 文档自动化</li>
+        </ul>
+        <div class="svc-chips"><span>zenmind-app-server</span><span>agent-platform</span><span>agent-webclient</span><span>agent-container-hub</span></div>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">想让 AI 在员工桌面上<b>真正动手干活</b>的企业与团队；注重数据本地化、希望智能体可审计可确认的组织</span></div>
+          <div><span class="k">交付物</span><span class="v">Desktop 安装包（开源版）／ 企业内网部署 + 模型接入配置 + 使用培训与技术支持（企业版）</span></div>
+        </div>
+        <div class="offer-links">
+          <a class="plink primary" href="https://www.zenmind.cc" target="_blank" rel="noopener">下载 ZenMind ↗</a>
+          <a class="plink" href="https://github.com/linlay/zenmind" target="_blank" rel="noopener">GitHub 开源仓库 ↗</a>
+          <a class="plink" href="#contact">咨询企业部署</a>
+        </div>
+      </article>
+      <article class="offer rv">
+        <div class="offer-top">
+          <h3>Gamium AI 演武场<span class="en-name">LLM EVALUATION ARENA</span></h3>
+        </div>
+        <p class="pitch">给大模型戴上「紧箍咒」的风控沙盒。</p>
+        <p class="desc">银行级大模型对抗与基准评测平台。模型上岗前先在这里过招：回合制自动对话模拟真实业务场景与对抗提问，量化输出每一项关键指标。</p>
+        <div class="metric-row"><span>任务完成率</span><span>幻觉率</span><span>合规率</span><span>响应时延</span></div>
+        <ul class="feat">
+          <li><b>回合制自动对话评测</b>：多轮交互中考察任务完成度，而非单轮问答</li>
+          <li><b>对抗与合规测试</b>：针对金融场景的风险话术、越界请求做压力测试</li>
+          <li><b>可复现的基准</b>：同一套题库横向对比不同模型与不同版本</li>
+        </ul>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">模型上线前需要<b>评测验收与合规把关</b>的银行、券商等金融机构科技部门</span></div>
+          <div><span class="k">交付物</span><span class="v">评测平台部署 + 金融场景题库 + 量化评测报告</span></div>
+        </div>
+        <div class="offer-links">
+          <a class="plink primary" href="#contact">预约演示</a>
+          <a class="plink" href="#solutions">看评测解决方案 →</a>
+        </div>
+      </article>
+      <article class="offer rv">
+        <div class="offer-top">
+          <h3>零匠开发平台<span class="en-name">ZEROCRAFT · PAAS / LOW-CODE</span></h3>
+        </div>
+        <p class="pitch">基于 PaaS 架构的自主研发框架，轻量级全栈开发模式。</p>
+        <p class="desc">统一代码规范、降低重复开发，开发效率显著提升；原生集成智能体开发能力，把 AI 能力沉淀进企业自己的业务系统。已在证券需求单管理、金融机构缺陷管理等真实项目中交付。</p>
+        <ul class="feat">
+          <li><b>生态七件套</b>：工作站、工程化、后端脚本、前端低代码、测试、模型、工作流</li>
+          <li><b>云原生 Web IDE</b>：随处随时开发，一键部署 / 发布 / 提交，协同编辑</li>
+          <li><b>全栈信创适配</b>：应用服务器、数据库、消息队列、缓存服务</li>
+        </ul>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">需要<b>快速交付业务系统</b>、又受信创环境约束的企业 IT 团队</span></div>
+          <div><span class="k">交付物</span><span class="v">平台授权 + 实施交付 + 智能体开发支持</span></div>
+        </div>
+        <div class="offer-links">
+          <a class="plink primary" href="#contact">预约演示</a>
+          <a class="plink" href="#zerocraft">看零匠详细介绍 →</a>
+        </div>
+      </article>
+      <article class="offer wide rv">
+        <div class="offer-top">
+          <h3>信创产品代理<span class="en-name">XINCHUANG PRODUCT DISTRIBUTION</span></h3>
+        </div>
+        <p class="pitch">现成的现金流产品线：头部厂商战略伙伴资质 + 金融行业交付经验，产品与服务一起卖。</p>
+        <ul class="feat">
+          <li><b>WPS 办公软件</b>：金山办公战略伙伴、金牌服务商资质，与头部银行、保险机构长期合作</li>
+          <li><b>中间件</b>：东方通战略伙伴，深度技术认证，金融行业全覆盖</li>
+          <li><b>数据库</b>：OceanBase、达梦、南大通用 GBase 代理与实施</li>
+        </ul>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">正在做<b>国产化替代采购</b>的金融、政务、国企客户</span></div>
+          <div><span class="k">交付物</span><span class="v">产品授权 + 部署实施 + 迁移与运维服务（完整矩阵见下方信创服务区）</span></div>
+        </div>
+        <div class="offer-links">
+          <a class="plink primary" href="#contact">咨询采购与实施</a>
+          <a class="plink" href="#partners">看代理矩阵 →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 02 SERVICES ======================= -->
+<section class="sec sec-dark" id="services">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-idx">02</span><h2>做技术服务</h2><span class="en">TECHNICAL SERVICES</span></div>
+    <div class="sec-rule"></div>
+    <p class="sec-lede rv">能立项、能报价、能验收的服务线。四条服务共享同一套交付纪律——<b>GDF 全球交付框架</b>：业务咨询、系统集成、应用开发、运维服务端到端贯通。AI 服务不是概念演示，每条都写清了交付物。</p>
+    <div class="offer-grid">
+      <article class="offer rv">
+        <div class="offer-top"><h3>大模型私有化部署服务<span class="en-name">PRIVATE LLM DEPLOYMENT</span></h3></div>
+        <p class="desc">把大模型部署进客户内网：从裸机到 OpenAI 兼容的私有 API 服务，全程数据不出内网。我们自己的双机 DGX Spark 集群就是这条服务线的样板间——125B MoE 本地运行、带宽与加速比全部实测（见实力背书区）。</p>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">数据敏感、<b>不能上公有云 API</b> 的金融与政企客户</span></div>
+          <div><span class="k">交付物</span><span class="v">硬件选型建议 + 模型量化与 vLLM 部署 + 压测调优报告 + 私有 API + 运维交接</span></div>
+        </div>
+        <div class="offer-links"><a class="plink primary" href="#contact">咨询部署</a><a class="plink" href="#proof">看实测数据 →</a></div>
+      </article>
+      <article class="offer rv">
+        <div class="offer-top"><h3>模型微调服务<span class="en-name">FINE-TUNING SERVICE</span></h3></div>
+        <p class="desc">通用大模型不懂你的业务。我们走通了一条可复现的路线：强教师模型序列级蒸馏 → 数据过滤 → LoRA SFT，训出懂业务的企业专属小模型；敏感数据可用本地模型当教师，全程不出内网。</p>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">有<b>专属业务语料</b>、通用模型答不好自家问题的企业</span></div>
+          <div><span class="k">交付物</span><span class="v">训练数据管线 + 微调后专属模型 + 评测对比报告 + 私有部署</span></div>
+        </div>
+        <div class="offer-links"><a class="plink primary" href="#contact">咨询微调</a><a class="plink" href="#proof">看微调路线 →</a></div>
+      </article>
+      <article class="offer rv">
+        <div class="offer-top"><h3>企业 AI 培训服务<span class="en-name">AI TRAINING FOR ENTERPRISE</span></h3></div>
+        <p class="desc">把我们内部培训的同一套课程对外交付：业务轨 5 周 + 技术轨 6 周双轨设计，外加并行训练、偏好优化、推理引擎等进阶专题，讲义全量开源可查——不是 PPT 培训，是带真实算力实操的工程课。</p>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">要<b>成建制提升团队 AI 工程能力</b>的企业技术部门</span></div>
+          <div><span class="k">交付物</span><span class="v">双轨课程交付 + 21 讲讲义 + DGX Spark 真机实操 + 结课项目（蒸馏→LoRA 全流程）</span></div>
+        </div>
+        <div class="offer-links"><a class="plink primary" href="#contact">咨询培训</a><a class="plink" href="https://rightmagic.cn/ai-training/" target="_blank" rel="noopener">先看开源讲义 ↗</a></div>
+      </article>
+      <article class="offer rv">
+        <div class="offer-top"><h3>信创迁移服务<span class="en-name">XINCHUANG MIGRATION</span></h3></div>
+        <p class="desc">基本盘的服务线，六年实绩：IBM Lotus Domino 邮箱迁移、办公 OA 国产化改造、WPS 协同落地。双轨运行、用户无感切换、定制迁移工具——40 多万用户迁移规模验证过的打法。</p>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">面临<b>国产化替代时间表</b>的金融机构与大型企业</span></div>
+          <div><span class="k">交付物</span><span class="v">迁移方案 + 定制迁移工具 + 分批切换实施 + 持续优化支持</span></div>
+        </div>
+        <div class="offer-links"><a class="plink primary" href="#contact">咨询迁移</a><a class="plink" href="#cases">看迁移案例 →</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 03 SOLUTIONS ======================= -->
+<section class="sec sec-light" id="solutions">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-idx">03</span><h2>做解决方案</h2><span class="en">SOLUTIONS</span></div>
+    <div class="sec-rule"></div>
+    <p class="sec-lede rv">能进招投标、能写进方案书的成套打法：产品 + 服务 + 行业 know-how 打包交付，对着客户的<b>验收场景</b>说话。</p>
+    <div class="offer-grid cols3">
+      <article class="offer rv">
+        <div class="offer-top"><h3>金融 AI 评测解决方案<span class="en-name">FINANCIAL LLM EVALUATION</span></h3></div>
+        <p class="desc">Gamium 演武场 + 私有算力底座 + 金融场景题库：为银行的模型选型、集采验收与上线合规提供一套可复现、可出报告的评测体系。</p>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">引入大模型需<b>选型比测与上线验收</b>的金融机构</span></div>
+          <div><span class="k">交付物</span><span class="v">评测方案 + 题库建设 + 评测执行 + 验收报告</span></div>
+        </div>
+        <div class="offer-links"><a class="plink primary" href="#contact">获取方案</a></div>
+      </article>
+      <article class="offer rv">
+        <div class="offer-top"><h3>企业私有 AI 一体机解决方案<span class="en-name">PRIVATE AI APPLIANCE</span></h3></div>
+        <p class="desc">硬件 + 模型 + 智能体打包：DGX Spark 级桌面算力、本地大模型与 ZenMind 智能体预装交付，开箱即是一台数据不出内网的企业 AI 工作站。</p>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">想<b>低成本起步私有 AI</b>、又不建机房的中小机构与部门级团队</span></div>
+          <div><span class="k">交付物</span><span class="v">一体机硬件 + 模型与智能体预装 + 部署调优 + 培训交接</span></div>
+        </div>
+        <div class="offer-links"><a class="plink primary" href="#contact">咨询一体机</a></div>
+      </article>
+      <article class="offer rv">
+        <div class="offer-top"><h3>信创国产化解决方案<span class="en-name">XINCHUANG LOCALIZATION</span></h3></div>
+        <p class="desc">老本行的成套方案：邮箱、OA、办公协同三大系统的国产化替代，产品代理 + 迁移服务 + 定制开发一体交付，覆盖金融、政务、国企等重点行业。</p>
+        <div class="meta-rows">
+          <div><span class="k">卖给谁</span><span class="v">有<b>整体国产化规划</b>、需要总包交付的行业客户</span></div>
+          <div><span class="k">交付物</span><span class="v">替代规划 + 产品组合 + 迁移实施 + 适配认证支持</span></div>
+        </div>
+        <div class="offer-links"><a class="plink primary" href="#contact">获取方案</a><a class="plink" href="#xinchuang">看信创服务 →</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 04 PROOF ======================= -->
+<section class="sec sec-dark" id="proof">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-idx">04</span><h2>实力背书</h2><span class="en">PROOF, NOT PROMISES</span></div>
+    <div class="sec-rule"></div>
+    <p class="sec-lede rv">说自己会做 AI 的公司很多。这一层不放口号，只放<b>我们自己机房里的实测、自己跑通的路线、自己公开的材料</b>——上面每一条产品与服务的可信度，都由这里支撑。</p>
+
+    <div class="proof-sub rv" style="margin-top:0">
+      <h3>AI Infra 实证 · 双 DGX Spark 本地大模型</h3>
+      <p class="lede2">两台 DGX Spark 桌面超算组双机集群，在企业内网本地跑起 125B MoE 大模型。下面每个数字都来自我们自己的压测脚本与真机实验。</p>
+    </div>
+    <div class="infra-grid">
+      <figure class="photo-card rv">
+        <img src="assets/dgx-spark.jpg" alt="NVIDIA DGX Spark（GB10）桌面 AI 超算示意（公开评测图）" loading="lazy" />
+        <figcaption><span>NVIDIA DGX Spark · GB10 Grace Blackwell（产品示意图，非自有实拍）</span><span class="mono">2× cluster · TP2 + EP</span></figcaption>
+      </figure>
+      <div class="rv">
+        <ul class="spec-list">
+          <li><span class="k">集群硬件</span><span class="v"><b>2× NVIDIA DGX Spark</b>（GB10）双机集群，桌面级体积、机房级算力</span></li>
+          <li><span class="k">在跑模型</span><span class="v"><b>Qwen 125B MoE</b> 大模型，NVFP4 量化，每步仅激活约 <span class="mono">6B</span> 参数</span></li>
+          <li><span class="k">推理引擎</span><span class="v"><b>vLLM</b> · TP2 + EP 张量 / 专家并行 · MTP 投机解码 · CUDA Graph</span></li>
+          <li><span class="k">内存带宽</span><span class="v">统一内存实测 <span class="mono">224–226 GB/s</span>（约理论峰值的 82–83%）</span></li>
+          <li><span class="k">投机解码</span><span class="v">MTP 接受率 <span class="mono">61.8%</span>，开启后解码速度达 <span class="mono">1.5–1.8×</span></span></li>
+          <li><span class="k">服务形态</span><span class="v">OpenAI 兼容的<b>私有 API 服务</b>，业务系统即插即用</span></li>
+        </ul>
+        <div class="privacy-note"><span>数据不出内网</span><span>私有化合规</span><span>离线可用</span></div>
+      </div>
+    </div>
+    <div class="stat-band">
+      <div class="stat rv"><div class="num">125<em>B</em></div><div class="lbl">MoE 总参数</div><div class="sub">NVFP4 量化 · 每步激活约 6B</div></div>
+      <div class="stat rv"><div class="num">224<em> GB/s</em></div><div class="lbl">统一内存带宽实测</div><div class="sub">双机真机压测，非厂商标称</div></div>
+      <div class="stat rv"><div class="num">61.8<em>%</em></div><div class="lbl">MTP 投机解码接受率</div><div class="sub">多轮真机实验均值</div></div>
+      <div class="stat rv"><div class="num">1.5–1.8<em>×</em></div><div class="lbl">开启 MTP 后解码加速</div><div class="sub">对比关闭投机解码</div></div>
+    </div>
+    <div class="pipeline rv">
+      <h4>从一台裸机到私有 API：我们的标准部署流水线</h4>
+      <div class="pipe-steps">
+        <div class="pstep"><div class="n">STEP 1</div><div class="t">模型选型</div><div class="d">按业务场景、上下文与合规要求选基座模型</div></div>
+        <div class="pstep"><div class="n">STEP 2</div><div class="t">量化</div><div class="d">NVFP4 / FP8 量化，精度与体积取平衡</div></div>
+        <div class="pstep"><div class="n">STEP 3</div><div class="t">vLLM 部署</div><div class="d">TP + EP 并行、投机解码、CUDA Graph</div></div>
+        <div class="pstep"><div class="n">STEP 4</div><div class="t">压测调优</div><div class="d">并发、时延与吞吐的真机压测与参数实验</div></div>
+        <div class="pstep"><div class="n">STEP 5</div><div class="t">私有 API 服务</div><div class="d">内网交付，持续运维与版本管理</div></div>
+      </div>
+    </div>
+
+    <div class="proof-sub rv">
+      <h3>微调路线 · 蒸馏 → 过滤 → LoRA SFT</h3>
+      <p class="lede2">用强教师模型蒸馏出高质量数据，再用 LoRA 把知识装进可私有部署的 Qwen 小模型——这是我们内部 AI 培训技术轨的结课项目路线，也是微调服务的交付路线。落点只有三个词：<b>成本低</b>（小模型推理便宜）、<b>可私有</b>（部署在自有算力上）、<b>懂业务</b>（用客户自己的数据教出来）。敏感数据场景改用本地大模型当教师，全程不出内网。</p>
+      <div class="ft-steps">
+        <div class="ftstep rv"><div class="n">STEP 1 · DISTILL</div><h4>序列级蒸馏</h4><p>以 <b>DeepSeek 教师模型</b>对业务问题生成高质量回答序列，把大模型的能力「蒸」进训练数据。</p></div>
+        <div class="ftstep rv"><div class="n">STEP 2 · FILTER</div><h4>数据过滤</h4><p>对蒸馏数据做质量过滤与去噪：格式校验、正确性筛选、重复剔除，只留可学的样本。</p></div>
+        <div class="ftstep rv"><div class="n">STEP 3 · SFT</div><h4>LoRA SFT</h4><p>用过滤后的数据对 <b>Qwen 小模型</b>做 LoRA 监督微调，低成本得到懂业务的专属模型。进阶能力：Megatron 并行训练、GRPO 偏好优化、量化与投机解码。</p></div>
+      </div>
+    </div>
+
+    <div class="proof-sub rv">
+      <h3>AI + 硬件 · Muse × 边缘设备</h3>
+      <p class="lede2">AI 不只在云端和屏幕里——<b>还能戴在手上、落在设备上</b>。我们基于 Muse Gadgets / ESP32 生态做了从固件到联网的完整实证。</p>
+      <div class="hw-grid">
+        <div>
+          <div class="hw-item">
+            <h4>SenseCAP Watcher × Muse <span class="tag">已全程跑通</span></h4>
+            <p>在 Seeed SenseCAP Watcher AI 手表上跑通 <b>Muse</b> 对话：官方固件 + 自编 <b>CJK 中文字体固件</b>解决中文显示，经便携路由代理出口完成联网与配对。从「收不到回复」到字幕翻页，每一坑都踩过、都记录在案。</p>
+            <span class="article-link">公众号复盘《一块手表的五天五夜：我的 AI 手表联网血泪史》</span>
+          </div>
+          <div class="hw-item">
+            <h4>ESP32 边缘设备生态</h4>
+            <p>以 ESP32 系列开发板为载体验证 <b>Muse Gadgets</b> 的设备接入路径：AI 助手从手机、电脑延伸到桌面与空间里的实体设备。</p>
+          </div>
+          <div class="hw-item">
+            <h4>AI 眼镜探索</h4>
+            <p>对带屏 AI 眼镜做选型与可编程性验证（配镜范围、SDK 开放度、续航与成本），为「AI 戴在脸上」的下一代交互形态做技术储备。</p>
+          </div>
+        </div>
+        <figure class="photo-card">
+          <img src="assets/watcher-crop.jpg" alt="Seeed SenseCAP Watcher 智能设备正面，屏幕显示绿色像素表情" loading="lazy" />
+          <figcaption><span>Seeed SenseCAP Watcher · ESP32-S3</span><span class="mono">Muse Gadgets 实证载体</span></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="proof-sub rv">
+      <h3>知识开源 · 用的材料，就是公开的材料</h3>
+      <p class="lede2">我们把内部培训和研究<b>全量公开</b>：讲义、译著、部署复盘、每周简报——这些不是营销文案，是我们给自己团队用的同一套材料。</p>
+      <div class="os-grid">
+        <a class="os-card" href="https://rightmagic.cn/ai-training/" target="_blank" rel="noopener">
+          <div class="row"><h4>AI 培训讲义 Wiki</h4><span class="url">rightmagic.cn/ai-training/</span></div>
+          <p>公司内部 AI 培训的完整讲义：<b>业务轨 5 周 + 技术轨 6 周</b>，外加并行训练、偏好优化、推理引擎、Profiling、企业落地等<b>进阶专题五模块十讲</b>，双轨读者各取所需。</p>
+          <div class="nums"><div><div class="n">21 讲</div><div class="l">讲义篇数</div></div><div><div class="n">11.6 万字</div><div class="l">全文规模</div></div><div><div class="n">双轨</div><div class="l">业务轨 / 技术轨</div></div></div>
+        </a>
+        <a class="os-card" href="https://rightmagic.cn/cuda-wiki/" target="_blank" rel="noopener">
+          <div class="row"><h4>CUDA 编程指南中文 Wiki</h4><span class="url">rightmagic.cn/cuda-wiki/</span></div>
+          <p>NVIDIA《CUDA Programming Guide》<b>全 45 节中文翻译</b>，带目录树与全文搜索，离线可读——我们学 GPU 编程的底稿，也开放给所有人。</p>
+          <div class="nums"><div><div class="n">45 节</div><div class="l">官方指南全译</div></div><div><div class="n">13.4.2</div><div class="l">对应 Release 版本</div></div></div>
+        </a>
+        <a class="os-card" href="https://rightmagic.cn/showcase/" target="_blank" rel="noopener">
+          <div class="row"><h4>DGX Spark 部署复盘 Showcase</h4><span class="url">rightmagic.cn/showcase/</span></div>
+          <p>双机 DGX Spark 部署 Qwen 大模型的完整复盘：镜像选型、并行策略、带宽实测与压测口径，<b>连同踩过的坑一起公开</b>。</p>
+          <div class="nums"><div><div class="n">2× GB10</div><div class="l">双机集群</div></div><div><div class="n">224 GB/s</div><div class="l">带宽实测</div></div></div>
+        </a>
+        <div class="os-card">
+          <div class="row"><h4>LLM 本地部署动态简报</h4><span class="arrow">每周一发布</span></div>
+          <p>每周追踪<b>国产模型、推理引擎、DGX Spark 部署实践与 Mac MLX 生态</b>的最新动态，并持续换算各家 API 价格（人民币 / 每百万 token），支撑「自建 vs 云 API」的平衡点测算。</p>
+          <div class="nums"><div><div class="n">7 天</div><div class="l">覆盖周期</div></div><div><div class="n">¥/百万 token</div><div class="l">API 价格追踪口径</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 05 CASES ======================= -->
+<section class="sec sec-light" id="cases">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-idx">05</span><h2>客户案例</h2><span class="en">CASE STUDIES</span></div>
+    <div class="sec-rule"></div>
+    <p class="sec-lede rv">案例不写形容词，写<b>挑战、方案、结果</b>。客户名称按保密惯例脱敏，规模数字全部来自项目实绩。</p>
+
+    <article class="case rv">
+      <div class="case-head"><span class="who">某国有大行</span><h3>邮箱系统国产化迁移项目</h3></div>
+      <div class="case-cols">
+        <div>
+          <div class="k">挑 战</div>
+          <ul>
+            <li><b>Domino 平台整体更换</b>，期初邮件数据需完整迁移</li>
+            <li>分支机构遍布全球，<b>不同国家与地区的监管要求不同</b>，方案不能一刀切</li>
+            <li>用户规模巨大，切换不能影响日常办公</li>
+          </ul>
+        </div>
+        <div>
+          <div class="k">方 案</div>
+          <ul>
+            <li>采用<b>双轨运行</b>方式，新旧系统并行，逐步让用户适应新系统，减少用户工作量、提高体验感</li>
+            <li><b>定制开发数据迁移工具</b>，实现集中式、本地部署两套方案落地</li>
+            <li>针对全球不同监管要求，逐地提出差异化解决方案</li>
+          </ul>
+        </div>
+        <div>
+          <div class="k">结 果</div>
+          <p class="case-result">40 家国内分行 + 50 家海外分行 + 若干直属机构</p>
+          <p style="margin-top:8px">历经三年，邮箱迁移方案推广至全行，<b>40 多万用户</b>完成全面国产化替代。</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="case rv">
+      <div class="case-head"><span class="who">某头部券商</span><h3>信创 OA 改造项目</h3></div>
+      <div class="case-cols">
+        <div>
+          <div class="k">挑 战</div>
+          <ul>
+            <li>集团核心业务流程数量庞大，全部运行在待替代的平台上</li>
+            <li>切换窗口敏感，业务不能停、用户不能有感</li>
+            <li>各部门流程差异大，标准化迁移之外还有大量个性化需求</li>
+          </ul>
+        </div>
+        <div>
+          <div class="k">方 案</div>
+          <ul>
+            <li><b>全面迁移</b>：完成集团数百项核心业务流程的国产化迁移</li>
+            <li><b>功能保障</b>：实现用户无感切换，以及在线编辑、文档预览等关键功能平移</li>
+            <li><b>持续优化</b>：针对各部门个性化需求提供定制解决方案，迁移后持续迭代</li>
+          </ul>
+        </div>
+        <div>
+          <div class="k">结 果</div>
+          <p class="case-result">数百项核心业务流程完成国产化迁移</p>
+          <p style="margin-top:8px">集团 OA 整体切换至国产化平台，关键功能无损，用户无感过渡。</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="case rv">
+      <div class="case-head"><span class="who">某股份制银行</span><h3>WPS 协同辅助开发项目</h3></div>
+      <div class="case-cols">
+        <div>
+          <div class="k">挑 战 · 五大痛点</div>
+          <ul>
+            <li><b>文档协作难</b>：各部门信息传递不到位</li>
+            <li><b>跨端管理难</b>：数据协作终端多样化、文件协作方式复杂，重要文件的更新或上传无法让员工第一时间知晓</li>
+            <li><b>文档收集及检索难</b>：海量文档分散在个人电脑上，无法有效集中管理及备份；员工很少主动上传云端，文件冗余多、存储成本高</li>
+            <li><b>文档安全难</b>：面临病毒威胁，随时有数据丢失或泄露风险；误操作难以追溯责任，存在内部人员恶意盗取风险</li>
+            <li><b>文档管控难</b>：数据散落在不同服务器，无法集中管控；同一文档多个修改版本无法统一管理</li>
+          </ul>
+        </div>
+        <div>
+          <div class="k">方 案</div>
+          <ul>
+            <li>基于 <b>WPS 协同生态</b>做辅助开发，无缝衔接国产办公生态</li>
+            <li>实现<b>多端文档管理</b>：多终端统一访问、编辑与更新提醒，重要文件第一时间触达</li>
+            <li>文档集中收集、统一版本管理与检索</li>
+          </ul>
+        </div>
+        <div>
+          <div class="k">结 果</div>
+          <p class="case-result">多端统一的文档协作与管控体系落地</p>
+          <p style="margin-top:8px">文档从个人电脑回到企业管控之下：可集中、可检索、可追溯，安全体系覆盖存储、传输与权限。</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ======================= 06 XINCHUANG ======================= -->
+<section class="sec sec-light" id="xinchuang" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-idx">06</span><h2>信创服务体系</h2><span class="en">XINCHUANG SERVICES</span></div>
+    <div class="sec-rule"></div>
+    <p class="sec-lede rv">基本盘的完整拼图：<b>三大服务支柱 + 产品代理矩阵</b>，全部由 GDF 全球交付框架贯通——端到端的服务交付框架，整合全球最佳实践，标准化交付流程、质量保证体系、知识资产沉淀、持续服务保障。</p>
+    <div class="xc-grid">
+      <div class="xc rv"><h3>邮箱信创</h3><p>专注 <b>IBM Lotus Domino 迁移</b>，国产化邮件系统定制开发。从期初数据迁移到全球分支机构分批切换，有 40 多万用户规模的实绩打底。</p></div>
+      <div class="xc rv"><h3>办公信创</h3><p><b>Microsoft Office 全套迁移</b>，无缝衔接国产 WPS 生态：文档协作、跨端管理与安全管控在迁移中一并解决。</p></div>
+      <div class="xc rv"><h3>业务流程信创</h3><p><b>全国产化流程平台</b>替代：核心业务流程迁移、无感切换与持续定制优化，覆盖金融、政务、国企等重点行业。</p></div>
+    </div>
+
+    <h4 class="sub-h rv" id="partners" style="margin-top:52px; scroll-margin-top:90px">信创产品代理矩阵</h4>
+    <table class="ptable rv">
+      <thead><tr><th style="width:22%">产品线</th><th style="width:30%">厂商与资质</th><th>合作实绩</th></tr></thead>
+      <tbody>
+        <tr><td class="cat">WPS 办公软件</td><td><b>金山办公</b>战略伙伴 · <b>金牌服务商</b>资质</td><td>与头部银行、保险机构长期合作，办公迁移与协同开发经验完整</td></tr>
+        <tr><td class="cat">中间件</td><td><b>东方通</b>战略伙伴 · 深度技术认证</td><td>金融行业全覆盖，应用服务器等基础软件国产化替代</td></tr>
+        <tr><td class="cat">数据库</td><td><b>OceanBase</b> · <b>达梦</b> · <b>南大通用 GBase</b></td><td>三大国产数据库的代理、部署与迁移实施</td></tr>
+      </tbody>
+    </table>
+
+    <div class="gdf rv">
+      <h4 class="sub-h"><span style="font-family:var(--mono); color:var(--gold-ink)">GDF</span> · 全球交付框架（Global Delivery Framework）</h4>
+      <div class="gdf-steps">
+        <div class="gstep"><div class="n">01</div><div class="t">业务咨询</div><div class="d">战略规划、流程优化、转型咨询</div></div>
+        <div class="gstep"><div class="n">02</div><div class="t">系统集成</div><div class="d">异构系统整合、平台迁移、架构转型</div></div>
+        <div class="gstep"><div class="n">03</div><div class="t">应用开发</div><div class="d">定制开发、产品适配、应用现代化</div></div>
+        <div class="gstep"><div class="n">04</div><div class="t">运维服务</div><div class="d">应用运维、基础设施维护、持续优化</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 07 ZEROCRAFT ======================= -->
+<section class="sec sec-dark" id="zerocraft">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-idx">07</span><h2>零匠平台详解</h2><span class="en">ZEROCRAFT IN DETAIL</span></div>
+    <div class="sec-rule"></div>
+    <p class="sec-lede rv">深耕金融场景，沉淀行业智慧，打造可复制的数字化转型样板。零匠基于 PaaS 架构自主研发：<b>七大模块构成完整开发生态，五大优势解决企业开发的「最后一公里」</b>。</p>
+    <div class="eco-grid">
+      <div class="eco rv"><div class="cn">工作站</div><div class="en">STATION</div><p>统一的开发工作台入口，一个账号进入全部研发资产</p></div>
+      <div class="eco rv"><div class="cn">工程化</div><div class="en">ENGINEERING</div><p>工程规范与脚手架，统一代码规范，降低重复开发</p></div>
+      <div class="eco rv"><div class="cn">后端脚本</div><div class="en">SCRIPT</div><p>自创脚本语言编写后端逻辑，低门槛、好维护、易交接</p></div>
+      <div class="eco rv"><div class="cn">前端低代码</div><div class="en">LOWCODE</div><p>前端页面低代码组装，快速响应业务界面需求</p></div>
+      <div class="eco rv"><div class="cn">测试</div><div class="en">TESTING</div><p>内置测试环节，质量左移，交付质量内建于流程</p></div>
+      <div class="eco rv"><div class="cn">模型</div><div class="en">MODEL</div><p>数据与业务模型定义，沉淀可复用的领域资产</p></div>
+      <div class="eco rv"><div class="cn">工作流</div><div class="en">FLOW</div><p>业务流程编排，构建技术中台、统一业务流程</p></div>
+      <div class="eco rv"><div class="cn">信创适配</div><div class="en">XINCHUANG READY</div><p>应用服务器、数据库、消息队列、缓存服务及其他开源组件全栈适配</p></div>
+    </div>
+    <div class="adv-list">
+      <div class="adv rv"><div class="n">01</div><div><h4>无缝高效集成，解决「最后一公里」</h4><p>云研发一体化：系统集成不再卡在最后一段。</p></div></div>
+      <div class="adv rv"><div class="n">02</div><div><h4>构建技术中台，统一业务流程</h4><p>零 / 中代码沉淀共性能力，业务系统不再重复造轮子。</p></div></div>
+      <div class="adv rv"><div class="n">03</div><div><h4>自创脚本语言，降低学习成本</h4><p>低门槛、好维护、易交接，团队上手与人员更替成本显著降低。</p></div></div>
+      <div class="adv rv"><div class="n">04</div><div><h4>智能体开发平台，快速响应业务需求</h4><p>强扩展、高上限：从传统应用到 AI 智能体，同一平台演进。</p></div></div>
+      <div class="adv rv"><div class="n">05</div><div><h4>云原生 Web IDE，快速简便</h4><p>随处随时、一台设备一个账号；<b>一键部署、一键发布、一键提交</b>，协同编辑、即时更新、安全备份、资源优化。</p></div></div>
+    </div>
+
+    <article class="case rv" style="margin-top:48px">
+      <div class="case-head"><span class="who">零匠案例 · 某证券客户</span><h3>需求单管理系统</h3></div>
+      <div class="case-cols">
+        <div>
+          <div class="k">全 流 程</div>
+          <p>需求反馈、需求申请、需求流转、历史需求——<b>需求单全生命周期</b>在零匠平台上闭环管理。</p>
+        </div>
+        <div>
+          <div class="k">数 据 价 值</div>
+          <p>需求单反映客户的真实需求，具有极高的分析价值：基于样本数据进行标注，<b>提炼需求标签</b>，沉淀数据形成客户画像。</p>
+        </div>
+        <div>
+          <div class="k">结 果</div>
+          <p class="case-result">即时响应 · 精准定位 · 高效协同</p>
+          <p style="margin-top:8px">资源匹配与高效协同，客户需求被精准定位并持续沉淀为可分析的资产。</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="case rv">
+      <div class="case-head"><span class="who">零匠案例 · 某金融机构</span><h3>缺陷管理平台系统</h3></div>
+      <div class="case-cols">
+        <div>
+          <div class="k">平 台 与 部 署</div>
+          <ul>
+            <li>基于零匠开发平台，<b>微服务架构、容器化部署</b></li>
+            <li>Web IDE 开发界面，<b>AI 极速开发体验</b></li>
+            <li>基于 Docker、K8s 快速部署，<b>弹性伸缩</b>，开箱即用</li>
+          </ul>
+        </div>
+        <div>
+          <div class="k">可 靠 与 监 控</div>
+          <ul>
+            <li><b>双层高可用</b>：应用服务级高可用 + 基础设施高可用</li>
+            <li><b>全链路跟踪</b>：跨服务跟踪、标准化日志格式抽取</li>
+            <li>非侵入式接入，性能损耗小</li>
+          </ul>
+        </div>
+        <div>
+          <div class="k">安 全 体 系</div>
+          <ul>
+            <li>数据存储安全、数据通信安全</li>
+            <li><b>完整的数字证书体系</b>：数字加密、数字签名技术</li>
+            <li>防暴力破解、密码策略、用户账户安全与账户锁定</li>
+            <li>统一的集成管理、标准化集成接口、灵活的适配机制</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ======================= 08 HISTORY / CREDENTIALS / GLOBAL ======================= -->
+<section class="sec sec-light" id="about">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-idx">08</span><h2>发展历程</h2><span class="en">MILESTONES</span></div>
+    <div class="sec-rule"></div>
+    <div class="tl rv">
+      <div class="tl-item"><div class="yr">2019</div><span class="dot"></span><div><h3>扎根金融</h3><p>公司成立，聚焦银行信创服务，建立核心客户合作。</p></div></div>
+      <div class="tl-item"><div class="yr">2020</div><span class="dot"></span><div><h3>伙伴升级</h3><p>获金山办公、统信战略认证，技术创新能力显著提升，完善生态伙伴体系建设。</p></div></div>
+      <div class="tl-item"><div class="yr">2021</div><span class="dot"></span><div><h3>双轮驱动</h3><p>自研产品与解决方案并举，拓展多元化业务版图，完成 CMMI3 认证。</p></div></div>
+      <div class="tl-item"><div class="yr">2022</div><span class="dot"></span><div><h3>能力跃升</h3><p>获高新技术企业认证，业务规模快速增长。</p></div></div>
+      <div class="tl-item"><div class="yr">2023</div><span class="dot"></span><div><h3>资质提升</h3><p>获专精特新企业认证，通过 ISO20000 / ISO27001 双认证。</p></div></div>
+      <div class="tl-item"><div class="yr">2024</div><span class="dot"></span><div><h3>创新引领</h3><p>打造自主可控产品矩阵——自研产品与解决方案并举，AI 成为第二曲线。</p></div></div>
+    </div>
+
+    <h4 class="sub-h rv" style="margin-top:64px">资质与合作厂商证书</h4>
+    <div class="cred-band rv">
+      <span><b>金山办公</b> 战略伙伴 · 金牌服务商</span>
+      <span><b>东方通</b> 战略伙伴 · 深度技术认证</span>
+      <span><b>统信</b> 战略认证</span>
+      <span><b>高新技术企业</b> 认证</span>
+      <span><b>专精特新</b> 企业</span>
+      <span><b>CMMI 3</b> 级认证</span>
+      <span><b>ISO 20000</b> 认证</span>
+      <span><b>ISO 27001</b> 认证</span>
+      <span>信创适配证书（多项）</span>
+    </div>
+
+    <div class="client-wall">
+      <div class="client rv"><h4>某国有大行</h4><p>邮箱国产化迁移 · 40 多万用户 · 全球 90+ 分支机构</p></div>
+      <div class="client rv"><h4>某头部券商</h4><p>信创 OA 改造 · 数百项核心业务流程迁移</p></div>
+      <div class="client rv"><h4>某股份制银行</h4><p>WPS 协同辅助开发 · 文档协作与安全管控</p></div>
+    </div>
+
+    <h4 class="sub-h rv" style="margin-top:64px">全球布局</h4>
+    <p class="sec-lede rv" style="margin-bottom:0">立足上海，布局全球：国内三地交付网络，加一间建在英国拉夫堡大学的 <b>AI 联合实验室</b>。</p>
+    <div class="loc-grid">
+      <div class="loc rv"><h4>上海<span class="en">SHANGHAI</span></h4><div class="role">总部及研发中心</div><p>上海市徐汇区 · 公司总部与全部研发团队所在地</p></div>
+      <div class="loc rv"><h4>广东<span class="en">GUANGDONG</span></h4><div class="role">华南运营中心</div><p>中国广东省广州市 · 华南区域运营与交付</p></div>
+      <div class="loc rv"><h4>福建<span class="en">FUJIAN</span></h4><div class="role">华东分支机构</div><p>中国福建省福州市 · 华东区域分支</p></div>
+      <div class="loc rv"><h4>拉夫堡<span class="en">LOUGHBOROUGH, UK</span></h4><div class="role">英国 AI 联合实验室</div><p>与拉夫堡大学合作共建，探索金融科技与人工智能的深度融合</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= FOOTER ======================= -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#top"><b>Right<i>Magic</i></b></a>
+        <p class="foot-slogan">正道而行 · 奇迹自显</p>
+        <p class="foot-co">上海正奇信息科技有限公司<br />上海市徐汇区肇嘉浜路 798 号<br />坤阳国际商务广场 20 楼 2015 室<br />产品、服务与解决方案咨询，请经官网渠道与我们联系。</p>
+      </div>
+      <div>
+        <div class="foot-h">产品与开源</div>
+        <div class="foot-links">
+          <a href="https://www.zenmind.cc" target="_blank" rel="noopener">ZenMind 智能体平台 · 下载 ↗</a>
+          <a href="https://github.com/linlay/zenmind" target="_blank" rel="noopener">ZenMind 开源仓库 ↗</a>
+          <a href="https://rightmagic.cn/ai-training/" target="_blank" rel="noopener">AI 培训讲义 Wiki ↗</a>
+          <a href="https://rightmagic.cn/cuda-wiki/" target="_blank" rel="noopener">CUDA 中文 Wiki ↗</a>
+          <a href="https://rightmagic.cn/showcase/" target="_blank" rel="noopener">DGX Spark 部署复盘 ↗</a>
+        </div>
+      </div>
+      <div>
+        <div class="foot-h">本站导航</div>
+        <div class="foot-links">
+          <a href="#products">卖产品</a>
+          <a href="#services">做技术服务</a>
+          <a href="#solutions">做解决方案</a>
+          <a href="#proof">实力背书</a>
+          <a href="#cases">客户案例</a>
+          <a href="#xinchuang">信创服务</a>
+          <a href="#about">发展历程与关于我们</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 上海正奇信息科技有限公司 RightMagic · 改版效果稿 v2 · 待确认，非正式上线版本</span>
+      <span class="muse-note">本效果稿由 <b>Muse</b> 协助设计与构建</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    toggle.addEventListener('click', function () {
+      var open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    links.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') links.classList.remove('open');
+    });
+  })();
+</script>
+
+<script>
+  (function () {
+    var NAMES = { t1: '绛红鎏金', t2: '墨蓝香槟', t3: '曜石铂金', t4: '黛青金', t5: '素白正红' };
+    var DOTS = {
+      t1: ['#2A0A0D', '#9E1B1B', '#C6A15B'],
+      t2: ['#0A1428', '#C6A15B', '#F7F5F0'],
+      t3: ['#101114', '#C0C4CC', '#F4F4F2'],
+      t4: ['#0C2420', '#C6A15B', '#F7F5EE'],
+      t5: ['#FAF8F4', '#A6191F', '#191919']
+    };
+    var sw = document.getElementById('themeSwitch');
+    var btn = document.getElementById('tsBtn');
+    var nameEl = document.getElementById('tsName');
+    var curEl = document.getElementById('tsCur');
+    var dotsEl = document.getElementById('tsDots');
+    var opts = sw.querySelectorAll('.ts-opt');
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = sw.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    sw.querySelector('.ts-panel').addEventListener('click', function (e) { e.stopPropagation(); });
+    document.addEventListener('click', function () {
+      sw.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { sw.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+    });
+    function apply(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      nameEl.textContent = NAMES[t];
+      curEl.textContent = '当前：' + NAMES[t];
+      dotsEl.innerHTML = DOTS[t].map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('');
+      for (var i = 0; i < opts.length; i++) {
+        opts[i].setAttribute('aria-pressed', opts[i].getAttribute('data-theme') === t ? 'true' : 'false');
+      }
+    }
+    for (var i = 0; i < opts.length; i++) {
+      opts[i].addEventListener('click', function () { apply(this.getAttribute('data-theme')); });
+    }
+  })();
+</script>
+
+</body>
+</html>
