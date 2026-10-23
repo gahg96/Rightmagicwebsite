@@ -112,6 +112,12 @@ export default async function RootLayout({
               {children}
             </main>
             <Footer />
+            <a
+              href="/v2/"
+              className="fixed bottom-5 right-5 z-[60] rounded-full bg-[#9E1B1B] px-4 py-2 text-sm font-medium text-white shadow-lg ring-1 ring-white/20 transition hover:bg-[#7f1414]"
+            >
+              {locale === 'zh' ? '✦ 新版预览' : '✦ New version'}
+            </a>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
